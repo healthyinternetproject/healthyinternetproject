@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Civic Review</title>
+		<link href="/css/civic.css" rel="stylesheet">
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		
+		<div class="content">
+			<div class="page active" data-index="0">
+				<h2>Here's a new user's review</h2>
+				<p>URL: <a href="http://alanbellows.com" target="_blank">http://alanbellows.com</a></p>
+				<p>You have more experience. Please make edits to their reiview if needed.</p>
+				<br><br>
+				<form>
+					<div class="flag">
+
+						<div class="row">
+							<div class="main">
+								<label></label>
+								<div class="option">Strongly<br>Agree</div>
+								<div class="option"></div>
+								<div class="option">I Don't<br>Know</div>
+								<div class="option"></div>
+								<div class="option">Strongly<br>Disagree</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="main">
+								<label>Is <a href="http://alanbellows.com" target="_blank">the content</a> misleading or inaccurate?</label>
+								<div class="option">
+									<input type="radio" name="accurate" data-score="1">
+								</div>
+								<div class="option">
+									<input type="radio" name="accurate" data-score="2">
+								</div>
+								<div class="option">
+									<input type="radio" name="accurate" data-score="3" checked>
+								</div>
+								<div class="option">
+									<input type="radio" name="accurate" data-score="4">
+								</div>
+								<div class="option">
+									<input type="radio" name="accurate" data-score="5">
+								</div>
+							</div>
+							<div class="follow-ups">
+								<div class="follow-up">
+									<label>It lacks context</label>
+									<div class="option">
+										<input type="radio" name="context" data-dscore="1">
+									</div>
+									<div class="option">
+										<input type="radio" name="context" data-dscore="2">
+									</div>
+									<div class="option">
+										<input type="radio" name="context" data-dscore="3" checked>
+									</div>
+									<div class="option">
+										<input type="radio" name="context" data-dscore="4">
+									</div>
+									<div class="option">
+										<input type="radio" name="context" data-dscore="5">
+									</div>
+								</div>
+								<div class="follow-up">
+									<label>The media has been altered</label>
+									<div class="option">
+										<input type="radio" name="alter" data-dscore="1">
+									</div>
+									<div class="option">
+										<input type="radio" name="alter" data-dscore="2">
+									</div>
+									<div class="option">
+										<input type="radio" name="alter" data-dscore="3" checked>
+									</div>
+									<div class="option">
+										<input type="radio" name="alter" data-dscore="4">
+									</div>
+									<div class="option">
+										<input type="radio" name="alter" data-dscore="5">
+									</div>
+								</div>
+								<div class="follow-up">
+									<label>It is outright false</label>
+									<div class="option">
+										<input type="radio" name="false" data-dscore="1">
+									</div>
+									<div class="option">
+										<input type="radio" name="false" data-dscore="2">
+									</div>
+									<div class="option">
+										<input type="radio" name="false" data-dscore="3" checked>
+									</div>
+									<div class="option">
+										<input type="radio" name="false" data-dscore="4">
+									</div>
+									<div class="option">
+										<input type="radio" name="false" data-dscore="5">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="main">
+								<label>Is <a href="http://alanbellows.com" target="_blank">the content</a> abusive or harassing?</label>
+								<div class="option">
+									<input type="radio" name="abuse" data-score="1">
+								</div>
+								<div class="option">
+									<input type="radio" name="abuse" data-score="2">
+								</div>
+								<div class="option">
+									<input type="radio" name="abuse" data-score="3" checked>
+								</div>
+								<div class="option">
+									<input type="radio" name="abuse" data-score="4">
+								</div>
+								<div class="option">
+									<input type="radio" name="abuse" data-score="5">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="main">
+								<label>Does <a href="http://alanbellows.com" target="_blank">the content</a> incite fear or hate?</label>
+								<div class="option">
+									<input type="radio" name="hate" data-score="1">
+								</div>
+								<div class="option">
+									<input type="radio" name="hate" data-score="2">
+								</div>
+								<div class="option">
+									<input type="radio" name="hate" data-score="3" checked>
+								</div>
+								<div class="option">
+									<input type="radio" name="hate" data-score="4">
+								</div>
+								<div class="option">
+									<input type="radio" name="hate" data-score="5">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="main">
+								<label>Does <a href="http://alanbellows.com" target="_blank">the content</a> violate copyright or trademark?</label>
+								<div class="option">
+									<input type="radio" name="copyright" data-score="1">
+								</div>
+								<div class="option">
+									<input type="radio" name="copyright" data-score="2">
+								</div>
+								<div class="option">
+									<input type="radio" name="copyright" data-score="3" checked>
+								</div>
+								<div class="option">
+									<input type="radio" name="copyright" data-score="4">
+								</div>
+								<div class="option">
+									<input type="radio" name="copyright" data-score="5">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<br>
+						<label>Reasoning</label>
+						<textarea name="reasoning" readonly>This is an example of another user's reasoning.</textarea>
+					</div>
+					<div class="row">
+						<br>
+						<label>Your Feedback</label>
+						<textarea name="feedback"></textarea>
+					</div>
+					<div class="row">
+						<br>
+						<p>
+							<input class="submit" type="button" value="Submit">
+							<input class="help" type="button" value="Help!">
+						</p>
+					</div>
+				</form>
+			</div>
+			<div class="page" data-index="1">
+				<img class="centered" src="/images/loading.gif">
+			</div>
+			<div class="page" data-index="2">
+				<h2>Thank you!</h2>
+				<p>We'll pass along your feedback to the new user, and let you know what happens to this content. We'll try to get it taken offline or at least less visible.</p>
+				<p>So far this month you've mentored <strong>17</strong> new users. <strong>3</strong> of those users have gone on to become mentors themselves.</p>
+				<p>
+					<input class="close" type="button" value="Close">
+					<input class="help" type="button" value="Help!">
+				</p>
+			</div>
+
+
+		</div>
+		<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="/js/civic.js"></script>
+		<script type="text/javascript" src="/js/simulate.js"></script>
+	</body>
+</html>

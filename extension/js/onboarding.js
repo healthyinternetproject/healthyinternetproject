@@ -1,0 +1,333 @@
+
+var CONFIG = {}; //this is auto-fetched from background.js
+var FADE_TIME = 400;
+var WELCOME_ANIMATION_TIME = 900; //matches transition time for .onboarding .welcome in onboarding.css
+
+
+jQuery(document).ready(function ($) {
+
+
+	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+
+		console.log(request);
+
+		if (request.command == 'config')
+		{				
+			CONFIG = request.config;
+			console.log(CONFIG);		
+			initializeUI();		
+		}
+		else if (request.command == 'notification-click')
+		{
+			console.log("Notification clicked");
+			window.location.href = window.location.pathname + "#5";
+			sendResponse({result: "success"});
+		}
+		else if (request.command == 'hide-hand')
+		{
+			console.log("hiding hand");
+			$("#pointer-hand").removeClass();
+			$("#pointer-tip").removeClass();
+			sendResponse({result: "success"});
+		}
+		else if (request.command == 'done-flagging')
+		{
+			console.log("done with flagging demo");
+			window.location.href = window.location.pathname + "#6";
+			sendResponse({result: "success"});
+		}
+
+		return Promise.resolve("Dummy response to keep the console quiet");
+	});
+
+	browser.runtime.sendMessage({command: 'get-config'}, function () {});
+
+
+
+	function initializeUI ()
+	{
+		console.log("Initializing UI");
+
+
+		$(".onboarding .user-id").html( parseInt(CONFIG.userId) );
+
+
+		$(".onboarding .progress .step [href]").click(function (ev) {
+
+			let $this = $(this);
+			let $step = $this.closest('.step');
+
+			if ($step.hasClass('ahead'))
+			{
+				ev.preventDefault();
+				return false;
+			}
+		});
+
+
+		$(".onboarding .missions li").click(function () {
+
+			let $this = $(this);
+			let $panel = $this.closest('.panel');
+			let $img  = $this.find("img[data-active]");
+			let $next = $panel.find(".next");
+
+			/* multi-select
+
+			if ($this.attr('data-active') == 'true')
+			{
+				$this.removeClass('active');
+				$this.attr('data-active', 'false');
+			}
+			else
+			{
+				$this.addClass('active');
+				$this.attr('data-active', 'true');
+			}
+
+			$next.addClass('disabled');
+
+			$(".missions li").each(function () {
+				if ($(this).hasClass('active'))
+				{
+					$next.removeClass('disabled');				
+				}
+			});
+			*/
+
+
+			if ($this.hasClass('active'))
+			{
+				$this.removeClass('active');
+				$next.addClass('disabled');
+				$img.attr("src", $img.attr("data-inactive"));
+			}
+			else
+			{
+				let $active = $(".missions li.active");
+				let $activeImage = $active.find("img[data-active]");
+
+				if ($active.length > 0)
+				{				
+					$activeImage.attr("src", $activeImage.attr("data-inactive"));
+					$active.removeClass('active');
+				}
+				$next.removeClass('disabled');
+				$this.addClass('active');
+				$img.attr("data-inactive", $img.attr("src"));
+				$img.attr("src", $img.attr("data-active"));
+
+				$(".mission-name").text( getString( $this.attr("data-message-root") + "_on" ).toLowerCase() ).html();
+
+				if ($this.hasClass('good'))
+				{
+					$(".mission-name").addClass('good');
+				}
+				else
+				{
+					$(".mission-name").removeClass('good');	
+				}
+			}
+
+		});	
+
+
+		$(".onboarding .panel.mission-selector .next").click(function () {
+
+			let id = parseInt( $(".onboarding .missions li.active").attr("data-mission-id") );
+
+			console.log("Saving mission id " + id);
+
+			//save mission to API
+			browser.runtime.sendMessage(
+				{command: 'save-mission', 'mission_id': id}, 
+				function () {}
+			);
+
+		});
+
+
+		//activate 'next' buttons in onboarding
+		$(".onboarding .panel .next").click(function () {
+
+			let $this = $(this);
+			let $current = $(".panel.current");
+			let currentIndex = $current.attr("data-index");
+			let nextIndex = parseInt(currentIndex) + 1;
+
+			//console.log(nextIndex);
+
+			if ($this.hasClass('disabled')) { return; }
+						
+			window.location.href = window.location.pathname + "#" + nextIndex;
+		});
+
+
+		$(".sample-notification").click(function () {
+
+			if (Notification.permission == "denied")
+			{
+				alert( getString("error_notifications_disabled") );
+			}
+			else
+			{
+				browser.runtime.sendMessage({command: 'sample-notification'}, function (response) { console.log(response); });
+			}
+		});
+
+
+		$(".timed-appearance").each(function () {
+
+			let $this   = $(this);
+			let delay   = $this.attr("data-delay");
+			let trigger = $this.attr("data-trigger");
+
+			$("#" + trigger).click(function () {
+
+				setTimeout(function () {
+
+					$this.slideDown();
+				}, delay);
+			});
+		});
+
+
+		//let browser back/forward buttons work as expected
+		window.onhashchange = function () {
+
+			let index = parseInt(location.hash.substring(1));
+
+			if (!index) { index = 0; }
+
+			goToOnboardingStep(index);
+		};
+
+		location.hash = "#0";
+	}
+
+});
+
+
+function showMessage (title, text)
+{
+	let $message = $(".message-box");
+	let $h1 = $message.find("h1");
+	let $text = $message.find(".text");
+
+	$h1.html(title);
+	$text.html(text);
+
+	$message.fadeIn(FADE_TIME);
+}
+
+
+function hideMessage ()
+{
+	let $message = $(".message-box");
+
+	$message.fadeOut(FADE_TIME);
+}
+
+
+function goToOnboardingStep (index)
+{
+	//let $current = $(".panel.current");
+	let $target = $(".panel[data-index=" + index + "]");
+
+	if ($target.length > 0)
+	{
+		//$(".progress .step.current").removeClass('current');
+		//$(".progress .step[data-index*='|" + index + "|']").addClass('current');
+		let currentStepReached = (index == 0);
+		let $hand              = $("#pointer-hand");
+		let $logo              = $("#civic-logo");
+		let $tip               = $("#pointer-tip");
+		let handState          = $target.attr("data-hand");	
+		let logoState          = $target.attr("data-logo");	
+		let $progress          = $("ul.progress");	
+		let $panels            = $target.closest('.panels');
+		let $overlay           = $("#bg-overlay");
+
+		window.location.href = window.location.pathname + "#" + index;
+
+		if (index == 0)
+		{
+			$panels.css('transform','translate(-50%,-50%)'); 
+			$overlay.fadeIn(WELCOME_ANIMATION_TIME);
+		}
+		else
+		{
+			//$panels.css('transform','translate(-50%,-60%)');
+			$panels.css({'top':'150px','transform':'translate(-50%,0)'});
+			$overlay.fadeOut(WELCOME_ANIMATION_TIME);
+		}
+
+		$(".panel.current").fadeOut(FADE_TIME, function () {
+			$target.fadeIn(FADE_TIME);
+		});		
+
+		if (logoState)
+		{
+			$logo.attr("src","/images/" + logoState);
+		}	
+
+		console.log(index);
+
+		$(".panel[data-index]").each(function () {
+
+			let $this = $(this);
+			let i = parseInt($this.attr("data-index"));
+
+			//console.log(i + " " + index);
+			
+			if (i == index)
+			{
+				$this.addClass('current').removeClass('behind ahead');
+			}			
+			else if (i < index)
+			{
+				$this.addClass('behind').removeClass('current ahead');
+			}
+			else
+			{
+				$this.addClass('ahead').removeClass('current behind');
+			}
+			
+		});
+
+
+		$progress.find(".step[data-index]").each(function () {
+
+			let $this = $(this);
+			let indexList = $this.attr("data-index");
+
+			if (indexList.indexOf('|' + index + '|') > -1)
+			{
+				//current item
+				let currentProgress = $this.attr("data-progress");
+				$this.addClass('current').removeClass('behind ahead');
+				$progress.removeClass().addClass('progress progress-' + currentProgress);
+				currentStepReached = true;
+			}
+			else if (currentStepReached === false)
+			{
+				$this.addClass('behind').removeClass('current ahead');
+			}
+			else
+			{
+				$this.addClass('ahead').removeClass('current behind');
+			}
+		});
+
+		$hand.removeClass();
+		$tip.removeClass();
+		
+		if (handState != "")
+		{
+			$hand.addClass(handState);
+			$tip.addClass(handState);
+		}
+		
+	}
+}
+

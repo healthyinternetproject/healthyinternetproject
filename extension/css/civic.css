@@ -1,0 +1,157 @@
+
+/*
+	Red: rgba(230,43,30, 1) / #E62B1E
+	Green: #26A65B
+	Blue: #5762D5
+	Light blue: #A6ADE7
+	Dark gray: #252B36
+	Dark gray 2: #7F8DA7 e.g., (optional)
+*/
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/Inter-Regular.otf') format('opentype');
+}
+
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Inter-Bold.otf') format('opentype');
+}
+
+* 
+{
+	box-sizing: border-box;
+	background-repeat: no-repeat;
+}
+
+body
+{
+	background-color: #fff;
+	color: #1B1F27;
+	font-family: 'Inter', sans-serif;
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+	/*padding-top: 90px;
+	background-image: url(/images/logo.jpg);
+	background-position: center 15px;
+	background-repeat: no-repeat;*/
+}
+
+em
+{
+	color: #E62B1E;
+}
+
+em.good
+{
+	color: #26A65B;
+}
+
+
+[href]
+{
+	color: #5762D5;
+}
+
+.centered
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+
+.button
+{
+	display: inline-block;
+	padding: 8px 12px 8px 12px;
+	background-color: #5762D5;
+	color: #fff;
+	font-weight: bold;
+	font-size: 16px;
+	border-radius: 3px;
+	text-align: center;
+	cursor: pointer;
+	user-select: none;
+}
+
+.button.disabled
+{
+	opacity: 0.4;
+}
+
+.button.close
+{
+	/* background-color: #E62B1E; */
+}
+
+.onboarding ul.missions li,
+.flagging .page[data-index="0"] li,
+.flagging .selected-flags li
+{
+	display: block;
+	position: relative;
+	padding-left: 58px;
+	cursor: pointer;
+	min-height: 50px;
+}
+
+.onboarding ul.missions li label,
+.flagging .page[data-index="0"] li label,
+.flagging .selected-flags li label
+{
+	cursor: inherit;
+}
+
+
+.onboarding ul.missions li .icon,
+.flagging .page[data-index="0"] li .icon,
+.flagging .selected-flags li .icon
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 48px;
+	height: 48px;
+	background-color: #fff;
+	border-radius: 7px;
+	box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.2);
+	transition: background-color 200ms linear, transform 350ms ease-in-out;
+}
+
+.onboarding ul.missions li .icon:hover,
+.flagging .page[data-index="0"] li .icon:hover,
+.flagging .selected-flags li .icon:hover
+{
+	transform: scale(1.1);
+}
+
+.flagging .selected-flags li .icon:hover
+{
+	transform: none;
+}
+
+.onboarding ul.missions li .icon img,
+.flagging .page[data-index="0"] li .icon img,
+.flagging .selected-flags li .icon img
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 22px;
+	max-height: 26px;
+	height: auto;
+}
+
+
+
+
+

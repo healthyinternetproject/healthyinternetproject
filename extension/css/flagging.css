@@ -1,0 +1,534 @@
+
+
+.flagging 
+{
+	background-color: rgba(0,0,0,0);
+	border: 2px solid #252B36;
+	box-shadow: 0px 2px 10px rgba(0, 0, 0, 1);
+	width: 384px;
+}
+
+.flagging #debugger
+{
+	display: none;
+}
+
+.flagging.debug #debugger
+{	
+	color: #fff;
+	display: block;
+	background-color: #000;
+	font-size: 12px;
+	position: absolute;
+	top: 0;	
+	right: 0;
+	width: 416px;
+	height: 100%;
+	padding: 10px;
+	z-index: 10;
+	overflow: auto;
+}
+
+.flagging.debug
+{
+	width: 800px;
+}
+
+
+.flagging .message 
+{
+	display: none;
+	padding: 20px 30px 20px 30px;
+}
+
+.flagging .message .text
+{
+	font-size: 18px;
+	line-height: 1.3em;
+}
+
+.flagging .message img.example
+{
+	display: none;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	transform: translateX(-10px);
+	width: 380px;
+}
+
+
+.flagging .pages
+{	
+	display: none;
+	position: relative;
+	width: 380px;
+	height: 100%;
+	overflow-x: hidden;
+	white-space: nowrap;
+	transition: height 200ms ease-in-out;
+	padding-bottom: 30px;
+}
+
+.flagging .pages .footer
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 30px;
+	background-color: #252B36;
+	color: #D9DDE5;
+	font-size: 11px;
+	text-align: center;
+	line-height: 30px;
+	white-space: nowrap;
+}
+
+.flagging .pages .footer [href]
+{
+	color: #A6ADE7;
+}
+
+.flagging .content
+{
+	height: 100%;
+}
+
+.flagging .page
+{
+	top: 0;
+	bottom: 0;
+	position: absolute;
+	width: 380px;
+	padding: 18px 30px 18px 30px;
+	white-space: normal;
+	transition: transform 300ms ease-in-out;
+}
+
+.flagging .page.initial
+{
+	/* background-image: url(/images/flag.svg);
+	background-position: 340px 24px;
+	background-repeat: no-repeat;	*/
+}
+
+.flagging .page.initial h1,
+.flagging .message h1
+{
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 19px;
+	letter-spacing: -0.75px;
+	color: #1B1F27;	
+	margin: 8px 0 8px 0;
+	user-select: none;
+}
+
+.flagging .site-title,
+.flagging .message h1
+{
+	color: #5762D5;
+}
+
+.flagging .site-title
+{
+	display: inline-block;
+	position: relative;
+	padding-left: 24px; 
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 320px;	
+}
+
+.flagging .with-favicon
+{
+	position: relative;
+	min-height: 16px;
+}
+
+.flagging .with-favicon img
+{
+	position: absolute;
+	top: 2px;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+	z-index: 2;
+}
+
+.flagging .page[data-index="1"]
+{
+	left: 100%;	
+}
+
+.flagging .page[data-index="2"]
+{
+	left: 200%;
+}
+
+.flagging .page.active
+{
+	
+}
+
+
+.flagging .page p
+{
+	line-height: 1.5em;
+	margin-bottom: 1em;
+	user-select: none;
+}
+
+.flagging .page h2
+{
+	user-select: none;
+}
+
+.flagging ul.flags
+{
+	display: block;
+	margin-top: 20px;
+	user-select: none;
+}
+
+
+.flagging ul.flags li,
+.flagging .selected-flags li
+{
+	display: block;
+	position: relative;
+	font-weight: bold;
+	font-size: 16px;
+	letter-spacing: -0.65px;
+	padding-top: 14px;
+	transition: all 300ms ease-in-out;
+}
+
+.flagging ul.flags hr
+{
+	display: block;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 0;	
+	border-top: 1px solid #7F8DA7;
+	margin: 10px 0 10px 0;
+}
+
+.flagging ul.flags li a
+{
+	display: block;	
+}
+
+.flagging .page[data-index="0"] li,
+.flagging .selected-flags li
+{
+	margin-bottom: 8px;
+}
+
+.flagging ul.flags li .severity,
+.flagging ul.selected-flags li .severity
+{
+	font-size: 12px;
+	font-weight: normal;
+	max-height: 0;
+	transition: max-height 300ms ease-in-out;	
+}
+
+.flagging ul.flags li .thermometer,
+.flagging ul.selected-flags li .thermometer
+{
+	position: absolute;
+	left: 56px;
+	top: 0;
+	width: 0;
+	height: 44px;
+	opacity: 0;
+	transform: translateX(-14px);
+	transition: all 300ms ease-in-out;
+}
+
+/* this is the red in the thermometer */
+.flagging ul.flags li .thermometer:before, 
+.flagging ul.selected-flags li .thermometer:before
+{
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 0;
+	transition: height 300ms ease-in-out;
+	background-color: #E62B1E;
+	z-index: 0;
+}
+
+/* this is the green in the thermometer */
+.flagging ul.flags li.good .thermometer:before, 
+.flagging ul.selected-flags li.good .thermometer:before
+{
+	background-color: #26A65B;
+}
+
+/* this is the thermometer foreground */
+.flagging ul.flags li .thermometer:after,
+.flagging ul.selected-flags li .thermometer:after 
+{
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 12px;
+	height: 44px;
+	background-image: url(/images/thermometer.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	z-index: 1;
+}
+
+.flagging ul.flags li.on,
+.flagging ul.selected-flags li
+{
+	color: #E62B1E;
+	padding-top: 8px;
+	padding-left: 78px;
+}
+
+.flagging ul.flags li.on.good,
+.flagging ul.selected-flags li.good
+{
+	color: #26A65B;
+}
+
+.flagging ul.flags li.on .severity,
+.flagging ul.selected-flags li .severity
+{
+	max-height: 12px;
+}
+
+.flagging ul.flags li.on .thermometer,
+.flagging ul.selected-flags li .thermometer
+{
+	width: 12px;
+	opacity: 1;
+	transform: none;
+}
+
+.flagging ul.flags li[data-severity="1"] .thermometer:before,
+.flagging ul.selected-flags li[data-severity="1"] .thermometer:before
+{
+	height: 22px;
+}
+
+.flagging ul.flags li[data-severity="2"] .thermometer:before,
+.flagging ul.selected-flags li[data-severity="2"] .thermometer:before
+{
+	height: 33px;
+}
+
+.flagging ul.flags li[data-severity="3"] .thermometer:before,
+.flagging ul.selected-flags li[data-severity="3"] .thermometer:before
+{
+	height: 100%;
+}
+
+.flagging form textarea
+{
+	width: 100%;
+	height: 60px;
+	border: 1px solid #9DA8BC;
+	border-radius: 4px;
+	box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+	margin-top: 4px;
+	padding: 4px;
+	resize: none; 
+	font-family: inherit;
+	font-size: 12px;
+	color: #7F8DA7;
+}
+
+.flagging .buttons
+{
+	margin-top: 12px;
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+	grid-column-gap: 30px;
+	align-content: space-around;
+}
+
+.flagging .buttons .select
+{
+	margin-top: 4px;
+	
+}
+
+.select
+{	
+	position: relative;
+	background: #FFFFFF;
+	border: 1px solid #5762D5;
+	border-radius: 3px;		
+	height: 24px;
+	width: 210px;
+	background-image: url(/images/dropdown-arrow.svg);
+	background-position: 192px center;
+	background-repeat: no-repeat;
+	font-family: inherit;
+	font-size: 12px;
+	color: #7F8DA7;
+	cursor: pointer;	
+	user-select: none;
+	z-index: 1;
+}
+
+.select .preview,
+.select .options .option
+{
+	padding: 0 4px 0 4px;
+	line-height: 24px;
+}
+
+.select .preview
+{
+	color: #7F8DA7;
+}
+
+.select .preview.selected
+{
+	color: inherit;
+}
+
+.select .options
+{
+	max-height: 0;
+	overflow: hidden;
+	opacity: 0;
+	position: absolute;
+	left: 0;
+	bottom: 100%;
+	background: #FFFFFF;
+	border: 1px solid #5762D5;	
+	border-radius: 3px;
+	width: 100%;
+	transition: all 200ms ease-in-out;
+}
+
+.select.open .options
+{
+	max-height: 100px;
+	opacity: 1;
+}
+
+.select .options .option
+{
+	border-top: 0.5px solid #D9DDE5;
+}
+
+.select .options .option:first-child
+{
+	border-top: none;
+}
+
+.select .options .option:hover
+{
+	background-color: rgba(87,98,213,0.2);
+}
+
+.select-note
+{
+	position: absolute;
+	top: 100%;
+	font-size: 80%;
+	margin-top: 8px;
+	color: #7F8DA7;
+}
+
+.flagging .page.thanks
+{
+
+}
+
+.flagging .page.thanks h1
+{
+	color: #5762D5;
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.flagging .page.thanks p
+{
+	font-size: 16px;
+	margin-top: 4px;
+}
+
+
+.flagging .page.thanks li
+{
+	cursor: default;
+}
+
+
+.flagging .page.thanks .card
+{
+	background-color: #FFFFFF;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+	border-radius: 7px;	
+	padding: 20px;
+}
+
+
+.flagging .page.thanks .card h2
+{
+	font-weight: bold;
+	font-size: 18px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 270px;		
+}
+
+.flagging .page.thanks .card .selected-campaign
+{
+	margin: 8px 0 8px 0;
+}
+
+.flagging .page.thanks .card .selected-campaign span
+{
+	color: #fff;
+	background-color: #E62B1E;
+	border-radius: 4px;
+	padding: 3px 10px 3px 10px;
+	font-size: 12px;
+}
+
+.flagging .page.thanks .card .notes
+{
+	color: #1B1F27;
+	font-size: 12px;
+	margin-top: 20px;
+	border: 1px solid #1B1F27;	
+	border-radius: 4px;	
+	padding: 8px;
+	line-height: 1.3em;
+}
+
+.flagging .selected-flags
+{
+	margin-top: 10px;
+}
+
+.flagging .selected-flags li .icon
+{
+	box-shadow: none;
+	border: 1.5px solid #E62B1E;
+}
+
+.flagging .selected-flags li.good .icon
+{
+	border-color: #26A65B;
+}
+
+

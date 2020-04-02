@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Welcome to Civic Mentorship!</title>
+		<link href="/css/reset.css" rel="stylesheet">
+		<link href="/css/civic.css" rel="stylesheet">
+		<link href="/css/onboarding.css" rel="stylesheet">
+		<meta charset="UTF-8">
+	</head>
+	<body class="onboarding">
+		
+		<ul class="progress">
+			<li class="step current" data-index="|1|" data-progress="20">
+				<a href="#1">
+					<span class="step-count"><span data-i18n-message="step_1_of_5"></span></span>
+					<h1><span data-i18n-message="welcome"></span></h1>					
+				</a>
+			</li>
+			<li class="step" data-index="|2|3|" data-progress="40">
+				<a href="#2">
+					<span class="step-count"><span data-i18n-message="step_2_of_5"></span></span>
+					<h1><span data-i18n-message="getting_set_up"></span></h1>
+				</a>
+			</li>
+			<li class="step" data-index="|4|" data-progress="60">
+				<a href="#4">
+					<span class="step-count"><span data-i18n-message="step_3_of_5"></span></span>
+					<h1><span data-i18n-message="notify_me"></span></h1>
+				</a>
+			</li>
+			<li class="step" data-index="|5|" data-progress="80">
+				<a href="#5">
+					<span class="step-count"><span data-i18n-message="step_4_of_5"></span></span>
+					<h1><span data-i18n-message="your_first_flag"></span></h1>
+				</a>
+			</li>
+			<li class="step" data-index="|6|" data-progress="100">
+				<a href="#6">
+					<span class="step-count"><span data-i18n-message="step_5_of_5"></span></span>
+					<h1><span data-i18n-message="off_to_the_races"></span></h1>
+				</a>
+			</li>
+
+		</ul>
+
+		<div class="panels">
+			<div class="panel current welcome" data-index="0">
+				<img src="/images/celebration.svg">
+
+				<h1><span data-i18n-message="congratulations_mentor"></span></h1>
+				<p><span data-i18n-message="you_have_contributed"></span></p>
+
+				<div class="button-container">
+					<!--button class="next from-welcome-screen"></button-->
+				</div>			
+			</div>
+
+			<div class="panel ahead" data-index="1">
+				<h1><span data-i18n-message="whatre_your_missions"></span></h1>
+				<h2><span data-i18n-message="well_tailor_the_experience"></span></h2>
+
+				<ul class="missions">
+					<li class="lies" data-message-root="lies_or_manipulation">
+						<div class="icon"><img src="/images/lies-red.svg" data-active="/images/lies-white.svg"></div>
+						<label><span data-i18n-message="diminish_lies_or_manipulation"></span></label>
+						<span class="description"><span data-i18n-message="youre_bothered_by_lies"></span></span>
+					</li>
+
+					<li class="harrassment" data-message-root="abuse_or_harassment">
+						<div class="icon"><img src="/images/abuse-red.svg" data-active="/images/abuse-white.svg"></div>
+						<label><span data-i18n-message="lower_abuse_or_harassment"></span></label>
+						<span class="description"><span data-i18n-message="turn_the_temperature_down"></span></span>
+					</li>
+
+					<li class="division" data-message-root="division_or_fear">
+						<div class="icon"><img src="/images/division-red.svg" data-active="/images/division-white.svg"></div>
+						<label><span data-i18n-message="reduce_division_or_fear"></span></label>
+						<span class="description"><span data-i18n-message="your_thick_skin"></span></span>
+					</li>
+
+					<li class="good" data-message-root="good_ideas">
+						<div class="icon"><img src="/images/good-green.svg" data-active="/images/good-white.svg"></div>
+						<label><span data-i18n-message="spread_good_ideas"></span></label>
+						<span class="description"><span data-i18n-message="elevate_the_good"></span></span>
+					</li>
+
+				</ul>
+
+				<!--div class="note"><span data-i18n-message="choose_all_that_apply"></span></div-->
+
+				<div class="button-container">
+					<button class="next disabled"></button>
+				</div>
+			</div>
+
+			<div class="panel ahead" data-index="2">
+				<h1><span data-i18n-message="we_collect_zero_personal_info"></span></h1>
+				
+				<div class="details">
+					<ul class="icon-info">
+						<li class="privacy">
+							<img class="icon" src="/images/persona.svg">
+							<label><span data-i18n-message="full_privacy"></span></label>
+							<span class="description"><span data-i18n-message="we_care_about_user_privacy"></span></span>
+						</li>
+
+						<li class="logins">
+							<img class="icon" src="/images/lock.svg">
+							<label><span data-i18n-message="no_more_forgotten_logins"></span></label>
+							<span class="description"><span data-i18n-message="every_user_unique_id"></span></span>
+						</li>
+
+						<li>
+							<span data-i18n-message="view_more_privacy_info"></span>
+						</li>
+					</ul>
+
+				</div>
+
+				<div class="button-container">
+					<button class="next"></button>
+				</div>
+			</div>
+
+
+			<div class="panel ahead" data-index="3">
+				<h1><span data-i18n-message="how_your_work_matters"></span></h1>
+				
+				<div class="details">
+					<ul class="three">
+						<li>
+							<div class="illustrations type-a">
+								<div class="word-box">
+									<img src="/images/flag-black-bordered.svg">
+									<span data-i18n-message="you"></span>
+								</div>
+							</div>
+							<span data-i18n-message="first_you_come_across_lies"></span>
+						</li>
+
+						<li>
+							<div class="illustrations type-a">
+								<div class="word-box">
+									<img src="/images/persona-black-bordered.svg">
+									<span data-i18n-message="mentor"></span>
+								</div>
+							</div>
+							<span data-i18n-message="experienced_user_gives_feedback"></span>
+						</li>
+
+						<li>
+							<div class="illustrations type-b">
+								<div class="word-box"><span data-i18n-message="journalists"></span></div>
+								<div class="word-box"><span data-i18n-message="tech_platforms"></span></div>
+								<div class="word-box"><span data-i18n-message="community_leaders"></span></div>
+							</div>
+
+							<span data-i18n-message="we_share_your_findings"></span>
+						</li>					
+					</ul>
+				</div>
+
+				<div class="button-container">
+					<button class="next"></button>
+				</div>
+			</div>
+
+			<div class="panel ahead" data-index="4">
+				<h1><span data-i18n-message="heres_how_notifications_work"></span></h1>
+				<h2><span data-i18n-message="since_we_dont_collect_your_email"></span></h2>
+
+				<div class="button-container">
+					<span data-i18n-message="try_it_out"></span><br>
+					<button id="send-notification" class="action sample-notification"><span data-i18n-message="send_me_a_notification"></span></button>
+					<div class="tip timed-appearance" data-trigger="send-notification" data-delay="5000"><span data-i18n-message="dont_see_notification"></span></div>
+				</div>
+			</div>
+
+			<div class="panel ahead" data-index="5" data-hand="point-at-extension">				
+				<h1><span data-i18n-message="lets_make_your_first_flag"></span></h1>
+				<h2><span data-i18n-message="click_the_chrome_extension"></span></h2>
+
+				<div class="details">
+					<img src="/images/fake-article.png">
+				</div>
+
+			</div>
+
+			<div class="panel ahead" data-index="6">
+				<h1><span data-i18n-message="thank_you"></span></h1>
+				<h2><span data-i18n-message="more_info_available_here"></span></h2>
+				
+			</div>
+		</div>
+
+		<div id="pointer-hand"><img src="/images/hand-point.png"></div>
+
+		<div id="pointer-tip"><span data-i18n-message="find_the_civic_button"></span></div>
+
+		<img id="civic-logo" src="/images/logo.png">
+
+		<div id="bg-overlay"></div>
+		
+		<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="/js/civic.js"></script>
+		<script type="text/javascript" src="/js/onboarding.js"></script>
+
+	</body>
+</html>
