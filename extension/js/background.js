@@ -1,8 +1,10 @@
 
 const CONFIG = {
-	'apiRootUrl' : "http://127.0.0.1:5000/api/v1/", //if you change this, also update the matching permissions in manifest.json
+	//'apiRootUrl' : "http://127.0.0.1:5000/api/v1/", //if you change this, also update the matching permissions in manifest.json
+	'apiRootUrl' : "http://18.221.76.156:8080/api/v1/", //if you change this, also update the matching permissions in manifest.json
+	
 	'userId' : false,
-	'debug' : true,
+	'debug' : false,
 	'skipAPI' : false
 };
 

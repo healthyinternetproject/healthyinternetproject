@@ -28,17 +28,68 @@
 	z-index: 3;
 }
 
+.onboarding #pointer-hand img{
+	width:60px;
+}
+
 .onboarding #pointer-hand
 {
 	position: fixed;	
 	opacity: 0;
 	z-index: -1;
+	transition: opacity 300ms ease-in-out;
 }
 
 .onboarding #pointer-hand.point-at-extension
 {
-	top: 0;
+	top: 5px;
 	right: 120px;	
+	animation-fill-mode: forwards;
+	animation: slide-frames ease-in-out infinite;
+	animation-duration: 2s;	
+	z-index: 10;
+}
+
+.onboarding #pointer-hand.point-at-flag
+{
+	top: 80px;
+	right: 620px;	
+	opacity: 1;
+	animation-fill-mode: forwards;
+	animation: slide-frames-rotate ease-in-out infinite;
+	animation-duration: 2s;	
+	z-index: 10;
+}
+
+.onboarding #pointer-hand.point-at-text
+{
+	top: 340px !important;
+	right: 620px;	
+	opacity: 1;
+	animation-fill-mode: forwards;
+	animation: slide-frames-rotate ease-in-out infinite;
+	animation-duration: 2s;	
+	transition: top 600ms ease-in-out;
+	z-index: 10;
+}
+
+.onboarding #pointer-hand.point-at-dropdown
+{
+	top: 400px !important;
+	right: 620px;	
+	opacity: 1;
+	animation-fill-mode: forwards;
+	animation: slide-frames-rotate ease-in-out infinite;
+	animation-duration: 2s;	
+	transition: top 400ms ease-in-out;
+	z-index: 10;
+}
+
+.onboarding #pointer-hand.point-at-submit
+{
+	top: 515px !important;
+	right: 175px;	
+	opacity: 1;
 	animation-fill-mode: forwards;
 	animation: slide-frames ease-in-out infinite;
 	animation-duration: 2s;	
@@ -70,6 +121,48 @@
 .onboarding #pointer-tip.point-at-extension
 {
 	opacity: 1;
+}
+
+.onboarding #pointer-tip.point-at-flag
+{
+	opacity: 1;
+	top: 80px;
+	right: 690px;	
+	opacity: 1;
+	background-image: none;
+	padding: 18px 18px 18px 18px;
+}
+
+.onboarding #pointer-tip.point-at-text
+{
+	opacity: 1;
+	top: 340px  !important;
+	right: 690px;	
+	opacity: 1;
+	background-image: none;
+	padding: 18px 18px 18px 18px;
+	transition: top 600ms ease-in-out
+}
+
+.onboarding #pointer-tip.point-at-dropdown
+{
+	opacity: 1;
+	top: 400px  !important;
+	right: 690px;	
+	opacity: 1;
+	background-image: none;
+	transition: top 400ms ease-in-out;
+	padding: 18px 18px 18px 18px;
+}
+
+.onboarding #pointer-tip.point-at-submit
+{
+	opacity: 1;
+	top: 590px !important;
+	right: 85px;		
+	opacity: 1;
+	background-image: none;
+	padding: 18px 18px 18px 18px;
 }
 
 .onboarding .message-box
@@ -359,10 +452,80 @@
 {
 	font-weight: 700;
 }
-
-.onboarding .panels .panel .details
-{
+.onboarding .panels .panel .details{
 	margin-top: 3em;
+}
+.onboarding .panels .panel .browserbar{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: row;
+	padding-left:6px;
+	margin-top: 2em;
+	width: 75%;
+	max-width:600px;
+    height: 25px;
+    background: #3A4354;
+	border-radius: 7px 7px 0px 0px;
+}
+
+.onboarding .panels .panel .browserbar .dot{
+	height: 12px;
+	width: 12px;
+	border-radius: 50%;
+	display: inline-block;
+	margin-left:10px;
+}
+.onboarding .panels .panel .browserbar .dot:nth-child(1) {
+	background-color:#D91E18;
+}
+.onboarding .panels .panel .browserbar .dot:nth-child(2) {
+	background-color:#FFC000;
+}
+.onboarding .panels .panel .browserbar .dot:nth-child(3) {
+	background-color:#26A65B;
+}
+
+.onboarding .panels .panel .demo-article
+{
+	position: relative;
+	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+	width: 75%;
+	max-width:600px;
+	border: 1px solid #252B36;
+	padding:25px;
+	background-color: white;
+}
+.onboarding .panels .panel .demo-article .headline{
+	display: block;
+	position: relative;
+	font-weight: 700;
+	font-size: 28px;
+	line-height: 115%;
+	letter-spacing: -0.015em;
+	color: #E62B1E;
+	text-transform: uppercase;
+}
+
+.onboarding .panels .panel .demo-article .headline:before{
+	content:'';
+	position: absolute;
+	background-color: black;
+	width:100%;
+	height:2px;
+	top:-10px;
+	left:0;
+
+}
+
+.onboarding .panels .panel .demo-article .content{
+	display: block;
+	font-family: serif;
+	font-size: 18.1px;
+	line-height: 115%;
+	text-align: justify;
+	color: #000000;
+	margin-top:5px;
 }
 
 .onboarding .panels .panel .button-container
@@ -603,6 +766,12 @@
 	0% { opacity:1;transform:translateX(0); } 
 	50% { opacity:1;transform:translateX(90px); } 
 	100% { opacity:1;transform:translateX(0); }
+} 
+
+@keyframes slide-frames-rotate { 
+	0% { opacity:1;transform:translateX(0) rotate(90deg); } 
+	50% { opacity:1;transform:translateX(90px) rotate(90deg); } 
+	100% { opacity:1;transform:translateX(0) rotate(90deg); }
 } 
 
 @keyframes fade-in-frames { 

@@ -23,12 +23,100 @@ jQuery(document).ready(function ($) {
 			window.location.href = window.location.pathname + "#5";
 			sendResponse({result: "success"});
 		}
-		else if (request.command == 'hide-hand')
+		else if (request.command == 'move-hand-flag')
 		{
-			console.log("hiding hand");
 			$("#pointer-hand").removeClass();
 			$("#pointer-tip").removeClass();
+
+			$("#pointer-hand").addClass("point-at-flag");
+			$("#pointer-tip").addClass("point-at-flag");
+			//move height to the selected mission
+			var top = 0;
+			switch($(".mission-name").text()) {
+				case "worthwhile ideas":
+					top = 80;
+				  break;
+				case "lies or manipulation":
+					top = 155;
+					break;
+				case "abuse or harassment":
+					top = 212;
+					break;
+				case "division or fear":
+					top = 268;
+				  break;
+				default:
+					top = 80;
+			  }
+			$(".onboarding #pointer-hand.point-at-flag").css("top", top);
+			$(".onboarding #pointer-tip.point-at-flag").css("top", top);
+
+			//change i18n data field - may not be necessary
+			$("#pointer-tip span").attr("data-i18n-message","tooltip_click_multiple");
+			//change content of tip!
+			$("#pointer-tip span").text( getString("tooltip_click_multiple")).html();
+
 			sendResponse({result: "success"});
+
+		}
+		else if (request.command == 'move-hand-text')
+		{
+			$("#pointer-hand").removeClass();
+			$("#pointer-tip").removeClass();
+
+			$("#pointer-hand").addClass("point-at-text");
+			$("#pointer-tip").addClass("point-at-text");
+
+
+			//change i18n data field - may not be necessary
+			$("#pointer-tip span").attr("data-i18n-message","tooltip_click_freetext");
+			//change content of tip!
+			$("#pointer-tip span").text( getString("tooltip_click_freetext")).html();
+
+			sendResponse({result: "success"});
+
+		}
+		else if (request.command == 'move-hand-dropdown')
+		{
+			setTimeout(function(){
+				$("#pointer-hand").removeClass();
+				$("#pointer-tip").removeClass();
+	
+				$("#pointer-hand").addClass("point-at-dropdown");
+				$("#pointer-tip").addClass("point-at-dropdown");
+	
+				//change i18n data field - may not be necessary
+				$("#pointer-tip span").attr("data-i18n-message","tooltip_click_dropdown");
+				//change content of tip!
+				$("#pointer-tip span").text( getString("tooltip_click_dropdown")).html();
+	
+				sendResponse({result: "success"});
+			},2000);
+
+		}
+		else if (request.command == 'move-hand-submit'){
+			$("#pointer-hand").removeClass();
+			$("#pointer-tip").removeClass();
+
+			$("#pointer-hand").addClass("point-at-submit");
+			$("#pointer-tip").addClass("point-at-submit");
+
+			//change i18n data field - may not be necessary
+			$("#pointer-tip span").attr("data-i18n-message","tooltip_click_submit");
+			//change content of tip!
+			$("#pointer-tip span").text( getString("tooltip_click_submit")).html();
+
+
+			sendResponse({result: "success"});
+
+		}
+		else if (request.command == 'move-hand-done')
+		{
+			$("#pointer-hand").remove();
+			$("#pointer-tip").remove();
+
+			sendResponse({result: "success"});
+
 		}
 		else if (request.command == 'done-flagging')
 		{
@@ -48,9 +136,7 @@ jQuery(document).ready(function ($) {
 	{
 		console.log("Initializing UI");
 
-
 		$(".onboarding .user-id").html( parseInt(CONFIG.userId) );
-
 
 		$(".onboarding .progress .step [href]").click(function (ev) {
 
@@ -118,6 +204,8 @@ jQuery(document).ready(function ($) {
 				$img.attr("src", $img.attr("data-active"));
 
 				$(".mission-name").text( getString( $this.attr("data-message-root") + "_on" ).toLowerCase() ).html();
+				$(".demo-article-headline").text( getString( $this.attr("data-message-root") + "_headline" )).html();
+				$(".demo-article-content").text( getString( $this.attr("data-message-root") + "_content" )).html();
 
 				if ($this.hasClass('good'))
 				{
@@ -250,9 +338,10 @@ function goToOnboardingStep (index)
 
 		window.location.href = window.location.pathname + "#" + index;
 
-		if (index == 0)
+		if (index == 0 || index == 5)
 		{
 			$panels.css('transform','translate(-50%,-50%)'); 
+			$panels.css('top','50%'); 
 			$overlay.fadeIn(WELCOME_ANIMATION_TIME);
 		}
 		else
