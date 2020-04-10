@@ -197,12 +197,12 @@ jQuery(document).ready(function ($) {
 		}
 
 		let data = {
-			'command'  : 'save-flag',
-			'url'      : currentUrl,
-			'campaign' : currentReport.campaign,
-			'flags'    : currentReport.flags,
-			'notes'    : currentReport.notes,
-			'test'     : 'abc123'
+			'command'     : 'save-flag',
+			'url'         : currentUrl,
+			//'campaign'    : currentReport.campaign,
+			'campaign_id' : currentReport.campaignId,
+			'flags'       : currentReport.flags,
+			'notes'       : currentReport.notes
 		};
 
 		debug("Saving flag...");
@@ -263,16 +263,20 @@ function updateCurrentReport ()
 	let flags             = $(".flagging ul.flags li");
 	let $selectedCampaign = $(".campaign .option.selected");
 	let campaign          = "";
+	let campaignId        = "";
 
 	if ($selectedCampaign.length > 0)
 	{
 		campaign = $( $selectedCampaign.get(0) ).attr("data-value");
+		campaignId = $( $selectedCampaign.get(0) ).attr("data-campaign-id");
+		//debug("Campaign ID is " + campaignId);
 	}
 
 	currentReport = {
-		'flags'    : [],
-		'notes'    : $("#reasoning").val(),
-		'campaign' : campaign
+		'flags'      : [],
+		'notes'      : $("#reasoning").val(),
+		'campaign'   : campaign,
+		'campaignId' : campaignId
 	};
 
 	flags.each(function () {
@@ -293,6 +297,8 @@ function updateCurrentReport ()
 			});
 		}
 	});
+
+	debug(currentReport);
 
 
 	//todo: save to localStorage in case we need to resume

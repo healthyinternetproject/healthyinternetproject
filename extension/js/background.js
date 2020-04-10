@@ -1,8 +1,8 @@
 
 const CONFIG = {
-	'apiRootUrl' : "http://127.0.0.1:5000/api/v1/", //if you change this, also update the matching permissions in manifest.json
+	//'apiRootUrl' : "http://localhost:8080/api/v1/", //if you change this, also update the matching permissions in manifest.json
+	'apiRootUrl' : "http://18.221.76.156:8080/api/v1/", //if you change this, also update the matching permissions in manifest.json	
 	'userId' : false,
-	'debug' : true,
 	'skipAPI' : false
 };
 
@@ -19,6 +19,7 @@ const CONFIG = {
 
 		//showNotification("Civic", 'Civic Activated');
 		
+		console.log("Checking to see if user is already registered...");
 		isUserRegistered();		
 
 		//window.open("/html/flagging.html");
@@ -89,7 +90,7 @@ const CONFIG = {
 			{
 				sendFlagDataToAPI(
 					request.url,
-					request.campaign,
+					request.campaign_id,
 					request.flags,
 					request.notes
 				);
@@ -178,6 +179,7 @@ function sendMessageToPopup (data, responseFunc )
 	chrome.runtime.sendMessage(data, responseFunc);
 }
 
+
 function sendMessageToClientScript ( data, responseFunc ) {
 
 	chrome.tabs.query(
@@ -189,7 +191,6 @@ function sendMessageToClientScript ( data, responseFunc ) {
 }
 
 
-
 function isUserRegistered ()
 {
 	/*
@@ -199,17 +200,20 @@ function isUserRegistered ()
 	*/
 
 	browser.storage.sync.get(['civicUserId','civicPassword'], function(result) 
-	{
+	{		
 		console.log(result);
 
 		if (result.civicUserId)
 		{
+			console.log("User already registered, user id " + result.civicUserId);
 			CONFIG.userId = result.civicUserId;
 			CONFIG.password = result.civicPassword;
 			return true;
 		}
 		else
 		{
+			console.log("User not registered, contacting API...");
+
 			registerUser(function (data) {
 				//open onboarding when registration succeeds
 				//todo: what to do when offline?
@@ -217,7 +221,8 @@ function isUserRegistered ()
 				console.log(data);
 
 				if (CONFIG.skipAPI)
-				{
+				{					
+					console.log("Skipping API.");
 					CONFIG.userId = 123456;
 					CONFIG.password = 'sdfjalsfjhlsjdk';
 
@@ -226,6 +231,7 @@ function isUserRegistered ()
 				}
 				else
 				{
+					console.log("Received user ID " + data.user_id + " from API");
 					CONFIG.userId = data.user_id;
 					CONFIG.password = data.password;
 				}
@@ -253,10 +259,14 @@ function sendToAPI ( term, data, authenticate, callback )
 	let url = CONFIG.apiRootUrl + term;
 	let params = [];
 
+	console.log("Sending to API...");
+
 	if (CONFIG.skipAPI)
 	{
+		console.log("Skipping API");
 		if (callback)
 		{
+
 			callback();
 		}
 		return true;
@@ -300,6 +310,7 @@ function sendToAPI ( term, data, authenticate, callback )
 		if (xhr.readyState == 4) {
 
 			let data = (xhr.status == 200) ? xhr.response : false;
+			console.log("Response from API:");
 			console.log(data);
 
 			if (callback)
@@ -333,13 +344,13 @@ function sendMissionToAPI (mission_id)
 }
 
 
-function sendFlagDataToAPI (url, campaign, flags, notes)
+function sendFlagDataToAPI (url, campaignId, flags, notes)
 {
 	let data = {
-		'url'      : url,
-		'campaign' : campaign,
-		'flags'    : flags,
-		'notes'    : notes
+		'url'         : url,
+		'campaign_id' : campaignId,
+		'flags'       : flags,
+		'notes'       : notes
 	};
 
 	let callback = function () 

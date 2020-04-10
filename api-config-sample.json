@@ -1,0 +1,11 @@
+//rename this file to api-config.json and remove this comment
+
+{
+	"version" : "2020-04-10.1",
+	"mariadb" : {
+		"host"     : "localhost",
+		"username" : "civic",
+		"password" : "",
+		"database" : "civic"
+	}
+}

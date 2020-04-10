@@ -15,6 +15,17 @@ jQuery(document).ready(function ($) {
 		{				
 			CONFIG = request.config;
 			console.log(CONFIG);		
+			
+			if (CONFIG.userId)
+			{
+				debug("User ID is " + CONFIG.userId);
+			}
+			else
+			{
+				displayError('error_no_connection', 'try_again', function () { location.reload(); });
+				debug("Error, no user ID found");
+			}
+			
 			initializeUI();		
 		}
 		else if (request.command == 'notification-click')
@@ -331,3 +342,27 @@ function goToOnboardingStep (index)
 	}
 }
 
+function debug (data)
+{
+	let $debug = $("#debugger");
+	let existing = $debug.html();
+	let json = JSON.stringify(data);
+
+	$debug.html( existing + "<hr>" + json );
+}
+
+
+function displayError (message, buttonMessage, buttonFunc)
+{
+	let $overlay = $("#error-overlay");
+	let $message = $overlay.find(".message");
+	let html = getString(message) + "<br><br>";
+
+	let $button = $("<button>" + getString(buttonMessage) + "</button>");
+
+	$button.click(buttonFunc);
+
+	$message.html(html);
+	$message.append($button);
+	$overlay.fadeIn(300);
+}

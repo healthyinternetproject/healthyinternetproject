@@ -13,10 +13,24 @@ from datetime import datetime
 import random
 import string
 from argon2 import PasswordHasher
+import logging
 from classes.CivicDB import CivicDB
+import mysql.connector
+
+with open("../api-config.json") as json_data_file:
+    config = json.load(json_data_file)
+                                                             
+# print log in example.log instead of the console, and set the log level to DEBUG (by default, it is set to WARNING)
+logging.basicConfig(filename='../api.log', filemode='w', level=logging.DEBUG)
+
+logging.debug('debug')
+logging.info('info')
+logging.warning('warning')
+logging.error('error')
+logging.critical('critical')
 
 app = flask.Flask(__name__)
-db = CivicDB();
+db = CivicDB(config.get("mariadb"), logging)
 app.config["DEBUG"] = True
 
 
@@ -77,7 +91,8 @@ def authenticate_user(user_id, password):
 
 @app.route('/', methods=['GET'])
 def home():
-    return '''<h1>Civic API</h1>'''
+    return '<h1>Civic API v1 (' + config['version'] + ')</h1>'
+
 
 @app.route('/api/v1/register', methods=['POST'])
 def api_register():
@@ -86,33 +101,44 @@ def api_register():
 	ph               = PasswordHasher()
 	hash             = ph.hash(password)	
 
-	add_user = ("INSERT INTO user "
-		"(created, password_hash, locale_id) "
-		"VALUES (%s, %s, %s)")
+	try:
+		add_user = ("INSERT INTO user "
+			"(created, password_hash, locale_id) "
+			"VALUES (%s, %s, %s)")
 
-	user_data = (timestamp, hash, 1)
+		user_data = (timestamp, hash, 1)
 
-	# Insert new user
-	db.execute(add_user, user_data)
-	user_id = db.lastrowid()
+		# Insert new user
+		db.execute(add_user, user_data)
+		user_id = db.lastrowid()
 
-	# todo: Add role link
-	add_role_link = ("INSERT INTO user_role_link"
-		"(user_id, role_id, begin) "
-		"VALUES (%s, %s, %s)"
-		)
+		# todo: Add role link
+		add_role_link = ("INSERT INTO user_role_link"
+			"(user_id, role_id, begin) "
+			"VALUES (%s, %s, %s)"
+			)
 
-	role_link_data = (user_id, 1, timestamp) #default to role id 1, flagger
+		role_link_data = (user_id, 1, timestamp) #default to role id 1, flagger
 
-	db.execute(add_role_link, role_link_data)
+		db.execute(add_role_link, role_link_data)
 
-	results = {
-		'status': 'success',
-		'user_id': user_id,
-		'password': password
-	}
+		results = {
+			'status': 'success',
+			'user_id': user_id,
+			'password': password
+		}
 
-	return jsonify(results)
+		return jsonify(results)
+	
+	except mysql.connector.errors.DatabaseError as err:
+
+		results = {
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		return jsonify(results)
+
 
 
 @app.route('/api/v1/mission', methods=['POST'])
@@ -130,20 +156,30 @@ def api_mission():
 	if user is None or user is False:
 		print("auth failed\n")
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
-		
-	add_mission = ("INSERT INTO user_mission_link "
-		"(user_id, mission_id) "
-		"VALUES (%s, %s)")
+	
+	try:
+		add_mission = ("INSERT INTO user_mission_link "
+			"(user_id, mission_id) "
+			"VALUES (%s, %s)")
 
-	mission_data = (user['user_id'], mission_id)
+		mission_data = (user['user_id'], mission_id)
 
-	db.execute(add_mission, mission_data)
+		db.execute(add_mission, mission_data)
 
-	results = {
-		'status': 'success'
-	}
+		results = {
+			'status': 'success'
+		}
 
-	return jsonify(results)
+		return jsonify(results)
+
+	except mysql.connector.errors.DatabaseError as err:
+
+		results = {
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		return jsonify(results)
 
 
 
@@ -160,55 +196,64 @@ def api_flag():
 	user              = authenticate_user(user_id, password)
 	flagging_event_id = 0;
 
-	print(jsonify(flags))
+	# print(jsonify(flags))
 
 	if url is None:
 		return quit_with_error("Incomplete Request","Your request did not include all required parameters.", 400)
 
 	if user is None:
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
-		
-	add_event = ("INSERT INTO flagging_event "
-		"(user_id, locale_id, url, notes, campaign_id) "
-		"VALUES (%s, %s, %s, %s, %s)")
+	
+	try:
+		add_event = ("INSERT INTO flagging_event "
+			"(user_id, locale_id, url, notes, campaign_id) "
+			"VALUES (%s, %s, %s, %s, %s)")
 
-	event_data = (user['user_id'], user['locale_id'], url, notes, campaign_id)
+		event_data = (user['user_id'], user['locale_id'], url, notes, campaign_id)
 
-	# Insert new event
-	db.execute(add_event, event_data)
-	flagging_event_id = db.lastrowid()
+		# Insert new event
+		db.execute(add_event, event_data)
+		flagging_event_id = db.lastrowid()
 
-	# insert individual flags
+		# insert individual flags
 
-	for flag in flags:
+		for flag in flags:
 
-		add_flag = ("INSERT INTO flag"
-			"(flagging_event_id, flag_type_id, severity) "
+			add_flag = ("INSERT INTO flag"
+				"(flagging_event_id, flag_type_id, severity) "
+				"VALUES (%s, %s, %s)")
+
+			flag_data = (flagging_event_id, flag.get("flag_type_id"), flag.get("severity"))
+
+			db.execute(add_flag, flag_data)
+
+		# insert flag status
+
+		add_status_link = ("INSERT INTO flagging_event_status_link "
+			"(flagging_event_id, timestamp, flagging_event_status_id) "
 			"VALUES (%s, %s, %s)")
 
-		flag_data = (flagging_event_id, flag.get("flag_type_id"), flag.get("severity"))
+		status_link_data = (flagging_event_id, timestamp, 1)
 
-		db.execute(add_flag, flag_data)
+		# Insert new event
+		db.execute(add_status_link, status_link_data)
+		# status_id = cursor.lastrowid
 
-	# insert flag status
+		results = {
+			'status': 'success',
+			'flagging_event_id': flagging_event_id
+		}
 
-	add_status_link = ("INSERT INTO flagging_event_status_link "
-		"(flagging_event_id, timestamp, flagging_event_status_id) "
-		"VALUES (%s, %s, %s)")
+		return jsonify(results)
 
-	status_link_data = (flagging_event_id, timestamp, 1)
+	except mysql.connector.errors.DatabaseError as err:
 
-	# Insert new event
-	db.execute(add_status_link, status_link_data)
-	# status_id = cursor.lastrowid
+		results = {
+			'status': 'error',
+			'message': 'Database error'
+		}
 
-	results = {
-		'status': 'success',
-		'flagging_event_id': flagging_event_id
-	}
-
-	return jsonify(results)
-
+		return jsonify(results)
 
 
 @app.errorhandler(404)
