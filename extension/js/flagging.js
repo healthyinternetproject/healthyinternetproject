@@ -61,13 +61,16 @@ jQuery(document).ready(function ($) {
 			{			
 				if (onboarding)
 				{
+					//TODO: get headline title from demo article dynamically and fill flagging window title with that
+					//title = getString( $(".onboarding .missions li").attr("data-message-root") + "_headline" );
+					
 					//we are looking at an extension page, work in demo mode
 					title = getString("example_site_title");
 					displayUrl = "http://example.com";
 					favicon = "/images/demo-favicon.svg";
 
-					//hide the pointy hand that appears in onboarding
-					browser.runtime.sendMessage({command: 'hide-hand'}, function (response) { console.log(response); });
+					//move the pointy hand to the next step
+					browser.runtime.sendMessage({command: 'move-hand-flag'}, function (response) { console.log(response); });
 				}
 				else
 				{
@@ -116,6 +119,15 @@ jQuery(document).ready(function ($) {
 		let messageRoot = $this.attr("data-message-root");
 		let severity    = parseInt($this.attr("data-severity"));
 		let newSeverity = (severity <= 2) ? (severity+1) : 0;
+		let firstTimeOnboarding = true;
+
+		// for onboarding demo, when we loop back to original state, move tool tip to next location
+		if (firstTimeOnboarding && currentUrl.indexOf("chrome-extension://") === 0 && severity == 2)
+		{
+			browser.runtime.sendMessage({command: 'move-hand-text'}, function (response) { console.log(response); });
+			firstTimeOnboarding = false;
+		}
+		
 
 		if (newSeverity == 0)
 		{
@@ -150,6 +162,24 @@ jQuery(document).ready(function ($) {
 		updateCurrentReport();		
 	});
 
+	$("#reasoning").click(function (ev) {
+		// for onboarding demo, move tool tip to next location
+		if (currentUrl.indexOf("chrome-extension://") === 0)
+		{
+			browser.runtime.sendMessage({command: 'move-hand-dropdown'}, function (response) { console.log(response); });
+		}
+
+	});
+
+
+	$(".options").click(function (ev) {
+		// for onboarding demo, move tool tip to next location
+		if (currentUrl.indexOf("chrome-extension://") === 0)
+		{
+			browser.runtime.sendMessage({command: 'move-hand-submit'}, function (response) { console.log(response); });
+		}
+
+	});
 
 	$(".select").click(function (ev) {
 
@@ -210,6 +240,12 @@ jQuery(document).ready(function ($) {
 
 		//save mission to API
 		browser.runtime.sendMessage( data, function () {} ); //todo: handle errors
+
+		// for onboarding demo, move tool tip to next location
+		if (currentUrl.indexOf("chrome-extension://") === 0)
+		{
+			browser.runtime.sendMessage({command: 'move-hand-done'}, function (response) { console.log(response); });
+		}
 
 		$(".page[data-index]").css({ 'transform':'translateX(-100%)' }).removeClass('active');
 		$(".page[data-index=1]").addClass('active');
