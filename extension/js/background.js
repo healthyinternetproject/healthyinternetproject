@@ -354,9 +354,9 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 		'notes'       : notes
 	};
 
-	let callback = function () 
+	let callback = function (data) 
 	{		
-		sendMessageToPopup({command: 'flag-saved'});
+		sendMessageToPopup({'command': 'flag-saved','data':data});
 	};
 
 	return sendToAPI( "flag", data, true, callback );

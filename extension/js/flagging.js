@@ -22,6 +22,7 @@ jQuery(document).ready(function ($) {
 
 		if (request.command == 'flag-saved')
 		{				
+			debug(request.data);
 			goToThanksPage();
 		}
 

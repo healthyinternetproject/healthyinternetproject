@@ -36,10 +36,10 @@ app.config["DEBUG"] = True
 
 
 def quit_with_error(title,message,code=500):
-	print(title + ": " + message)
+	#print(title + ": " + message)
 	#return "<h1>" + title + "</h1><p>" + message + "</p>", code
 	#sys.exit()
-	abort(code, description=title)
+	#abort(code, description=title)
 
 	results = {
 		'status': 'error',
@@ -88,6 +88,11 @@ def authenticate_user(user_id, password):
 	
 	return False
 	
+
+@app.errorhandler(404)
+def page_not_found(e):
+	return quit_with_error("Not Found","The resource could not be found.", 404)
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -201,7 +206,7 @@ def api_flag():
 	if url is None:
 		return quit_with_error("Incomplete Request","Your request did not include all required parameters.", 400)
 
-	if user is None:
+	if user is None or user is False:
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
 	
 	try:
@@ -256,9 +261,6 @@ def api_flag():
 		return jsonify(results)
 
 
-@app.errorhandler(404)
-def page_not_found(e):
-	return quit_with_error("Not Found","The resource could not be found.", 404)
 	
 
 if __name__ == '__main__':
