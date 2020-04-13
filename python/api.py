@@ -36,10 +36,10 @@ app.config["DEBUG"] = True
 
 
 def quit_with_error(title,message,code=500):
-	#print(title + ": " + message)
+	print(title + ": " + message)
 	#return "<h1>" + title + "</h1><p>" + message + "</p>", code
 	#sys.exit()
-	#abort(code, description=title)
+	abort(code, description=title)
 
 	results = {
 		'status': 'error',
@@ -96,7 +96,7 @@ def page_not_found(e):
 
 @app.route('/', methods=['GET'])
 def home():
-    return '<h1>Civic API v1 (' + config['version'] + ')</h1>'
+    return '<h1>Civic API (' + config['version'] + ')</h1>'
 
 
 @app.route('/api/v1/register', methods=['POST'])
@@ -190,6 +190,7 @@ def api_mission():
 
 @app.route('/api/v1/flag', methods=['POST'])
 def api_flag():	
+	logging.debug(request.form.get("json"))
 	params            = json.loads(request.form.get("json"))
 	url               = params.get("url")
 	notes             = params.get("notes")
@@ -266,3 +267,8 @@ def api_flag():
 if __name__ == '__main__':
 	from waitress import serve
 	serve(app, host="0.0.0.0", port=8080)
+
+
+
+
+

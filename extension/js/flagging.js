@@ -227,6 +227,8 @@ jQuery(document).ready(function ($) {
 			return;
 		}
 
+		updateCurrentReport();
+
 		let data = {
 			'command'     : 'save-flag',
 			'url'         : currentUrl,
@@ -250,6 +252,7 @@ jQuery(document).ready(function ($) {
 
 		$(".page[data-index]").css({ 'transform':'translateX(-100%)' }).removeClass('active');
 		$(".page[data-index=1]").addClass('active');
+
 		adjustPopupSize();
 		updateThanksPage();
 

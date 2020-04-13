@@ -267,7 +267,6 @@ function sendToAPI ( term, data, authenticate, callback )
 		console.log("Skipping API");
 		if (callback)
 		{
-
 			callback();
 		}
 		return true;
@@ -347,6 +346,11 @@ function sendMissionToAPI (mission_id)
 
 function sendFlagDataToAPI (url, campaignId, flags, notes)
 {
+	if (!campaignId)
+	{	
+		campaignId = 5; //default to 'none'
+	}
+
 	let data = {
 		'url'         : url,
 		'campaign_id' : campaignId,
@@ -361,3 +365,5 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 
 	return sendToAPI( "flag", data, true, callback );
 }
+
+
