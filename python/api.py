@@ -104,7 +104,9 @@ def api_register():
 	timestamp        = datetime.now()	
 	password         = random_string(20)
 	ph               = PasswordHasher()
-	hash             = ph.hash(password)	
+	hash             = ph.hash(password)
+
+	logging.debug("Trying to register user...")
 
 	try:
 		add_user = ("INSERT INTO user "
@@ -116,6 +118,8 @@ def api_register():
 		# Insert new user
 		db.execute(add_user, user_data)
 		user_id = db.lastrowid()
+
+		logging.debug("Added user ID " + str(user_id))
 
 		# todo: Add role link
 		add_role_link = ("INSERT INTO user_role_link"
@@ -136,6 +140,9 @@ def api_register():
 		return jsonify(results)
 	
 	except mysql.connector.errors.DatabaseError as err:
+
+		logging.debug("Database error")
+		#logging.debug(err)
 
 		results = {
 			'status': 'error',

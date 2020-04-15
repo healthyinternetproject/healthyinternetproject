@@ -35,6 +35,8 @@ const CONFIG = {
 		//testing/dev only
 		//console.log(changeInfo, tab);
 
+		getCredentialsFromStorage();
+
 		if (
 			false &&
 			changeInfo.status == 'complete' &&
@@ -174,6 +176,30 @@ function showNotification (title, bodyText)
 }
 */
 
+function getCredentialsFromStorage (callback)
+{
+	browser.storage.sync.get(['civicUserId','civicPassword'], function(result) 
+	{		
+		console.log(result);
+
+		if (result.civicUserId)
+		{
+			console.log("Credentials retrieved from sync storage, user id " + result.civicUserId);
+
+			callback({
+				'userId'   : result.civicUserId,
+				'password' : result.civicPassword
+			});
+		}
+		else
+		{
+			console.log("No credentials in sync storage");
+			callback(false);
+			return false;
+		}
+	});
+}
+
 
 function sendMessageToPopup (data, responseFunc )
 {
@@ -194,21 +220,15 @@ function sendMessageToClientScript ( data, responseFunc ) {
 
 function isUserRegistered ()
 {
-	/*
-	browser.storage.sync.set({key: value}, function() {
-		console.log('Value is set to ' + value);
-	});
-	*/
+	getCredentialsFromStorage(function (result) {
 
-	browser.storage.sync.get(['civicUserId','civicPassword'], function(result) 
-	{		
 		console.log(result);
 
-		if (result.civicUserId)
+		if (result && result.userId)
 		{
-			console.log("User already registered, user id " + result.civicUserId);
-			CONFIG.userId = result.civicUserId;
-			CONFIG.password = result.civicPassword;
+			console.log("User already registered, user id " + result.userId);
+			CONFIG.userId = result.userId;
+			CONFIG.password = result.password;
 			return true;
 		}
 		else
@@ -250,7 +270,9 @@ function isUserRegistered ()
 			
 			return false;
 		}
-	});	
+
+	});
+
 }
 
 
@@ -259,6 +281,7 @@ function sendToAPI ( term, data, authenticate, callback )
 	let xhr = new XMLHttpRequest();
 	let url = CONFIG.apiRootUrl + term;
 	let params = [];
+	let postData = "";
 
 	console.log("Sending to API...");
 
@@ -301,7 +324,9 @@ function sendToAPI ( term, data, authenticate, callback )
 		params.push( "password=" + encodeURI(CONFIG.password) );
 	}
 
-	console.log(params.join("&"));
+	postData = params.join("&");
+
+	console.log(postData);
 
 	xhr.onreadystatechange = function () {
 
@@ -325,7 +350,7 @@ function sendToAPI ( term, data, authenticate, callback )
 	xhr.responseType = 'json';  	
 	xhr.open('POST', url, true );			
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.send(params.join("&"));		
+	xhr.send(postData);		
 }
 
 
