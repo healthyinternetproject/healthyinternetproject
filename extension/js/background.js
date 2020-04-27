@@ -27,6 +27,8 @@ const CONFIG = {
 
 		//browser.browserAction.setBadgeText({text: "1"});
 		//browser.browserAction.setBadgeBackgroundColor({ color: [87, 98, 213, 255] });
+
+		return Promise.resolve("Dummy response to keep the console quiet");
 	});
 
 
@@ -66,6 +68,8 @@ const CONFIG = {
 			browser.notifications.onClicked.addListener(startMentorOnboarding);
 			browser.notifications.onButtonClicked.addListener(startMentorOnboarding);
 		}
+
+		return Promise.resolve("Dummy response to keep the console quiet");
 	});
 
 
@@ -141,7 +145,12 @@ const CONFIG = {
 			
 				sendResponse("Notification shown");
 			}
-		
+			else if (request.command == 'onboarding-done') 
+			{
+				browser.storage.sync.set({ 'civicOnboardingDone': 1 });	
+			}
+
+			return Promise.resolve("Dummy response to keep the console quiet");		
 		}
 	);
   
@@ -186,10 +195,13 @@ function getCredentialsFromStorage (callback)
 		{
 			console.log("Credentials retrieved from sync storage, user id " + result.civicUserId);
 
-			callback({
-				'userId'   : result.civicUserId,
-				'password' : result.civicPassword
-			});
+			if (callback && typeof callback === "function")
+			{
+				callback({
+					'userId'   : result.civicUserId,
+					'password' : result.civicPassword
+				});
+			}
 		}
 		else
 		{
@@ -278,79 +290,70 @@ function isUserRegistered ()
 
 function sendToAPI ( term, data, authenticate, callback )
 {
-	let xhr = new XMLHttpRequest();
-	let url = CONFIG.apiRootUrl + term;
-	let params = [];
-	let postData = "";
+	getCredentialsFromStorage(function (result) {
 
-	console.log("Sending to API...");
+		let xhr = new XMLHttpRequest();
+		let url = CONFIG.apiRootUrl + term;
+		let params = [];
+		let postData = "";
 
-	if (CONFIG.skipAPI)
-	{
-		console.log("Skipping API");
-		if (callback)
+		console.log("Sending to API...");
+
+		if (CONFIG.skipAPI)
 		{
-			callback();
-		}
-		return true;
-	}
-
-	if (data)
-	{
-		/*
-		for (var key in data)
-		{
-			let value = data[key];
-
-
-			if (Array.isArray(value))
+			console.log("Skipping API");
+			if (callback)
 			{
-				for (let i=0; i < value.length; i++)
-				{
-					params.push( encodeURI(key) + "=" + encodeURI(value[i]) );
-				}
+				callback();
+			}
+			return true;
+		}
+
+		if (data)
+		{
+			params.push("json=" + encodeURI(JSON.stringify(data)));
+		}
+
+		if (authenticate)
+		{
+			if (result.userId)
+			{
+				params.push( "user_id=" + encodeURI(result.userId) );
+				params.push( "password=" + encodeURI(result.password) );
 			}
 			else
 			{
-				params.push( encodeURI(key) + "=" + encodeURI(value) );
+				console.log("User ID not found in sync data.");
 			}
-		}*/
-		params.push("json=" + encodeURI(JSON.stringify(data)));
-	}
-
-	if (authenticate)
-	{
-		params.push( "user_id=" + encodeURI(CONFIG.userId) );
-		params.push( "password=" + encodeURI(CONFIG.password) );
-	}
-
-	postData = params.join("&");
-
-	console.log(postData);
-
-	xhr.onreadystatechange = function () {
-
-		//console.log(xhr.readyState);
-
-		if (xhr.readyState == 4) {
-
-			let data = (xhr.status == 200) ? xhr.response : false;
-			console.log("Response from API:");
-			console.log(data);
-
-			if (callback)
-			{
-				callback(data);
-			}
-
-			//sendMessageToClientScript({command: "fetchedFollowerTotals",'data': data});	
 		}
-	};
+
+		postData = params.join("&");
+
+		console.log(postData);
+
+		xhr.onreadystatechange = function () {
+
+			if (xhr.readyState == 4) {
+
+				let data = (xhr.status == 200) ? xhr.response : false;
+				console.log("Response from API:");
+				console.log(data);
+
+				if (callback)
+				{
+					callback(data);
+				}
+			}
+		};
+		
+		xhr.responseType = 'json';  	
+		xhr.open('POST', url, true );			
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send(postData);	
+
+	});
+
 	
-	xhr.responseType = 'json';  	
-	xhr.open('POST', url, true );			
-	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.send(postData);		
 }
 
 

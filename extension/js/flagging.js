@@ -247,6 +247,7 @@ jQuery(document).ready(function ($) {
 		// for onboarding demo, move tool tip to next location
 		if (currentUrl.indexOf("chrome-extension://") === 0)
 		{
+			browser.runtime.sendMessage({command: 'onboarding-done'}, function (response) { console.log(response); });
 			browser.runtime.sendMessage({command: 'move-hand-done'}, function (response) { console.log(response); });
 		}
 

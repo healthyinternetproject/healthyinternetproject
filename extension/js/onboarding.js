@@ -117,7 +117,6 @@ jQuery(document).ready(function ($) {
 			//change content of tip!
 			$("#pointer-tip span").text( getString("tooltip_click_submit")).html();
 
-
 			sendResponse({result: "success"});
 
 		}
@@ -127,7 +126,6 @@ jQuery(document).ready(function ($) {
 			$("#pointer-tip").remove();
 
 			sendResponse({result: "success"});
-
 		}
 		else if (request.command == 'done-flagging')
 		{
@@ -168,30 +166,6 @@ jQuery(document).ready(function ($) {
 			let $panel = $this.closest('.panel');
 			let $img  = $this.find("img[data-active]");
 			let $next = $panel.find(".next");
-
-			/* multi-select
-
-			if ($this.attr('data-active') == 'true')
-			{
-				$this.removeClass('active');
-				$this.attr('data-active', 'false');
-			}
-			else
-			{
-				$this.addClass('active');
-				$this.attr('data-active', 'true');
-			}
-
-			$next.addClass('disabled');
-
-			$(".missions li").each(function () {
-				if ($(this).hasClass('active'))
-				{
-					$next.removeClass('disabled');				
-				}
-			});
-			*/
-
 
 			if ($this.hasClass('active'))
 			{
@@ -335,8 +309,6 @@ function goToOnboardingStep (index)
 
 	if ($target.length > 0)
 	{
-		//$(".progress .step.current").removeClass('current');
-		//$(".progress .step[data-index*='|" + index + "|']").addClass('current');
 		let currentStepReached = (index == 0);
 		let $hand              = $("#pointer-hand");
 		let $logo              = $("#civic-logo");
@@ -357,7 +329,6 @@ function goToOnboardingStep (index)
 		}
 		else
 		{
-			//$panels.css('transform','translate(-50%,-60%)');
 			$panels.css({'top':'150px','transform':'translate(-50%,0)'});
 			$overlay.fadeOut(WELCOME_ANIMATION_TIME);
 		}
@@ -395,7 +366,6 @@ function goToOnboardingStep (index)
 			
 		});
 
-
 		$progress.find(".step[data-index]").each(function () {
 
 			let $this = $(this);
@@ -426,10 +396,10 @@ function goToOnboardingStep (index)
 		{
 			$hand.addClass(handState);
 			$tip.addClass(handState);
-		}
-		
+		}		
 	}
 }
+
 
 function debug (data)
 {
