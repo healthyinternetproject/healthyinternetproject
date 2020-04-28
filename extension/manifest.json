@@ -1,6 +1,6 @@
 {
     "name": "__MSG_extension_title__",
-    "version": "2020.04.27.1",
+    "version": "2020.04.28.1",
     "default_locale" : "en",
     "description": "__MSG_extension_description__",
     "permissions": [ 
@@ -8,8 +8,7 @@
     	"notifications",
     	"storage",
     	"chrome://favicon/",
-    	"http://localhost:8080/",
-    	"http://18.221.76.156:8080/"
+    	"http://api.welcometocivic.org:8080/"
    	],
    	"content_security_policy": "script-src 'self'; object-src 'self'; img-src chrome://favicon;",
 	"background": {
