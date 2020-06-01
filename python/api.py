@@ -1,9 +1,3 @@
-# Endpoints:
-# 
-# create account
-# save a flag event
-# check for messages
-# mentor agree/disagree
 
 #import sys
 import json
@@ -20,7 +14,7 @@ import mysql.connector
 with open("../api-config.json") as json_data_file:
     config = json.load(json_data_file)
                                                              
-# print log in example.log instead of the console, and set the log level to DEBUG (by default, it is set to WARNING)
+# print log in ../api.log instead of the console, and set the log level to DEBUG (by default, it is set to WARNING)
 logging.basicConfig(filename='../api.log', filemode='w', level=logging.DEBUG)
 
 logging.debug('debug')
@@ -60,6 +54,31 @@ def random_string(string_length=10):
 	return randomstring
 
 
+def random_number(digits=9):
+	"""Generate a random number of fixed length """
+	characters = string.digits
+	randomstring = ''.join(random.choice(characters) for i in range(digits))
+	return randomstring
+
+
+def get_unique_user_id():
+	user_id = False
+	available = False
+
+	while available == False:
+		user_id = random_number(9)
+		existing = get_user_by_id(user_id)
+		if existing is None:
+			available = True
+	return user_id;
+
+
+def get_user_by_id (user_id):
+	user_query = "SELECT * FROM user WHERE user_id = %s LIMIT 1"
+	user = db.fetchone(user_query, (user_id,))
+	return user
+
+
 def authenticate_user(user_id, password):	
 	# todo: limit login attempts to prevent brute force attacks
 
@@ -71,9 +90,7 @@ def authenticate_user(user_id, password):
 
 	print("Authenticating user id " + user_id + "...")
 	
-	auth_user = "SELECT * FROM user WHERE user_id = %s LIMIT 1"
-
-	user = db.fetchone(auth_user, (user_id,))
+	user = get_user_by_id(user_id)
 
 	if user is not None:		
 		ph = PasswordHasher()    
@@ -99,21 +116,23 @@ def home():
     return '<h1>Civic API (' + config['version'] + ')</h1>'
 
 
-@app.route('/api/v1/register', methods=['POST'])
+@app.route('/api/v1/register', methods=['GET','POST'])
 def api_register():
-	timestamp        = datetime.now()	
-	password         = random_string(20)
-	ph               = PasswordHasher()
-	hash             = ph.hash(password)
+	timestamp = datetime.now()	
+	password  = random_string(20)
+	ph        = PasswordHasher()
+	hash      = ph.hash(password)	
 
 	logging.debug("Trying to register user...")
 
 	try:
-		add_user = ("INSERT INTO user "
-			"(created, password_hash, locale_id) "
-			"VALUES (%s, %s, %s)")
+		user_id = get_unique_user_id()
 
-		user_data = (timestamp, hash, 1)
+		add_user = ("INSERT INTO user "
+			"(user_id, created, password_hash, locale_id) "
+			"VALUES (%s, %s, %s, %s)")
+
+		user_data = (user_id, timestamp, hash, 1)
 
 		# Insert new user
 		db.execute(add_user, user_data)
@@ -155,11 +174,11 @@ def api_register():
 
 @app.route('/api/v1/mission', methods=['POST'])
 def api_mission():
-	params           = json.loads(request.form.get("json"))
-	mission_id       = params.get('mission_id')
-	user_id          = request.form.get("user_id")
-	password         = request.form.get("password")
-	user             = authenticate_user(user_id, password)	
+	params     = json.loads(request.form.get("json"))
+	mission_id = params.get('mission_id')
+	user_id    = request.form.get("user_id")
+	password   = request.form.get("password")
+	user       = authenticate_user(user_id, password)	
 
 	if mission_id is None:
 		print("missing mission_id\n")
@@ -269,11 +288,40 @@ def api_flag():
 		return jsonify(results)
 
 
+
+
+@app.route('/api/v1/listcampaigns', methods=['GET'])
+def api_flag():	
+
+	try:
+		campaigns = []
+		campaign_query = "SELECT * FROM campaign WHERE active = 1"
+		rows = db.fetchall(campaign_query)
+		
+		for row in rows:
+			campaigns.append(row['name'])
+			
+		results = {
+			'status': 'success',
+			'campaigns': campaigns
+		}
+
+		return jsonify(results)
+
+	except mysql.connector.errors.DatabaseError as err:
+
+		results = {
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		return jsonify(results)
+
 	
 
 if __name__ == '__main__':
 	from waitress import serve
-	serve(app, host="0.0.0.0", port=8080)
+	serve(app, host="0.0.0.0", port=8080, url_scheme='https')
 
 
 

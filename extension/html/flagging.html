@@ -1,136 +1,149 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Civic</title>
+		<title>The Healthy Internet Project</title>
 		<link href="/css/reset.css" rel="stylesheet">
-		<link href="/css/civic.css" rel="stylesheet">
+		<link href="/css/common.css" rel="stylesheet">
 		<link href="/css/flagging.css" rel="stylesheet">
 		<meta charset="UTF-8">
 	</head>
 	<body class="flagging">
-		
-		<div class="content">
 
-			<div class="message">
-
-				<h1></h1>
+		<div class="error">
+			<div class="content">
 				<span class="text"></span>
-				<img class="example" src="">
 
 				<div class="buttons">
-					<div></div>
-
-					<div class="button close"><span data-i18n-message="close"></span></div>
-				</div>				
+					
+				</div>						
 			</div>
+		</div>
+		
+		<div class="flagging-ui">
 
-			<div class="pages">
-				<div class="page active initial" data-index="0">
-					<h1 class="with-favicon"><img><span class='site-title'></span><br><span data-i18n-message="contains"></span></h1>
+			<div class="content">
 
-					<form>
-						<ul class="flags">
+				<div class="message">
 
-							<li class="good" data-severity="0" data-id="4" data-message-root="good_ideas">
-								<a>
-									<div class="icon"><img src="/images/trueideas.svg"></div>
-									<span class="thermometer"></span>
-									<div class="severity"></div>
-									<label><span data-i18n-message="good_ideas_off"></span></label>
-								</a>
-							</li>	
-
-							<hr>
-
-							<li data-severity="0" data-id="1" data-message-root="lies_or_manipulation">
-								<a>
-									<div class="icon"><img src="/images/manipulation.svg"></div>
-									<span class="thermometer"></span>
-									<div class="severity"></div>
-									<label><span data-i18n-message="lies_or_manipulation_off"></span></label>
-								</a>
-							</li>
-
-							<li data-severity="0" data-id="2" data-message-root="abuse_or_harassment">
-								<a>
-									<div class="icon"><img src="/images/abuse.svg"></div>
-									<span class="thermometer"></span>
-									<div class="severity"></div>
-									<label><span data-i18n-message="abuse_or_harassment_off"></span></label>
-								</a>
-							</li>
-
-							<li data-severity="0" data-id="3" data-message-root="division_or_fear">
-								<a>
-									<div class="icon"><img src="/images/division.svg"></div>
-									<span class="thermometer"></span>
-									<div class="severity"></div>
-									<label><span data-i18n-message="division_or_fear_off"></span></label>
-								</a>
-							</li>
-
-						
-											
-						</ul>
-
-						<textarea name="reasoning" id="reasoning" data-i18n-placeholder="because_it"></textarea>
-
-						<div class="buttons">
-							<div class="select campaign">
-								<div class="preview">#2020election, #coronavirus...</div>
-								<div class="options">
-									<div class="option" data-campaign-id="5" data-value="#none">&nbsp;</div>
-									<div class="option" data-campaign-id="2" data-value="#2020election">#2020election</div>
-									<div class="option" data-campaign-id="1" data-value="#coronavirus">#coronavirus</div>
-									<div class="option" data-campaign-id="3" data-value="#climate">#climate</div>
-								</div>
-								<div class="select-note"><span data-i18n-message="optional"></span></div>
-							</div>
-								
-
-							<div class="button next disabled"><span data-i18n-message="submit"></span></div>
-						</div>
-					</form>
-					
-					<!--button class="close"><span data-i18n-message="close"></span></button-->
-
-				</div>
-				<div class="page" data-index="1">
-					<img class="centered" src="/images/loading.gif">
-				</div>
-				<div class="page thanks" data-index="2">
-					<h1><span data-i18n-message="thank_you"></span></h1>
-					<p><span data-i18n-message="your_flag_submitted"></span></p>
-					
-					<div class="card">
-						<h2 class="with-favicon"><img><span class="site-title"></span></h2>
-						<ul class="selected-flags"></ul>
-						<div class="selected-campaign"></div>
-						<div class="notes"></div>
-					</div>
+					<h1></h1>
+					<span class="text"></span>
+					<img class="example" src="">
 
 					<div class="buttons">
-						<div>
-						</div>
+						<div></div>
 
 						<div class="button close"><span data-i18n-message="close"></span></div>
-					</div>					
+					</div>				
 				</div>
 
-				<div class="footer">
-					<span data-i18n-message="questions_feedback"></span> 
-					<a href="mailto:civic-feedback@googlegroups.com" target="_blank"><span data-i18n-message="share_with_us"></span></a>
+				<div class="pages">
+					<div class="page active initial" data-index="0">
+						<h1 class="with-favicon"><img><span class='site-title'></span><br><span data-i18n-message="contains"></span></h1>
+
+						<form>
+							<ul class="flags">
+
+								<li class="good" data-severity="0" data-id="4" data-message-root="good_ideas">
+									<a>
+										<div class="icon"><img src="/images/trueideas.svg"></div>
+										<span class="thermometer"></span>
+										<div class="severity"></div>
+										<label><span data-i18n-message="good_ideas_off"></span></label>
+									</a>
+								</li>	
+
+								<hr>
+
+								<li data-severity="0" data-id="1" data-message-root="lies_or_manipulation">
+									<a>
+										<div class="icon"><img src="/images/manipulation.svg"></div>
+										<span class="thermometer"></span>
+										<div class="severity"></div>
+										<label><span data-i18n-message="lies_or_manipulation_off"></span></label>
+									</a>
+								</li>
+
+								<li data-severity="0" data-id="2" data-message-root="abuse_or_harassment">
+									<a>
+										<div class="icon"><img src="/images/abuse.svg"></div>
+										<span class="thermometer"></span>
+										<div class="severity"></div>
+										<label><span data-i18n-message="abuse_or_harassment_off"></span></label>
+									</a>
+								</li>
+
+								<li data-severity="0" data-id="3" data-message-root="division_or_fear">
+									<a>
+										<div class="icon"><img src="/images/division.svg"></div>
+										<span class="thermometer"></span>
+										<div class="severity"></div>
+										<label><span data-i18n-message="division_or_fear_off"></span></label>
+									</a>
+								</li>
+
+							
+												
+							</ul>
+
+							<textarea name="reasoning" id="reasoning" data-i18n-placeholder="because_it"></textarea>
+
+							<div class="buttons">
+								<div class="select campaign">
+									<div class="preview">#2020election, #coronavirus...</div>
+									<div class="options">
+										<div class="option" data-campaign-id="5" data-value="#none">&nbsp;</div>
+										<div class="option" data-campaign-id="2" data-value="#2020election">#2020election</div>
+										<div class="option" data-campaign-id="1" data-value="#coronavirus">#coronavirus</div>
+										<div class="option" data-campaign-id="3" data-value="#climate">#climate</div>
+									</div>
+									<div class="select-note"><span data-i18n-message="optional"></span></div>
+								</div>
+									
+
+								<div class="button next disabled"><span data-i18n-message="submit"></span></div>
+							</div>
+						</form>
+						
+						<!--button class="close"><span data-i18n-message="close"></span></button-->
+
+					</div>
+					<div class="page" data-index="1">
+						<img class="centered" src="/images/loading.gif">
+					</div>
+					<div class="page thanks" data-index="2">
+						<h1><span data-i18n-message="thank_you"></span></h1>
+						<p><span data-i18n-message="your_flag_submitted"></span></p>
+						
+						<div class="card">
+							<h2 class="with-favicon"><img><span class="site-title"></span></h2>
+							<ul class="selected-flags"></ul>
+							<div class="selected-campaign"></div>
+							<div class="notes"></div>
+						</div>
+
+						<div class="buttons">
+							<div>
+							</div>
+
+							<div class="button close"><span data-i18n-message="close"></span></div>
+						</div>					
+					</div>
+
+					<div class="footer">
+						<span data-i18n-message="questions_feedback"></span> 
+						<a href="mailto:civic-feedback@googlegroups.com" target="_blank"><span data-i18n-message="share_with_us"></span></a>
+					</div>
+					
 				</div>
-				
+
+
 			</div>
-
-
 		</div>
 
 		<div id="debugger">DEBUG</div>
 
 		<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
-		<script type="text/javascript" src="/js/civic.js"></script>
+		<script type="text/javascript" src="/js/common.js"></script>
 		<script type="text/javascript" src="/js/flagging.js"></script>
 	</body>
 </html>

@@ -3,6 +3,8 @@ var CONFIG = {}; //this is auto-fetched from background.js
 var FADE_TIME = 400;
 var WELCOME_ANIMATION_TIME = 900; //matches transition time for .onboarding .welcome in onboarding.css
 
+var uiInitialized = false;
+
 
 jQuery(document).ready(function ($) {
 
@@ -132,6 +134,7 @@ jQuery(document).ready(function ($) {
 			console.log("done with flagging demo");
 			window.location.href = window.location.pathname + "#6";
 			sendResponse({result: "success"});
+			browser.runtime.sendMessage({command: 'onboarding-done'}, function () {});
 		}
 
 		return Promise.resolve("Dummy response to keep the console quiet");
@@ -143,7 +146,10 @@ jQuery(document).ready(function ($) {
 
 	function initializeUI ()
 	{
+		if (uiInitialized) { return; }
+
 		console.log("Initializing UI");
+		uiInitialized = true;
 
 		$(".onboarding .user-id").html( parseInt(CONFIG.userId) );
 
@@ -160,7 +166,11 @@ jQuery(document).ready(function ($) {
 		});
 
 
-		$(".onboarding .missions li").click(function () {
+		$(".onboarding .missions li").on('click', function (ev) {
+
+			console.log('click ' + Date.now());
+			ev.stopPropagation();
+			ev.preventDefault();
 
 			let $this = $(this);
 			let $panel = $this.closest('.panel');

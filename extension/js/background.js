@@ -1,19 +1,20 @@
 
-const CONFIG = {
-	//'apiRootUrl' : "http://127.0.0.1:5000/api/v1/", //if you change this, also update the matching permissions in manifest.json
-	'apiRootUrl' : "https://api.healthyinternetproject.org/api/v1/", //if you change this, also update the matching permissions in manifest.json=	
-	'userId' : false,
-	'debug' : false,
-	'skipAPI' : false
+var CONFIG = {
+	//'apiRootUrl'     : "http://127.0.0.1:5000/api/v1/", //if you change this, also update the matching permissions in manifest.json
+	'apiRootUrl'       : "https://api.healthyinternetproject.org/api/v1/", //if you change this, also update the matching permissions in manifest.json=	
+	'userId'           : false,
+	'onboardingDone'   : false,
+	'onboardingOptOut' : false,
+	'debug'            : false,
+	'skipAPI'          : false
 };
 
+if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
+{
+	browser = chrome;
+}
 
 (function() {
-
-	if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
-	{
-		browser = chrome;
-	}
 
 	
 	browser.runtime.onInstalled.addListener(function() {
@@ -21,7 +22,7 @@ const CONFIG = {
 		//showNotification("Civic", 'Civic Activated');
 		
 		console.log("Checking to see if user is already registered...");
-		isUserRegistered();		
+		isUserRegistered();
 
 		//window.open("/html/flagging.html");
 
@@ -76,12 +77,13 @@ const CONFIG = {
 	browser.runtime.onMessage.addListener(
 		function(request, sender, sendResponse) {
 			
-			//console.log(request);
+			console.log(request);
 
 			if (request.command == 'get-config')
 			{
 				//script wants the config settings
 				sendMessageToClientScript({command: 'config', config: CONFIG});
+				sendMessageToPopup({command: 'config', config: CONFIG});
 				sendResponse("Config sent");
 			}	
 			else if ( request.command == 'console-log' )
@@ -147,13 +149,20 @@ const CONFIG = {
 			}
 			else if (request.command == 'onboarding-done') 
 			{
-				browser.storage.sync.set({ 'civicOnboardingDone': 1 });	
+				browser.storage.sync.set({ 'onboardingDone': 1 });	
+			}
+			else if (request.command == 'onboarding-opt-out') 
+			{
+				browser.storage.sync.set({ 'onboardingOptOut': 1 });	
+				CONFIG.onboardingOptOut = 1;
+				console.log("Trying to opt out");
 			}
 
 			return Promise.resolve("Dummy response to keep the console quiet");		
 		}
 	);
   
+
 
 
 
@@ -187,21 +196,25 @@ function showNotification (title, bodyText)
 
 function getCredentialsFromStorage (callback)
 {
-	browser.storage.sync.get(['civicUserId','civicPassword'], function(result) 
+	browser.storage.sync.get(['userId','password','onboardingDone','onboardingOptOut'], function(result) 
 	{		
-		console.log(result);
+		//console.log(result);
 
-		if (result.civicUserId)
+		if (!callback || typeof callback !== "function")
 		{
-			console.log("Credentials retrieved from sync storage, user id " + result.civicUserId);
+			callback = function () {};
+		}
 
-			if (callback && typeof callback === "function")
-			{
-				callback({
-					'userId'   : result.civicUserId,
-					'password' : result.civicPassword
-				});
-			}
+		if (result.userId)
+		{
+			console.log("Credentials retrieved from sync storage, user id " + result.userId);
+
+			callback({
+				'userId'           : result.userId,
+				'password'         : result.password,
+				'onboardingDone'   : result.onboardingDone,
+				'onboardingOptOut' : result.onboardingOptOut
+			});
 		}
 		else
 		{
@@ -215,16 +228,16 @@ function getCredentialsFromStorage (callback)
 
 function sendMessageToPopup (data, responseFunc )
 {
-	chrome.runtime.sendMessage(data, responseFunc);
+	browser.runtime.sendMessage(data, responseFunc);
 }
 
 
 function sendMessageToClientScript ( data, responseFunc ) {
 
-	chrome.tabs.query(
+	browser.tabs.query(
 		{active: true, currentWindow: true}, 
 		function(tabs) {
-			chrome.tabs.sendMessage(tabs[0].id, data, responseFunc);
+			browser.tabs.sendMessage(tabs[0].id, data, responseFunc);
 		}
 	);	
 }
@@ -239,8 +252,9 @@ function isUserRegistered ()
 		if (result && result.userId)
 		{
 			console.log("User already registered, user id " + result.userId);
-			CONFIG.userId = result.userId;
-			CONFIG.password = result.password;
+			//CONFIG.userId = result.userId;
+			//CONFIG.password = result.password;
+			CONFIG = result;
 			return true;
 		}
 		else
@@ -271,8 +285,8 @@ function isUserRegistered ()
 
 				browser.storage.sync.set(
 					{
-						'civicUserId': data.user_id,
-						'civicPassword': data.password
+						'userId': data.user_id,
+						'password': data.password
 					}, 
 					function() {
 						window.open("/html/onboarding.html");
@@ -387,8 +401,16 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 	};
 
 	let callback = function (data) 
-	{		
-		sendMessageToPopup({'command': 'flag-saved','data':data});
+	{
+		if (data.status == 'success')
+		{
+			sendMessageToPopup({'command': 'flag-saved','data':data});	
+		}
+		else
+		{
+			sendMessageToPopup({'command': 'flag-error','data':data});		
+		}
+		
 	};
 
 	return sendToAPI( "flag", data, true, callback );

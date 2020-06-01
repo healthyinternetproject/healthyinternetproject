@@ -2,3 +2,4 @@
 api-config.json
 *.log
 *.zip
+nohup.out

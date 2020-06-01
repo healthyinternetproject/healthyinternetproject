@@ -4,7 +4,9 @@ var CARD_DISPLAY_URL_LENGTH = 60;
 
 var currentReport = {};	
 var currentUrl = "";
+var CONFIG = {};
 
+var uiInitialized = false;
 
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
@@ -12,270 +14,341 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 	browser = chrome;
 }
 
+debug('Starting...');
 
 jQuery(document).ready(function ($) {
 
+	debug('Document ready.');
 
 	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 		debug(request);
 
-		if (request.command == 'flag-saved')
+		if (request.command == 'config')
+		{				
+			debug(request.config);
+			CONFIG = request.config;
+			initializeUI(CONFIG);
+		}
+		else if (request.command == 'flag-error')
+		{				
+			debug(request.data);
+			$(".page[data-index]").css({ 'transform':'translateX(0)' }).removeClass('active');
+			$(".page[data-index=0]").addClass('active');			
+		}		
+		else if (request.command == 'flag-saved')
 		{				
 			debug(request.data);
 			goToThanksPage();
-		}
+		}		
 
 		return Promise.resolve("Dummy response to keep the console quiet");
 	});
 
+	browser.runtime.sendMessage({command: 'get-config'}, function () {});
 
+	
 
-	if ($(".site-title").length > 0)
+	function initializeUI (config)
 	{
-		//populate the flagging with details of the site
+		if (uiInitialized) { return; }
+
+		debug("Initializing UI");
+		uiInitialized = true;
+		
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
 
-			let title = getPageTitle( tabs[0].title );
-			let url = tabs[0].url;
+			let url        = tabs[0].url;
 			let displayUrl = url ? url : "";
-			let favicon = "chrome://favicon/" + displayUrl;
 			let onboarding = (displayUrl.indexOf("chrome-extension://") === 0);
-			let messageDetails = isPermalink( displayUrl );
 
-			currentUrl = url;
+			debug("Tab query complete");
 
-			if ( messageDetails )
+
+			if (!config.onboardingDone && !config.onboardingOptOut && !onboarding )
 			{
-				$(".flagging .message h1").html( messageDetails.title );
-				$(".flagging .message .text").html( messageDetails.message );
-
-				if (messageDetails.image)
-				{
-					$(".flagging .message .example").attr('src',messageDetails.image).css('display','block');
-				}
-
-				$(".flagging .message").css('display','block');
+				debug("Onboarding incomplete");
+				showError( 
+					'onboarding_incomplete', 
+					[
+						{ 
+							'labelId' : 'yes',
+							'func' : function () {
+								setTimeout(function () { window.close(); }, 100);						
+								window.open("/html/onboarding.html");
+							} 
+						},
+						{
+							'labelId' : 'no',
+							'func' : function () {
+								browser.runtime.sendMessage({command: 'onboarding-opt-out'}, function (response) { debug(response); });
+								$(".flagging-ui").css('display','block');
+								$(".flagging .error").css('display','none');
+								$(".flagging .pages").css('display','block');
+							}
+						}
+					]
+					
+					
+				);
 			}
 			else
-			{			
-				if (onboarding)
-				{
-					//TODO: get headline title from demo article dynamically and fill flagging window title with that
-					//title = getString( $(".onboarding .missions li").attr("data-message-root") + "_headline" );
-					
-					//we are looking at an extension page, work in demo mode
-					title = getString("example_site_title");
-					displayUrl = "http://example.com";
-					favicon = "/images/demo-favicon.svg";
+			{
+				debug("Onboarding complete");
+				$(".flagging-ui").css('display','block');				
+			}
 
-					//move the pointy hand to the next step
-					browser.runtime.sendMessage({command: 'move-hand-flag'}, function (response) { console.log(response); });
+
+			if ($(".site-title").length > 0)
+			{
+				//populate the flagging with details of the site
+
+				let title = getPageTitle( tabs[0].title );
+				let url = tabs[0].url;					
+				let favicon = "chrome://favicon/" + displayUrl;					
+				let messageDetails = isPermalink( displayUrl );
+
+				currentUrl = url;
+
+				if ( messageDetails )
+				{
+					$(".flagging .message h1").html( messageDetails.title );
+					$(".flagging .message .text").html( messageDetails.message );
+
+					if (messageDetails.image)
+					{
+						$(".flagging .message .example").attr('src',messageDetails.image).css('display','block');
+					}
+
+					$(".flagging .message").css('display','block');
 				}
 				else
-				{
-					if (title.length > CARD_DISPLAY_TITLE_LENGTH)
+				{			
+					if (onboarding)
 					{
-						title = title.substring(0,CARD_DISPLAY_TITLE_LENGTH);
+						//TODO: get headline title from demo article dynamically and fill flagging window title with that
+						//title = getString( $(".onboarding .missions li").attr("data-message-root") + "_headline" );
+						
+						//we are looking at an extension page, work in demo mode
+						title = getString("example_site_title");
+						displayUrl = "http://example.com";
+						favicon = "/images/demo-favicon.svg";
+
+						//move the pointy hand to the next step
+						browser.runtime.sendMessage({command: 'move-hand-flag'}, function (response) { console.log(response); });
+					}
+					else
+					{
+						if (title.length > CARD_DISPLAY_TITLE_LENGTH)
+						{
+							title = title.substring(0,CARD_DISPLAY_TITLE_LENGTH);
+						}
+
+						if (displayUrl.length > CARD_DISPLAY_URL_LENGTH)
+						{
+							displayUrl = displayUrl.substring(0,(CARD_DISPLAY_URL_LENGTH - 3)) + "...";
+						}
 					}
 
-					if (displayUrl.length > CARD_DISPLAY_URL_LENGTH)
-					{
-						displayUrl = displayUrl.substring(0,(CARD_DISPLAY_URL_LENGTH - 3)) + "...";
-					}
+					$(".site-title").html( title );
+					//$(".card .site-url").html( '<a href="' + url + '" target="_blank" rel="noreferrer noopener">' + displayUrl + '</a>' );
+					$(".with-favicon img").attr('src', favicon);
+
+					$(".flagging .pages").css('display','block');
+
+					adjustPopupSize();
 				}
 
-				$(".site-title").html( title );
-				//$(".card .site-url").html( '<a href="' + url + '" target="_blank" rel="noreferrer noopener">' + displayUrl + '</a>' );
-				$(".with-favicon img").attr('src', favicon);
-
-				$(".flagging .pages").css('display','block');
-
-				adjustPopupSize();
 			}
 
 			
+			$("body").click(function (ev) {
 
-			//consoleLog($("#site-icon").css('background-image'));
+				$(".select.open").click();
+				console.log('body click');
+			});
+			
+
+
+			$(".flagging ul.flags li").click(function () {
+
+				let $this               = $(this);
+				let $label              = $this.find("label");
+				let $severity           = $this.find(".severity");
+				let $page               = $this.closest(".page");
+				let $submit             = $page.find(".next");
+				let messageRoot         = $this.attr("data-message-root");
+				let severity            = parseInt($this.attr("data-severity"));
+				let newSeverity         = (severity <= 2) ? (severity+1) : 0;
+				let firstTimeOnboarding = true;
+
+
+				// for onboarding demo, when we loop back to original state, move tool tip to next location
+				if (firstTimeOnboarding && currentUrl.indexOf("chrome-extension://") === 0 && severity == 2)
+				{
+					browser.runtime.sendMessage({command: 'move-hand-text'}, function (response) { console.log(response); });
+					firstTimeOnboarding = false;
+				}
+				
+
+				if (newSeverity == 0)
+				{
+					$this.removeClass('on');	
+					$label.html( getString(messageRoot + "_off") );
+
+					//see if we need to disable the submit button
+					if ( $(".flagging ul.flags li.on").length == 0 )
+					{
+						$submit.addClass('disabled');
+					}
+				}
+				else
+				{
+					if (newSeverity == 1)
+					{
+						$this.addClass('first-click');
+					}
+					else
+					{
+						$this.removeClass('first-click');
+					}
+					$this.addClass('on');
+					$label.html( getString(messageRoot + "_on") );
+					$submit.removeClass('disabled');
+				}
+
+				if ($this.hasClass("good"))
+				{
+					$severity.html( getString("quality_" + newSeverity) );
+				}
+				else
+				{
+					$severity.html( getString("severity_" + newSeverity) );
+				}
+				$this.attr("data-severity", newSeverity);
+
+				console.log("Severity is " + newSeverity);
+
+				updateCurrentReport();		
+			});
+
+			$("#reasoning").click(function (ev) {
+				// for onboarding demo, move tool tip to next location
+				if (currentUrl.indexOf("chrome-extension://") === 0)
+				{
+					browser.runtime.sendMessage({command: 'move-hand-dropdown'}, function (response) { console.log(response); });
+				}
+
+			});
+
+
+			$(".options").click(function (ev) {
+				// for onboarding demo, move tool tip to next location
+				if (currentUrl.indexOf("chrome-extension://") === 0)
+				{
+					browser.runtime.sendMessage({command: 'move-hand-submit'}, function (response) { console.log(response); });
+				}
+
+			});
+
+			$(".select").click(function (ev) {
+
+				let $this    = $(this);
+				let $preview = $this.find(".preview");
+				let $options = $this.find(".options");
+				let open     = $this.hasClass("open");
+
+				if (open)
+				{
+					//close it
+					$this.removeClass("open");
+				}
+				else
+				{
+					//open it
+					$this.addClass("open");
+				}
+
+				ev.stopPropagation();
+			});
+
+
+			$(".select .options .option").click(function () {
+
+				let $this    = $(this);
+				let $select  = $this.closest(".select");
+				let $preview = $select.find(".preview");
+				let value    = $this.attr("data-value");
+
+				$select.find(".option").removeClass('selected');
+				$this.addClass('selected');
+
+				$preview.html( value ).addClass("selected");
+
+				updateCurrentReport();
+			});
+
+			
+			$(".page[data-index=0] .button.next").click(function () {
+
+				if ( $(this).hasClass('disabled') )
+				{
+					return;
+				}
+
+				updateCurrentReport();
+
+				let data = {
+					'command'     : 'save-flag',
+					'url'         : currentUrl,
+					//'campaign'    : currentReport.campaign,
+					'campaign_id' : currentReport.campaignId,
+					'flags'       : currentReport.flags,
+					'notes'       : currentReport.notes
+				};
+
+				debug("Saving flag...");
+				debug(data);
+
+				//save mission to API
+				browser.runtime.sendMessage( data, function () {} ); //todo: handle errors
+
+				// for onboarding demo, move tool tip to next location
+				if (currentUrl.indexOf("chrome-extension://") === 0)
+				{
+					//browser.runtime.sendMessage({command: 'onboarding-done'}, function (response) { console.log(response); });
+					browser.runtime.sendMessage({command: 'move-hand-done'}, function (response) { console.log(response); });
+				}
+
+				$(".page[data-index]").css({ 'transform':'translateX(-100%)' }).removeClass('active');
+				$(".page[data-index=1]").addClass('active');
+
+				adjustPopupSize();
+				updateThanksPage();
+
+			});
+			
+			
+			$(".flagging .close").click(function () {
+
+				browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
+
+					let url = tabs[0].url;
+					let onboarding = (url.indexOf("chrome-extension://") === 0);
+
+					if (onboarding)
+					{
+						//move onboarding to next step
+						browser.runtime.sendMessage({command: 'done-flagging'}, function (response) { console.log(response); });
+					}
+				});
+
+				window.close();
+			});
+
 		});
 	}
-
-	
-	$("body").click(function (ev) {
-
-		$(".select.open").click();
-		console.log('body click');
-	});
-	
-
-
-	$(".flagging ul.flags li").click(function () {
-
-		let $this       = $(this);
-		let $label      = $this.find("label");
-		let $severity   = $this.find(".severity");
-		let $page       = $this.closest(".page");
-		let $submit     = $page.find(".next");
-		let messageRoot = $this.attr("data-message-root");
-		let severity    = parseInt($this.attr("data-severity"));
-		let newSeverity = (severity <= 2) ? (severity+1) : 0;
-		let firstTimeOnboarding = true;
-
-		// for onboarding demo, when we loop back to original state, move tool tip to next location
-		if (firstTimeOnboarding && currentUrl.indexOf("chrome-extension://") === 0 && severity == 2)
-		{
-			browser.runtime.sendMessage({command: 'move-hand-text'}, function (response) { console.log(response); });
-			firstTimeOnboarding = false;
-		}
-		
-
-		if (newSeverity == 0)
-		{
-			$this.removeClass('on');	
-			$label.html( getString(messageRoot + "_off") );
-
-			//see if we need to disable the submit button
-			if ( $(".flagging ul.flags li.on").length == 0 )
-			{
-				$submit.addClass('disabled');
-			}
-		}
-		else
-		{
-			$this.addClass('on');
-			$label.html( getString(messageRoot + "_on") );
-			$submit.removeClass('disabled');
-		}
-
-		if ($this.hasClass("good"))
-		{
-			$severity.html( getString("quality_" + newSeverity) );
-		}
-		else
-		{
-			$severity.html( getString("severity_" + newSeverity) );
-		}
-		$this.attr("data-severity", newSeverity);
-
-		console.log("Severity is " + newSeverity);
-
-		updateCurrentReport();		
-	});
-
-	$("#reasoning").click(function (ev) {
-		// for onboarding demo, move tool tip to next location
-		if (currentUrl.indexOf("chrome-extension://") === 0)
-		{
-			browser.runtime.sendMessage({command: 'move-hand-dropdown'}, function (response) { console.log(response); });
-		}
-
-	});
-
-
-	$(".options").click(function (ev) {
-		// for onboarding demo, move tool tip to next location
-		if (currentUrl.indexOf("chrome-extension://") === 0)
-		{
-			browser.runtime.sendMessage({command: 'move-hand-submit'}, function (response) { console.log(response); });
-		}
-
-	});
-
-	$(".select").click(function (ev) {
-
-		let $this    = $(this);
-		let $preview = $this.find(".preview");
-		let $options = $this.find(".options");
-		let open     = $this.hasClass("open");
-
-		if (open)
-		{
-			//close it
-			$this.removeClass("open");
-		}
-		else
-		{
-			//open it
-			$this.addClass("open");
-		}
-
-		ev.stopPropagation();
-	});
-
-
-	$(".select .options .option").click(function () {
-
-		let $this    = $(this);
-		let $select  = $this.closest(".select");
-		let $preview = $select.find(".preview");
-		let value    = $this.attr("data-value");
-
-		$select.find(".option").removeClass('selected');
-		$this.addClass('selected');
-
-		$preview.html( value ).addClass("selected");
-
-		updateCurrentReport();
-	});
-
-	
-	$(".page[data-index=0] .button.next").click(function () {
-
-		if ( $(this).hasClass('disabled') )
-		{
-			return;
-		}
-
-		updateCurrentReport();
-
-		let data = {
-			'command'     : 'save-flag',
-			'url'         : currentUrl,
-			//'campaign'    : currentReport.campaign,
-			'campaign_id' : currentReport.campaignId,
-			'flags'       : currentReport.flags,
-			'notes'       : currentReport.notes
-		};
-
-		debug("Saving flag...");
-		debug(data);
-
-		//save mission to API
-		browser.runtime.sendMessage( data, function () {} ); //todo: handle errors
-
-		// for onboarding demo, move tool tip to next location
-		if (currentUrl.indexOf("chrome-extension://") === 0)
-		{
-			browser.runtime.sendMessage({command: 'onboarding-done'}, function (response) { console.log(response); });
-			browser.runtime.sendMessage({command: 'move-hand-done'}, function (response) { console.log(response); });
-		}
-
-		$(".page[data-index]").css({ 'transform':'translateX(-100%)' }).removeClass('active');
-		$(".page[data-index=1]").addClass('active');
-
-		adjustPopupSize();
-		updateThanksPage();
-
-	});
-	
-	
-	$(".flagging .close").click(function () {
-
-		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
-
-			let url = tabs[0].url;
-			let onboarding = (url.indexOf("chrome-extension://") === 0);
-
-			if (onboarding)
-			{
-				//move onboarding to next step
-				browser.runtime.sendMessage({command: 'done-flagging'}, function (response) { console.log(response); });
-			}
-		});
-
-		window.close();
-	});
 
 
 });
@@ -491,3 +564,23 @@ function getPageTitle ( foundTitle )
 }
 
 
+function showError (messageKey, buttons)
+{
+	console.log("Error");
+
+	let $ = jQuery;
+	let $buttons = $(".flagging .error .content .buttons");
+
+	$(".flagging-ui").css('display','none');
+
+	$buttons.html("<div></div>");
+	$(".flagging .error .content .text").html( getString(messageKey) );
+
+	for (let i=0; i < buttons.length; i++)
+	{
+		let $button = $('<div class="button">' + getString(buttons[i].labelId) + '</div>');
+		$button.click( buttons[i].func );
+		$buttons.append( $button );
+	}
+	$(".flagging .error").css('display','block');
+}

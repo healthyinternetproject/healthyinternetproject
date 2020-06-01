@@ -38,6 +38,15 @@ function consoleLog (data)
 
 function getString (messageId)
 {
-	return browser.i18n.getMessage(messageId);
+	let string = browser.i18n.getMessage(messageId);
+
+	if (string) 
+	{
+		return string;
+	}
+	else
+	{
+		return messageId;
+	}
 }
 
