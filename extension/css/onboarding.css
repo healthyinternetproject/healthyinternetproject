@@ -1,5 +1,4 @@
 
-
 .onboarding
 {
 	min-width: 100vw;
@@ -800,6 +799,48 @@
     line-height: 1.4em;
 }
 
+.onboarding #footer{
+    position: fixed;
+    bottom: 0px;
+    right: 20px;
+    z-index: 2;
+	width: 100%;
+	height: 20px;
+	font-size: 12px;
+}
+
+.onboarding .footer #privacy_policy {
+	position: fixed;
+	right: 20px;
+	color: black;
+}
+.onboarding .footer #terms_use {
+	position: fixed;
+	right: 7.5%;
+	color: black;
+}
+.onboarding .footer #copyright {
+	position: fixed;
+	right: 775px;
+	color: black;
+	
+}
+.onboarding .footer #ted-conf {
+	position: fixed;
+	right: 45%;
+	color: black;
+	font-weight: 700;
+	margin-left: 3px;
+	
+}
+
+.onboarding .footer #hip-logo-white{
+	z-index: 2;
+    position: fixed;
+    left: 10px;
+	height: 100px;
+	bottom: 0px;
+}
 
 /*
 @keyframes bounce-frames { 
