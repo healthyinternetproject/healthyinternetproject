@@ -14,21 +14,24 @@ jQuery(document).ready(function ($) {
 		console.log(request);
 
 		if (request.command == 'config')
-		{				
-			CONFIG = request.config;
-			console.log(CONFIG);		
-			
-			if (CONFIG.userId)
-			{
-				debug("User ID is " + CONFIG.userId);
+		{
+			if (request.config)
+			{				
+				CONFIG = request.config;
+				console.log(CONFIG);		
+				
+				if (CONFIG.userId)
+				{
+					debug("User ID is " + CONFIG.userId);
+				}
+				else
+				{
+					displayError('error_no_connection', 'try_again', function () { location.reload(); });
+					debug("Error, no user ID found");
+				}
+				
+				initializeUI();	
 			}
-			else
-			{
-				displayError('error_no_connection', 'try_again', function () { location.reload(); });
-				debug("Error, no user ID found");
-			}
-			
-			initializeUI();		
 		}
 		else if (request.command == 'notification-click')
 		{

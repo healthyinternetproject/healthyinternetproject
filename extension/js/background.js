@@ -1,7 +1,8 @@
 
+//if you change this, also update the matching permissions in manifest.json
+var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/"; 
+
 var CONFIG = {
-	//'apiRootUrl'     : "http://127.0.0.1:5000/api/v1/", //if you change this, also update the matching permissions in manifest.json
-	'apiRootUrl'       : "https://api.healthyinternetproject.org/api/v1/", //if you change this, also update the matching permissions in manifest.json=	
 	'userId'           : false,
 	'onboardingDone'   : false,
 	'onboardingOptOut' : false,
@@ -87,6 +88,8 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 				getConfigFromStorage(function (config) {
 					sendMessageToClientScript({command: 'config', 'config': config});
 					sendMessageToPopup({command: 'config', 'config': config});
+					console.log("Sending config:", config);
+
 					sendResponse("Config sent");					
 				});
 				
@@ -315,7 +318,7 @@ function sendToAPI ( term, data, authenticate, callback )
 	getConfigFromStorage(function (result) {
 
 		let xhr = new XMLHttpRequest();
-		let url = result.apiRootUrl + term;
+		let url = API_ROOT_URL + term;
 		let params = [];
 		let postData = "";
 
