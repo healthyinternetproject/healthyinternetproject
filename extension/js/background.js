@@ -83,21 +83,13 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 			if (request.command == 'get-config')
 			{
 				//script wants the config settings
-
-				let responseFunc = function () {
-					sendMessageToClientScript({command: 'config', config: CONFIG});
-					sendMessageToPopup({command: 'config', config: CONFIG});
+				
+				getConfigFromStorage(function (config) {
+					sendMessageToClientScript({command: 'config', 'config': config});
+					sendMessageToPopup({command: 'config', 'config': config});
 					sendResponse("Config sent");					
-				};
-
-				if (CONFIG.initialized)
-				{
-					responseFunc();
-				}
-				else
-				{
-					getConfigFromStorage(responseFunc);
-				}
+				});
+				
 			}	
 			else if ( request.command == 'console-log' )
 			{
@@ -110,24 +102,18 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 			}
 			else if ( request.command == 'save-flag' )
 			{
+				//console.log
 				sendFlagDataToAPI(
 					request.url,
 					request.campaign_id,
 					request.flags,
 					request.notes
 				);
-				//console.log(request);
+				
 				sendResponse("Initiating XHR...");
 			}
 			else if (request.command == 'sample-notification')
 			{		
-				/*		
-				let notification = showNotification("");
-
-				notification.onclick = function() {
-					window.open("/html/onboard.html#3");
-				};
-				*/
 				let dismissNotification = function (notificationId) 
 				{
 					sendMessageToClientScript( { command: 'notification-click' }, function () {} );
@@ -210,25 +196,33 @@ function showNotification (title, bodyText)
 
 function getConfigFromStorage (callback)
 {
+	if (!callback || typeof callback !== "function")
+	{
+		callback = function () {};
+	}
+
+	if (CONFIG && CONFIG.initialized)
+	{
+		callback(CONFIG);
+		return;
+	}
+
 	browser.storage.sync.get(['userId','password','onboardingDone','onboardingOptOut'], function(result) 
 	{		
 		//console.log(result);
 
-		if (!callback || typeof callback !== "function")
-		{
-			callback = function () {};
-		}
-
 		if (result.userId)
 		{
-			console.log("Credentials retrieved from sync storage, user id " + result.userId);
+			//console.log("Credentials retrieved from sync storage, user id " + result.userId);
 
-			callback({
-				'userId'           : result.userId,
-				'password'         : result.password,
-				'onboardingDone'   : result.onboardingDone,
-				'onboardingOptOut' : result.onboardingOptOut
-			});
+			CONFIG.userId           = result.userId;
+			CONFIG.password         = result.password;
+			CONFIG.onboardingDone   = result.onboardingDone;
+			CONFIG.onboardingOptOut = result.onboardingOptOut;
+			CONFIG.initialized      = true;
+
+			callback(CONFIG);
+			return;
 		}
 		else
 		{
@@ -259,16 +253,13 @@ function sendMessageToClientScript ( data, responseFunc ) {
 
 function isUserRegistered ()
 {
-	getConfigFromStorage(function (result) {
+	var callback = function (result) {
 
 		console.log(result);
 
 		if (result && result.userId)
 		{
 			console.log("User already registered, user id " + result.userId);
-			//CONFIG.userId = result.userId;
-			//CONFIG.password = result.password;
-			CONFIG = result;
 			return true;
 		}
 		else
@@ -311,23 +302,26 @@ function isUserRegistered ()
 			return false;
 		}
 
-	});
+	};
+
+	getConfigFromStorage(callback);
 
 }
 
 
 function sendToAPI ( term, data, authenticate, callback )
 {
+
 	getConfigFromStorage(function (result) {
 
 		let xhr = new XMLHttpRequest();
-		let url = CONFIG.apiRootUrl + term;
+		let url = result.apiRootUrl + term;
 		let params = [];
 		let postData = "";
 
 		console.log("Sending to API...");
 
-		if (CONFIG.skipAPI)
+		if (result.skipAPI)
 		{
 			console.log("Skipping API");
 			if (callback)
@@ -378,9 +372,7 @@ function sendToAPI ( term, data, authenticate, callback )
 		xhr.open('POST', url, true );			
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send(postData);	
-
 	});
-
 	
 }
 
@@ -416,7 +408,7 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 
 	let callback = function (data) 
 	{
-		if (data.status == 'success')
+		if (data && data.status == 'success')
 		{
 			sendMessageToPopup({'command': 'flag-saved','data':data});	
 		}
