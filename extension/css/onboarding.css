@@ -820,10 +820,10 @@
 	right: 7.5%;
 	color: black;
 }
-.onboarding .footer #copyright {
-	position: fixed;
-	right: 775px;
+.onboarding .footer #ted-conf #copyright {
 	color: black;
+	font-weight:400;
+	display: inline;
 	
 }
 .onboarding .footer #ted-conf {
