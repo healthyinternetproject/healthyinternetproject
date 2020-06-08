@@ -33,8 +33,24 @@ jQuery(document).ready(function ($) {
 		else if (request.command == 'flag-error')
 		{				
 			debug(request.data);
-			$(".page[data-index]").css({ 'transform':'translateX(0)' }).removeClass('active');
-			$(".page[data-index=0]").addClass('active');			
+			//$(".page[data-index]").css({ 'transform':'translateX(0)' }).removeClass('active');
+			//$(".page[data-index=0]").addClass('active');			
+			showError( 
+				'flag_failed', 
+				[
+					{ 
+						'labelId' : 'retry',
+						'func' : function () {
+							$(".flagging .error").css('display','none');
+							$(".flagging-ui").css('display','block');								
+							$(".flagging .pages").css('display','block');
+							sendFlagData(currentReport, currentUrl);							
+						} 
+					}
+				]
+				
+				
+			);			
 		}		
 		else if (request.command == 'flag-saved')
 		{				
@@ -69,6 +85,8 @@ jQuery(document).ready(function ($) {
 			if (!config.onboardingDone && !config.onboardingOptOut && !onboarding )
 			{
 				debug("Onboarding incomplete");
+				debug(config);
+
 				showError( 
 					'onboarding_incomplete', 
 					[
@@ -83,14 +101,12 @@ jQuery(document).ready(function ($) {
 							'labelId' : 'no',
 							'func' : function () {
 								browser.runtime.sendMessage({command: 'onboarding-opt-out'}, function (response) { debug(response); });
-								$(".flagging-ui").css('display','block');
 								$(".flagging .error").css('display','none');
+								$(".flagging-ui").css('display','block');								
 								$(".flagging .pages").css('display','block');
 							}
 						}
 					]
-					
-					
 				);
 			}
 			else
@@ -299,33 +315,7 @@ jQuery(document).ready(function ($) {
 
 				updateCurrentReport();
 
-				let data = {
-					'command'     : 'save-flag',
-					'url'         : currentUrl,
-					//'campaign'    : currentReport.campaign,
-					'campaign_id' : currentReport.campaignId,
-					'flags'       : currentReport.flags,
-					'notes'       : currentReport.notes
-				};
-
-				debug("Saving flag...");
-				debug(data);
-
-				//save mission to API
-				browser.runtime.sendMessage( data, function () {} ); //todo: handle errors
-
-				// for onboarding demo, move tool tip to next location
-				if (currentUrl.indexOf("chrome-extension://") === 0)
-				{
-					//browser.runtime.sendMessage({command: 'onboarding-done'}, function (response) { console.log(response); });
-					browser.runtime.sendMessage({command: 'move-hand-done'}, function (response) { console.log(response); });
-				}
-
-				$(".page[data-index]").css({ 'transform':'translateX(-100%)' }).removeClass('active');
-				$(".page[data-index=1]").addClass('active');
-
-				adjustPopupSize();
-				updateThanksPage();
+				sendFlagData(currentReport, currentUrl);
 
 			});
 			
@@ -352,6 +342,38 @@ jQuery(document).ready(function ($) {
 
 
 });
+
+
+function sendFlagData (currentReport, currentUrl)
+{
+	let data = {
+		'command'     : 'save-flag',
+		'url'         : currentUrl,
+		//'campaign'    : currentReport.campaign,
+		'campaign_id' : currentReport.campaignId,
+		'flags'       : currentReport.flags,
+		'notes'       : currentReport.notes
+	};
+
+	debug("Saving flag...");
+	debug(data);
+
+	//save mission to API
+	browser.runtime.sendMessage( data, function () {} ); //todo: handle errors
+
+	// for onboarding demo, move tool tip to next location
+	if (currentUrl.indexOf("chrome-extension://") === 0)
+	{
+		//browser.runtime.sendMessage({command: 'onboarding-done'}, function (response) { console.log(response); });
+		browser.runtime.sendMessage({command: 'move-hand-done'}, function (response) { console.log(response); });
+	}
+
+	$(".page[data-index]").css({ 'transform':'translateX(-100%)' }).removeClass('active');
+	$(".page[data-index=1]").addClass('active');
+
+	adjustPopupSize();
+	updateThanksPage();	
+}
 
 
 function debug (data)
@@ -523,6 +545,7 @@ function isPermalink ( url )
 	}
 	else if ( domain.indexOf('facebook.com') > -1 )
 	{
+		//todo: there's probably a better way to do this
 		if ( 
 			url.indexOf("/posts/") === -1 &&
 			url.indexOf("/photos/") === -1 &&
@@ -583,4 +606,6 @@ function showError (messageKey, buttons)
 		$buttons.append( $button );
 	}
 	$(".flagging .error").css('display','block');
+	$(".flagging-ui").css('display','none');								
+	$(".flagging .pages").css('display','none');
 }

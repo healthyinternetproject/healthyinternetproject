@@ -150,12 +150,13 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 			else if (request.command == 'onboarding-done') 
 			{
 				browser.storage.sync.set({ 'onboardingDone': 1 });	
+				CONFIG.onboardingDone = 1;
 			}
 			else if (request.command == 'onboarding-opt-out') 
 			{
 				browser.storage.sync.set({ 'onboardingOptOut': 1 });	
 				CONFIG.onboardingOptOut = 1;
-				console.log("Trying to opt out");
+				//console.log("Trying to opt out");
 			}
 
 			return Promise.resolve("Dummy response to keep the console quiet");		
