@@ -158,7 +158,8 @@
 	padding: 18px 18px 18px 80px;
 	width: 300px;
 	background-image: url(/images/icon-48.png);
-	background-position: 18px 18px;
+    background-position: 10px;
+    background-size: 55px;
 	background-repeat: no-repeat;
 	transition: opacity 300ms ease-in-out;
 }
