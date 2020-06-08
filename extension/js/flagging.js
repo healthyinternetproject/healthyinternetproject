@@ -14,7 +14,9 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 	browser = chrome;
 }
 
+
 debug('Starting...');
+
 
 jQuery(document).ready(function ($) {
 
@@ -48,8 +50,6 @@ jQuery(document).ready(function ($) {
 						} 
 					}
 				]
-				
-				
 			);			
 		}		
 		else if (request.command == 'flag-saved')

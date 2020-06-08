@@ -6,7 +6,8 @@ var CONFIG = {
 	'onboardingDone'   : false,
 	'onboardingOptOut' : false,
 	'debug'            : false,
-	'skipAPI'          : false
+	'skipAPI'          : false,
+	'initialized'      : false
 };
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
@@ -38,7 +39,7 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 		//testing/dev only
 		//console.log(changeInfo, tab);
 
-		getCredentialsFromStorage();
+		getConfigFromStorage();
 
 		if (
 			false &&
@@ -82,9 +83,21 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 			if (request.command == 'get-config')
 			{
 				//script wants the config settings
-				sendMessageToClientScript({command: 'config', config: CONFIG});
-				sendMessageToPopup({command: 'config', config: CONFIG});
-				sendResponse("Config sent");
+
+				let responseFunc = function () {
+					sendMessageToClientScript({command: 'config', config: CONFIG});
+					sendMessageToPopup({command: 'config', config: CONFIG});
+					sendResponse("Config sent");					
+				};
+
+				if (CONFIG.initialized)
+				{
+					responseFunc();
+				}
+				else
+				{
+					getConfigFromStorage(responseFunc);
+				}
 			}	
 			else if ( request.command == 'console-log' )
 			{
@@ -195,7 +208,7 @@ function showNotification (title, bodyText)
 }
 */
 
-function getCredentialsFromStorage (callback)
+function getConfigFromStorage (callback)
 {
 	browser.storage.sync.get(['userId','password','onboardingDone','onboardingOptOut'], function(result) 
 	{		
@@ -246,7 +259,7 @@ function sendMessageToClientScript ( data, responseFunc ) {
 
 function isUserRegistered ()
 {
-	getCredentialsFromStorage(function (result) {
+	getConfigFromStorage(function (result) {
 
 		console.log(result);
 
@@ -305,7 +318,7 @@ function isUserRegistered ()
 
 function sendToAPI ( term, data, authenticate, callback )
 {
-	getCredentialsFromStorage(function (result) {
+	getConfigFromStorage(function (result) {
 
 		let xhr = new XMLHttpRequest();
 		let url = CONFIG.apiRootUrl + term;
