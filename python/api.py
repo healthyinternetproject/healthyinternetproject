@@ -56,8 +56,9 @@ def random_string(string_length=10):
 
 def random_number(digits=9):
 	"""Generate a random number of fixed length """
+	firstdigit = '123456789' # zero not allowed as first digit
 	characters = string.digits
-	randomstring = ''.join(random.choice(characters) for i in range(digits))
+	randomstring = random.choice(firstdigit) + ''.join(random.choice(characters) for i in range(digits-1))
 	return randomstring
 
 
@@ -164,6 +165,7 @@ def api_register():
 		#logging.debug(err)
 
 		results = {
+			'error': "Error: {}".format(err),
 			'status': 'error',
 			'message': 'Database error'
 		}
@@ -206,6 +208,7 @@ def api_mission():
 	except mysql.connector.errors.DatabaseError as err:
 
 		results = {
+			'error': "Error: {}".format(err),
 			'status': 'error',
 			'message': 'Database error'
 		}
@@ -281,6 +284,7 @@ def api_flag():
 	except mysql.connector.errors.DatabaseError as err:
 
 		results = {
+			'error': "Error: {}".format(err),
 			'status': 'error',
 			'message': 'Database error'
 		}
@@ -291,7 +295,7 @@ def api_flag():
 
 
 @app.route('/api/v1/listcampaigns', methods=['GET'])
-def api_flag():	
+def api_listcampaigns():	
 
 	try:
 		campaigns = []
@@ -311,6 +315,7 @@ def api_flag():
 	except mysql.connector.errors.DatabaseError as err:
 
 		results = {
+			'error': "Error: {}".format(err),
 			'status': 'error',
 			'message': 'Database error'
 		}

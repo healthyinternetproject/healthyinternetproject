@@ -28,7 +28,7 @@ class CivicDB:
 		return self.connection.cursor(buffered=True, dictionary=True)	
 
 
-	def execute(self, sql, params, commit=True):
+	def execute(self, sql, params=(), commit=True):
 		cursor = self.get_cursor()
 		result = cursor.execute(sql, params)
 
@@ -41,7 +41,7 @@ class CivicDB:
 		return result
 
 
-	def fetchone(self, sql, params, commit=True):
+	def fetchone(self, sql, params=(), commit=True):
 		cursor = self.get_cursor()
 		cursor.execute(sql, params)
 
@@ -53,7 +53,7 @@ class CivicDB:
 		return row
 
 
-	def fetchall(self, sql, params, commit=True):
+	def fetchall(self, sql, params=(), commit=True):
 		cursor = self.get_cursor()
 		cursor.execute(sql, params)
 
