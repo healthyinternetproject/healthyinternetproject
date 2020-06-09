@@ -144,15 +144,15 @@ jQuery(document).ready(function ($) {
 					if (onboarding)
 					{
 						//TODO: get headline title from demo article dynamically and fill flagging window title with that
-						//title = getString( $(".onboarding .missions li").attr("data-message-root") + "_headline" );
-						
-						//we are looking at an extension page, work in demo mode
-						title = getString("example_site_title");
-						displayUrl = "http://example.com";
-						favicon = "/images/demo-favicon.svg";
 
-						//move the pointy hand to the next step
-						browser.runtime.sendMessage({command: 'move-hand-flag'}, function (response) { console.log(response); });
+						//move the pointy hand to the next step ONLY on the correct onboarding step
+						if(url.slice(-2) == "#5"){
+							//we are looking at an extension page, work in demo mode
+							title = getString("example_site_title");
+							displayUrl = "http://example.com";
+							favicon = "/images/demo-favicon.svg";
+							browser.runtime.sendMessage({command: 'move-hand-flag'}, function (response) { console.log(response); });
+						}
 					}
 					else
 					{
