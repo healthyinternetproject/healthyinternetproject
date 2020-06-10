@@ -108,7 +108,7 @@
 
 .onboarding #pointer-hand.point-at-text
 {
-	top: 340px !important;
+	top: 370px !important;
 	right: 620px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
@@ -120,7 +120,7 @@
 
 .onboarding #pointer-hand.point-at-dropdown
 {
-	top: 400px !important;
+	top: 450px !important;
 	right: 620px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
