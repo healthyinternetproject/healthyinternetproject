@@ -71,6 +71,11 @@ jQuery(document).ready(function ($) {
 
 		debug("Initializing UI");
 		uiInitialized = true;
+
+		let manifestData = browser.runtime.getManifest();
+
+		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
+		$(".flagging .extension-version").html( manifestData.version );
 		
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
@@ -78,8 +83,6 @@ jQuery(document).ready(function ($) {
 			let url        = tabs[0].url;
 			let displayUrl = url ? url : "";
 			let onboarding = (displayUrl.indexOf("chrome-extension://") === 0);
-
-			debug("Tab query complete");
 
 
 			if (!config.onboardingDone && !config.onboardingOptOut && !onboarding )
@@ -337,6 +340,17 @@ jQuery(document).ready(function ($) {
 				});
 
 				window.close();
+			});
+
+
+			$(".flagging .menu-open").click(function () {
+
+				$(".flagging .pane").addClass("open");
+			});
+
+			$(".flagging .menu-close").click(function () {
+
+				$(".flagging .pane").removeClass("open");
 			});
 
 		});

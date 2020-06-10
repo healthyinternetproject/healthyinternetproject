@@ -154,7 +154,7 @@ jQuery(document).ready(function ($) {
 		console.log("Initializing UI");
 		uiInitialized = true;
 
-		$(".onboarding .user-id").html( parseInt(CONFIG.userId) );
+		$(".onboarding .user-id").html( formatUserId(CONFIG.userId) );
 
 		$(".onboarding .progress .step [href]").click(function (ev) {
 
