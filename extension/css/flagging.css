@@ -72,6 +72,90 @@
 }
 
 
+.flagging .pane
+{
+	background-color: #1b1f28;
+	color: #9da8bc;	
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 4;
+	padding: 30px;
+	font-size: 26px;
+	font-weight: 700;
+	transform: translateX(100%);
+	transition: transform 400ms ease-out;
+}
+
+.flagging .pane h1
+{
+	color: #fff;
+	margin-bottom: 1em;
+}
+
+.flagging .pane ul
+{
+
+}
+
+.flagging .pane ul li
+{
+	display: block;
+	margin-bottom: 0.4em;
+}
+
+.flagging .pane ul li a
+{
+	text-decoration: none;
+	color: inherit;
+}
+
+.flagging .pane ul li a:hover
+{
+	color: #eee;
+}
+
+.flagging .pane .menu-footer
+{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	font-size: 12px;
+	padding: 30px;
+	font-weight: normal;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: 40px;
+	white-space: nowrap;
+}
+
+.flagging .pane .menu-footer .copyright
+{
+	font-weight: 700;
+}
+
+.flagging .pane.open
+{
+	transform: translateX(0);
+}
+
+.flagging .pane .menu-close,
+.flagging .menu-open
+{
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 30px;
+	right: 40px;
+	z-index: 3;
+}
+
+
+
 .flagging .pages
 {	
 	display: none;
@@ -154,12 +238,15 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 320px;	
+	padding-right: 50px;
+	
 }
 
 .flagging .with-favicon
 {
 	position: relative;
 	min-height: 16px;
+
 }
 
 .flagging .with-favicon img
@@ -172,6 +259,7 @@
 	margin-right: 8px;
 	z-index: 2;
 }
+
 
 .flagging .page[data-index="1"]
 {

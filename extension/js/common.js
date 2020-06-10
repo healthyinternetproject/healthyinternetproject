@@ -50,3 +50,10 @@ function getString (messageId)
 	}
 }
 
+
+function formatUserId (userId)
+{
+	var id = "" + userId + "";
+	return id.substring(0,3) + "-" + id.substring(3,6) + "-" + id.substring(6,9);
+}
+
