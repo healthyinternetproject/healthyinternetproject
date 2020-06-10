@@ -90,13 +90,7 @@ jQuery(document).ready(function ($) {
 				showError( 
 					'onboarding_incomplete', 
 					[
-						{ 
-							'labelId' : 'yes',
-							'func' : function () {
-								setTimeout(function () { window.close(); }, 100);						
-								window.open("/html/onboarding.html");
-							} 
-						},
+						
 						{
 							'labelId' : 'no',
 							'func' : function () {
@@ -104,7 +98,15 @@ jQuery(document).ready(function ($) {
 								$(".flagging .error").css('display','none');
 								$(".flagging-ui").css('display','block');								
 								$(".flagging .pages").css('display','block');
+								$(".flagging .pages").css('height','200px');
 							}
+						},
+						{ 
+							'labelId' : 'yes',
+							'func' : function () {
+								setTimeout(function () { window.close(); }, 100);						
+								window.open("/html/onboarding.html");
+							} 
 						}
 					]
 				);

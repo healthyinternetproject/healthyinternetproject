@@ -132,7 +132,7 @@
 
 .onboarding #pointer-hand.point-at-submit
 {
-	top: 515px !important;
+	top: 555px !important;
 	right: 175px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
@@ -204,7 +204,7 @@
 .onboarding #pointer-tip.point-at-submit
 {
 	opacity: 1;
-	top: 590px !important;
+	top: 640px !important;
 	right: 85px;		
 	opacity: 1;
 	background-image: none;
