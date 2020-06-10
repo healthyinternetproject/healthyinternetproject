@@ -811,14 +811,14 @@
 }
 
 .onboarding .footer #privacy_policy {
-	position: fixed;
-	right: 20px;
+	float: right;
+	/* right: 2%; */
 	color: black;
 }
 .onboarding .footer #terms_use {
-	position: fixed;
-	right: 7.5%;
+	float: right;
 	color: black;
+	margin-right: 2%;
 }
 .onboarding .footer #ted-conf #copyright {
 	color: black;
@@ -838,9 +838,9 @@
 .onboarding .footer #hip-logo-white{
 	z-index: 2;
     position: fixed;
-    left: 10px;
-	height: 100px;
-	bottom: 0px;
+    height: 90px;
+    bottom: 15px;
+    left: 20px;
 }
 
 /*
