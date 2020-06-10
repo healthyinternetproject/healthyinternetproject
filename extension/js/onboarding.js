@@ -50,19 +50,19 @@ jQuery(document).ready(function ($) {
 			var top = 0;
 			switch($(".mission-name").text()) {
 				case "worthwhile ideas":
-					top = 80;
+					top = 95;
 				  break;
 				case "lies or manipulation":
-					top = 155;
+					top = 170;
 					break;
 				case "abuse or harassment":
-					top = 212;
+					top = 227;
 					break;
 				case "division or fear":
-					top = 268;
+					top = 293;
 				  break;
 				default:
-					top = 80;
+					top = 95;
 			  }
 			$(".onboarding #pointer-hand.point-at-flag").css("top", top);
 			$(".onboarding #pointer-tip.point-at-flag").css("top", top);
