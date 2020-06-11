@@ -405,8 +405,9 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 		campaignId = 5; //default to 'none'
 	}
 
+
 	let data = {
-		'url'         : url,
+		'url'         : encodeURIComponent(url),
 		'campaign_id' : campaignId,
 		'flags'       : flags,
 		'notes'       : notes
