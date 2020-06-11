@@ -92,6 +92,7 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 
 					sendResponse("Config sent");					
 				});
+				return true; 
 				
 			}	
 			else if ( request.command == 'console-log' )
@@ -102,6 +103,7 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 			{
 				sendMissionToAPI(request.mission_id);
 				sendResponse("Initiating XHR...");
+				return true; 
 			}
 			else if ( request.command == 'save-flag' )
 			{
@@ -114,6 +116,7 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 				);
 				
 				sendResponse("Initiating XHR...");
+				return true; 
 			}
 			else if (request.command == 'sample-notification')
 			{		
