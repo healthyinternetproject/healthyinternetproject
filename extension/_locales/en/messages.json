@@ -57,6 +57,7 @@
 	"menu_heading"                        : { "message" : "Menu" },
 	"more_info_available_here"            : { "message" : "We are excited for you to start making our digital platforms a safer and more productive place! If you have more questions, please check out our <a href='http://healthyinternetproject.org/faq' target='_blank'>FAQ's</a>. "},
 	"no_more_forgotten_logins"            : { "message" : "No more forgotten logins" },
+	"no"								  : { "message" : "No"},
 	"stay_updated"                        : { "message" : "Stay updated" },
 	"off_to_the_races"                    : { "message" : "Off to the races!" },
 	"optional"                            : { "message" : "(optional)" },
