@@ -84,7 +84,7 @@
 	right: 0;
 	z-index: 4;
 	padding: 30px;
-	font-size: 26px;
+	font-size: 24px;
 	font-weight: 700;
 	transform: translateX(100%);
 	transition: transform 400ms ease-out;
@@ -94,6 +94,7 @@
 {
 	color: #fff;
 	margin-bottom: 1em;
+	font-size: 30px;
 }
 
 .flagging .pane ul
@@ -151,8 +152,14 @@
 	height: 30px;
 	position: absolute;
 	top: 30px;
-	right: 40px;
+	right: 30px;
 	z-index: 3;
+}
+
+.flagging .pane .menu-close
+{
+	transform-origin: center center;
+	transform: scale(0.75);
 }
 
 
