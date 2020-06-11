@@ -93,7 +93,6 @@ jQuery(document).ready(function ($) {
 				showError( 
 					'onboarding_incomplete', 
 					[
-						
 						{
 							'labelId' : 'no',
 							'func' : function () {
@@ -101,7 +100,7 @@ jQuery(document).ready(function ($) {
 								$(".flagging .error").css('display','none');
 								$(".flagging-ui").css('display','block');								
 								$(".flagging .pages").css('display','block');
-								$(".flagging .pages").css('height','200px');
+								$(".flagging").css('height','500px');
 							}
 						},
 						{ 
@@ -111,6 +110,7 @@ jQuery(document).ready(function ($) {
 								window.open("/html/onboarding.html");
 							} 
 						}
+						
 					]
 				);
 			}
