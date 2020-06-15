@@ -465,6 +465,12 @@
 	resize: none; 
 	font-family: inherit;
 	font-size: 12px;
+	
+	color: #000;
+}
+
+.flagging form textarea::placeholder
+{
 	color: #7F8DA7;
 }
 
