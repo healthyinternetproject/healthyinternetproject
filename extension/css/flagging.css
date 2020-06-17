@@ -322,7 +322,7 @@
 	display: block;
 	top: 0;
 	left: 0;
-	width: 50%;
+	width: 75%;
 	height: 0;	
 	border-top: 1px solid #7F8DA7;
 	margin: 10px 0 10px 0;
@@ -386,7 +386,7 @@
 /* this is so the animation delay only applies to first click */
 .flagging ul.flags li.first-click .thermometer:before
 {
-	/*transition-delay: 300ms;*/
+	transition-delay: 250ms;
 }
 
 /* this is the thermometer foreground */
@@ -456,7 +456,7 @@
 .flagging form textarea
 {
 	width: 100%;
-	height: 60px;
+	height: 70px;
 	border: 1px solid #9DA8BC;
 	border-radius: 4px;
 	box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
@@ -530,14 +530,13 @@
 
 .select .preview.selected
 {
-	color: inherit;
+	color: black;
 }
 
 .select .options
 {
-	max-height: 0;
-	overflow: scroll;
-	opacity: 0;
+	height: 0;
+	display: none;
 	position: absolute;
 	left: 0;
 	bottom: 100%;
@@ -546,12 +545,13 @@
 	border-radius: 3px;
 	width: 100%;
 	transition: all 200ms ease-in-out;
+	color:black;
 }
 
 .select.open .options
 {
-	max-height: 100px;
-	opacity: 1;
+	display: inline;
+	height: auto;
 }
 
 .select .options .option
