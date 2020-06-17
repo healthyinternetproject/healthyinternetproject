@@ -456,10 +456,9 @@
 .flagging form textarea
 {
 	width: 100%;
-	height: 70px;
+	height: 80px;
 	border: 1px solid #9DA8BC;
 	border-radius: 4px;
-	box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
 	margin-top: 4px;
 	padding: 4px;
 	resize: none; 
@@ -469,9 +468,9 @@
 	color: #000;
 }
 
-.flagging form textarea::placeholder
-{
-	color: #7F8DA7;
+.flagging form textarea:focus {
+    outline: none !important;
+    border:1px solid #5762D5;
 }
 
 .flagging .buttons
@@ -501,7 +500,7 @@
 {	
 	position: relative;
 	background: #FFFFFF;
-	border: 1px solid #5762D5;
+	border: 1px solid #9DA8BC;
 	border-radius: 3px;		
 	height: 24px;
 	width: 210px;
@@ -526,6 +525,11 @@
 .select .preview
 {
 	color: #7F8DA7;
+}
+
+.select.campaign.selected
+{
+	border: 1px solid #5762D5;
 }
 
 .select .preview.selected
@@ -569,13 +573,13 @@
 	background-color: rgba(87,98,213,0.2);
 }
 
-.select-note
+.reasoning-note
 {
-	position: absolute;
-	top: 100%;
-	font-size: 80%;
-	margin-top: 8px;
-	color: #7F8DA7;
+	font-weight: 700;
+	font-size: 12px;
+	margin-top: 18px;
+	margin-bottom: 2px;
+	color: black;
 }
 
 .flagging .page.thanks

@@ -34,6 +34,7 @@
 	"faqs"                                : { "message" : "FAQs" },
 	"first_you_come_across_X"             : { "message" : "First, you come across <em class='mission-name'></em> online and let us know." },
 	"flag_failed"                         : { "message" : "Error connecting to the Healthy Internet Project API." },
+	"free_text"                           : { "message" : "Share any thoughts or related URLs:" },
 	"full_privacy"                        : { "message" : "Full Privacy" },
 	"getting_set_up"                      : { "message" : "Getting Set Up" },
 	"full_privacy"                        : { "message" : "Full privacy" },
