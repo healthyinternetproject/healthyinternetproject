@@ -10,6 +10,8 @@ from argon2 import PasswordHasher
 import logging
 from classes.CivicDB import CivicDB
 import mysql.connector
+import urllib.parse
+
 
 with open("../api-config.json") as json_data_file:
     config = json.load(json_data_file)
@@ -231,7 +233,7 @@ def api_flag():
 	user              = authenticate_user(user_id, password)
 	flagging_event_id = 0;
 
-	# print(jsonify(flags))
+	# print(jsonify(flags))	
 
 	if url is None:
 		return quit_with_error("Incomplete Request","Your request did not include all required parameters.", 400)
@@ -240,6 +242,12 @@ def api_flag():
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
 	
 	try:
+		# url is encoded on arrival, decode it before storing
+		url = urllib.parse.unquote(url)
+
+		# notes is encoded on arrival, decode it before storing
+		notes = urllib.parse.unquote(notes)
+
 		add_event = ("INSERT INTO flagging_event "
 			"(user_id, locale_id, url, notes, campaign_id) "
 			"VALUES (%s, %s, %s, %s, %s)")

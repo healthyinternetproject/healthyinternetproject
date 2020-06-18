@@ -304,6 +304,7 @@ jQuery(document).ready(function ($) {
 
 				$select.find(".option").removeClass('selected');
 				$this.addClass('selected');
+				$select.addClass('selected');
 
 				$preview.html( value ).addClass("selected");
 
@@ -518,7 +519,7 @@ function adjustPopupSize ()
 	let newHeight     = 0;
 	let $activePage   = $(".page.active");
 	let $button       = $activePage.find(".button");
-	let bottomPadding = 50;
+	let bottomPadding = 20;
 
 	if ($button.length > 0)
 	{

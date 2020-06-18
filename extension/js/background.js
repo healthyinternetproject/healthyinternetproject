@@ -410,7 +410,7 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 		'url'         : encodeURIComponent(url),
 		'campaign_id' : campaignId,
 		'flags'       : flags,
-		'notes'       : notes
+		'notes'       : encodeURIComponent(notes)
 	};
 
 	let callback = function (data) 
