@@ -342,7 +342,7 @@ function goToOnboardingStep (index)
 		}
 		else
 		{
-			$panels.css({'top':'140px','transform':'translate(-50%,0)'});
+			$panels.css({'top':'20%','transform':'translate(-50%,0)'});
 			$overlay.fadeOut(WELCOME_ANIMATION_TIME);
 		}
 

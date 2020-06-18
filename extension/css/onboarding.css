@@ -267,13 +267,16 @@
 	letter-spacing: -0.95px;	
 }
 
-.onboarding .illustrations.type-b .word-box
-{
-	border: 2px solid #1B1F27;	
-	padding: 6px 12px 6px 12px;
-	font-size: 16px;
-	letter-spacing: -0.65px;	
-	margin: 8px 8px 0 0;
+.onboarding .illustrations.type-b {
+    border: 3px solid #1B1F27;
+    padding: 8px 12px 7px 12px;
+    font-size: 19px;
+    letter-spacing: -0.65px;
+    margin: 35px 8px 9px 0;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    height: 80px;
 }
 
 
@@ -449,7 +452,7 @@
 	left: 50%;
 	width: 80%;
 	max-width: 1000px;
-	height: 550px;
+	height: 70%;
 	background: #fff;
 	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);	
 	z-index: 4;
@@ -840,7 +843,9 @@
     position: fixed;
     height: 90px;
     bottom: 15px;
-    left: 20px;
+	left: 30px;
+	transition: all 1s linear;
+
 }
 
 /*
@@ -867,5 +872,122 @@
 	0% { opacity: 0; } 
 	100% { opacity: 1; } 
 } 
+
+
+@media only screen and (max-width: 1250px) {
+	.onboarding .footer #hip-logo-white{
+		height:75px;
+
+	}
+
+	.onboarding .progress .step.current h1 {
+		font-size: 25px;
+		line-height: 30px;
+		transition: all 1s linear;
+
+		
+	}
+
+	.onboarding .panels .panel button.next {
+		width: 50px;
+		height: 50px;
+		transition: all 1s linear;
+
+
+	}
+
+	.onboarding .panels .panel button.next:before {
+		width: 28px;
+		height: 25px;
+		transition: all 1s linear;
+
+
+	}
+	.onboarding .panels .panel h1 {
+		font-size: 35px;
+		transition: all 1s linear;
+
+		
+	}
+	.onboarding .panels .panel {
+		padding-top: 30px;
+	}
+
+
+
+	.onboarding .illustrations.type-b {
+		font-size: 15px;
+		width: 130px;
+		height: 130px;
+		transition: all 250ms linear;
+	}
+
+	
+  }
+
+
+  @media only screen and (max-width: 700px) {
+	.onboarding .footer #hip-logo-white{
+		height:60px;
+
+	}
+
+
+	.onboarding .progress .step.current h1{
+		font-size: 20px;	
+		line-height: 24x;
+		transition: all 1s linear;
+
+	}
+
+	.onboarding .panels .panel h1 {
+		font-size: 25px;
+
+		
+	}
+
+	.onboarding .panels .panel {
+		padding-right: 5%;
+		padding-left: 5%;
+	}
+
+	.onboarding .progress .step [href] {
+		padding: 36px 9px 0 20px;
+	}
+
+	.onboarding .panels .panel.welcome {
+		padding-left: 30px;
+	}
+
+	.onboarding .details .three {
+		grid-column-gap: 10px;
+	}
+
+
+
+	
+	
+  }
+
+
+  @media only screen and (max-height: 600px) {
+	.onboarding .panels .panel h1 {
+		font-size: 35px;
+		transition: all 1s linear;
+
+		
+	}
+
+	.onboarding .panels .panel {
+		padding-top: 30px;
+		padding-right: 5%;
+	}
+
+	.onboarding .footer #hip-logo-white{
+		height:70px;
+
+	}
+  }
+
 
 
