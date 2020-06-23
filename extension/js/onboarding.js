@@ -372,7 +372,7 @@ function goToOnboardingStep (index)
 			$overlay.fadeIn(WELCOME_ANIMATION_TIME);
 		}
 		else if (index == 4){
-			$button.css({"left": "50px", "bottom": "60px", "height":"300px"});
+			$button.css({"left": "0px", "bottom": "0px", "position":"relative", "top": "10px"});
 			$buttonText.css({"font-size": "20px"});
 			$panels.css({'top':'20%','transform':'translate(-50%,0)'});
 			$overlay.fadeOut(WELCOME_ANIMATION_TIME);
