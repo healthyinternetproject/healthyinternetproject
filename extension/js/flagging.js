@@ -7,6 +7,7 @@ var currentUrl = "";
 var CONFIG = {};
 
 var uiInitialized = false;
+var autofilling = false;
 
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
@@ -74,15 +75,18 @@ jQuery(document).ready(function ($) {
 
 		let manifestData = browser.runtime.getManifest();
 
+
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
 		
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
 
-			let url        = tabs[0].url;
-			let displayUrl = url ? url : "";
-			let onboarding = (displayUrl.indexOf("chrome-extension://") === 0);
+			let url          = tabs[0].url;
+			let displayUrl   = url ? url : "";
+			let onboarding   = (displayUrl.indexOf("chrome-extension://") === 0);			
+
+			currentUrl = url;
 
 
 			if (!config.onboardingDone && !config.onboardingOptOut && !onboarding )
@@ -116,7 +120,7 @@ jQuery(document).ready(function ($) {
 			}
 			else
 			{
-				debug("Onboarding complete");
+				//debug("Onboarding complete");
 				$(".flagging-ui").css('display','block');				
 			}
 
@@ -125,12 +129,9 @@ jQuery(document).ready(function ($) {
 			{
 				//populate the flagging with details of the site
 
-				let title = getPageTitle( tabs[0].title );
-				let url = tabs[0].url;					
+				let title = getPageTitle( tabs[0].title );				
 				let favicon = "chrome://favicon/" + displayUrl;					
 				let messageDetails = isPermalink( displayUrl );
-
-				currentUrl = url;
 
 				if ( messageDetails )
 				{
@@ -143,6 +144,8 @@ jQuery(document).ready(function ($) {
 					}
 
 					$(".flagging .message").css('display','block');
+
+					adjustPopupSize(true); //toggle message screen size
 				}
 				else
 				{			
@@ -204,7 +207,6 @@ jQuery(document).ready(function ($) {
 				let newSeverity         = (severity <= 2) ? (severity+1) : 0;
 				let firstTimeOnboarding = true;
 
-
 				// for onboarding demo, when we loop back to original state, move tool tip to next location
 				if (firstTimeOnboarding && currentUrl.indexOf("chrome-extension://") === 0 && severity == 2)
 				{
@@ -212,7 +214,6 @@ jQuery(document).ready(function ($) {
 					firstTimeOnboarding = false;
 				}
 				
-
 				if (newSeverity == 0)
 				{
 					$this.removeClass('on');	
@@ -249,9 +250,15 @@ jQuery(document).ready(function ($) {
 				}
 				$this.attr("data-severity", newSeverity);
 
-				console.log("Severity is " + newSeverity);
+				debug("Severity is " + newSeverity);
 
-				updateCurrentReport();		
+				updateCurrentReport();
+			});
+
+
+			$("#reasoning").on("keyup", function () {
+
+				updateCurrentReport();
 			});
 
 			$("#reasoning").click(function (ev) {
@@ -353,11 +360,12 @@ jQuery(document).ready(function ($) {
 
 				$(".flagging .pane").removeClass("open");
 			});
+			
+			
+			restoreStoredReport(currentUrl);			
 
 		});
 	}
-
-
 });
 
 
@@ -411,7 +419,13 @@ function goToThanksPage ()
 
 function updateCurrentReport ()
 {
-	let flags             = $(".flagging ul.flags li");
+	if (autofilling == true)
+	{
+		debug("Autofilling, ignoring updateCurrentReport");
+		return;
+	}
+
+	let $flags            = $(".flagging ul.flags li");
 	let $selectedCampaign = $(".campaign .option.selected");
 	let campaign          = "";
 	let campaignId        = "";
@@ -424,18 +438,20 @@ function updateCurrentReport ()
 	}
 
 	currentReport = {
+		'url'        : currentUrl,
 		'flags'      : [],
 		'notes'      : $("#reasoning").val(),
 		'campaign'   : campaign,
 		'campaignId' : campaignId
-	};
+	};	
 
-	flags.each(function () {
+	$flags.each(function () {
 
-		let $this    = $(this);
-		let severity = parseInt($this.attr("data-severity"));
-		let good     = $this.hasClass("good");
-		let $image   = $this.find(".icon img");
+		let $this      = $(this);
+		let severity   = parseInt($this.attr("data-severity"));
+		let good       = $this.hasClass("good");
+		let $image     = $this.find(".icon img");
+		let jsonReport = "";
 
 		if (severity > 0)
 		{
@@ -449,10 +465,7 @@ function updateCurrentReport ()
 		}
 	});
 
-	debug(currentReport);
-
-
-	//todo: save to localStorage in case we need to resume
+	setStoredReport(currentUrl, currentReport);
 }
 
 
@@ -514,16 +527,18 @@ function updateThanksPage ()
 }
 
 
-function adjustPopupSize ()
+function adjustPopupSize (messageToggle)
 {
 	let newHeight     = 0;
 	let $activePage   = $(".page.active");
 	let $button       = $activePage.find(".button");
 	let bottomPadding = 20;
+	let $flagging = $(".flagging");
 
-	if ($button.length > 0)
+	if(messageToggle){
+		$flagging.height("auto");	//set height to auto for messages with no "page"
+	}else if ($button.length > 0)
 	{
-		let $flagging = $(".flagging");
 		newHeight = $button.offset().top + $button.outerHeight() + bottomPadding;
 
 		$flagging.height( newHeight + "px" );
@@ -532,7 +547,6 @@ function adjustPopupSize ()
 			$flagging.css('transition','height 200ms ease-in-out');	
 		}, 100);
 		
-
 		console.log($button.offset().top, $button.outerHeight(), newHeight);
 	}
 	else
@@ -623,4 +637,114 @@ function showError (messageKey, buttons)
 	$(".flagging .error").css('display','block');
 	$(".flagging-ui").css('display','none');								
 	$(".flagging .pages").css('display','none');
+}
+
+
+function getStoredReport (url)
+{
+	let escapedUrl = encodeURIComponent(url);
+	let report = localStorage[escapedUrl];
+
+	if (report)
+	{
+		debug("Found stored report for " + escapedUrl);
+		
+		let parsed = JSON.parse(report);
+		debug(parsed);
+		return parsed;
+	}	
+	debug("No stored report for " + escapedUrl);
+}
+
+
+function setStoredReport (url, report)
+{
+	if (autofilling == true)
+	{
+		//dont save the report if it's the stored report being autofilled
+		debug("Autofilling, ignoring setStoredReport");
+		return;
+	}
+	let json = JSON.stringify(report);
+	localStorage[encodeURIComponent(url)] = json;
+	debug("Saved report");
+	debug(json);
+}
+
+
+function clearStoredReport (url)
+{
+	let escapedUrl = encodeURIComponent(url);
+	localStorage.removeItem(escapedUrl);
+}
+
+
+function restoreStoredReport (url)
+{
+	let storedReport = getStoredReport(url);
+	let $flags       = $(".flagging ul.flags li");
+	let $campaigns   = $(".campaign .option");
+
+	if (!storedReport || !storedReport.url)
+	{
+		return false;
+	}
+
+	autofilling = true; //set global var
+	
+	//save to global var
+	currentReport = storedReport;
+
+	debug("Re-entering report data");
+	debug(currentReport);
+
+	//update the UI with stored report data
+	$("#reasoning").val(currentReport.notes);
+
+	debug("Flags in report: " + currentReport.flags.length);
+
+	for (var i=0; i < currentReport.flags.length; i++)
+	{
+		
+		let currentFlag = currentReport.flags[i];
+		debug("Setting flag id " + currentFlag.flag_type_id);
+		
+
+		for (let j=0; j < $flags.length; j++)
+		{
+			
+			let $flag = $( $flags[j] );
+
+			if ($flag.attr("data-id") == currentFlag.flag_type_id)
+			{
+				for (let k=0; k < currentFlag.severity; k++)
+				{
+					$flag.trigger('click'); //click this flag once for each level of severity
+				}			
+			}
+
+		}
+		
+
+		debug("i = " + i);
+	}
+
+	debug("Done with flags, i = " + i);
+
+	if (storedReport.campaignId)
+	{
+		for (let i=0; i < $campaigns.length; i++)
+		{
+			let $campaign = $( $campaigns[i] );
+
+			if ($campaign.attr("data-campaign-id") == storedReport.campaignId)
+			{
+				$campaign.trigger('click');
+				$campaign.trigger('click'); //click again to close the select popup
+				break;
+			}
+		}	
+	}
+
+	autofilling = false; //set global var
 }
