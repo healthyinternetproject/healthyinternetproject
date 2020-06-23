@@ -144,6 +144,8 @@ jQuery(document).ready(function ($) {
 					}
 
 					$(".flagging .message").css('display','block');
+
+					adjustPopupSize(true); //toggle message screen size
 				}
 				else
 				{			
@@ -525,16 +527,18 @@ function updateThanksPage ()
 }
 
 
-function adjustPopupSize ()
+function adjustPopupSize (messageToggle)
 {
 	let newHeight     = 0;
 	let $activePage   = $(".page.active");
 	let $button       = $activePage.find(".button");
 	let bottomPadding = 20;
+	let $flagging = $(".flagging");
 
-	if ($button.length > 0)
+	if(messageToggle){
+		$flagging.height("auto");	//set height to auto for messages with no "page"
+	}else if ($button.length > 0)
 	{
-		let $flagging = $(".flagging");
 		newHeight = $button.offset().top + $button.outerHeight() + bottomPadding;
 
 		$flagging.height( newHeight + "px" );
@@ -543,7 +547,6 @@ function adjustPopupSize ()
 			$flagging.css('transition','height 200ms ease-in-out');	
 		}, 100);
 		
-
 		console.log($button.offset().top, $button.outerHeight(), newHeight);
 	}
 	else
