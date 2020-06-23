@@ -278,6 +278,35 @@ jQuery(document).ready(function ($) {
 		});
 
 
+		$(".troubleshoot").each(function () {
+
+			let $troubleshoot = $("#troubleshoot");
+			let $tips = $("#tips");
+
+			$troubleshoot.click(function () {
+				$tips.css({'display':'block'});
+
+
+			});
+		});
+
+
+		$("#button-container-notif").each(function () {
+
+			let $buttonNotif = $("#button-container-notif");
+			let $tips = $("#tips");
+
+			count = 0;
+			$buttonNotif.click(function () {
+
+				count += 1;
+				if(count > 2){
+					$tips.css({'display':'block'});
+				}
+			});
+		});
+
+
 		//let browser back/forward buttons work as expected
 		window.onhashchange = function () {
 
@@ -330,6 +359,8 @@ function goToOnboardingStep (index)
 		let logoState          = $target.attr("data-logo");	
 		let $progress          = $("ul.progress");	
 		let $panels            = $target.closest('.panels');
+		let $button            = $('#button-container-notif');
+		let $buttonText        = $('#send-notification');
 		let $overlay           = $("#bg-overlay");
 
 		window.location.href = window.location.pathname + "#" + index;
@@ -339,6 +370,12 @@ function goToOnboardingStep (index)
 			$panels.css('transform','translate(-50%,-50%)'); 
 			$panels.css('top','50%'); 
 			$overlay.fadeIn(WELCOME_ANIMATION_TIME);
+		}
+		else if (index == 4){
+			$button.css({"left": "50px", "bottom": "60px", "height":"300px"});
+			$buttonText.css({"font-size": "20px"});
+			$panels.css({'top':'20%','transform':'translate(-50%,0)'});
+			$overlay.fadeOut(WELCOME_ANIMATION_TIME);
 		}
 		else
 		{
