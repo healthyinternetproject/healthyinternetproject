@@ -791,7 +791,7 @@
 
 .onboarding .timed-appearance
 {
-	display: none;
+	display: block;
 }
 
 .onboarding .tip
@@ -799,7 +799,8 @@
 	font-size: 13px;
 	max-width: 200px;
 	margin-top: 12px;
-    line-height: 1.4em;
+	line-height: 1.4em;
+	width: 150px;
 }
 
 .onboarding #footer{
@@ -848,18 +849,18 @@
 }
 
 .onboarding .panels .panel .tips{
-	bottom: 25px;
     position: absolute;
     display: none;
     border: 2px solid black;
     border-radius: 10px;
-    width: 600px;
-    height: 350px;
-	left: 370px;
-	font-size: 20px;
-	line-height: 25px;
-	padding: 13px;
-	transition: all 1s ease-in-out;
+    width: 60%;
+    height: 50%;
+    left: 36%;
+    font-size: 16px;
+    line-height: 25px;
+    padding: 13px;
+    transition: all 1s ease-in-out;
+    top: 33%;
 }
 
 .onboarding .panels .panel .tips div span .apple-icon{
@@ -940,6 +941,15 @@
 		transition: all 250ms linear;
 	}
 
+	.onboarding .panels .panel .button-container{	
+		width: 50px;
+	}
+
+	.onboarding .panels .panel .tips{
+		height: 65%;
+		top: 30%;
+	}
+
 	
   }
 
@@ -981,6 +991,8 @@
 		grid-column-gap: 10px;
 	}
 
+	
+
 
 
 	
@@ -1005,6 +1017,8 @@
 		height:70px;
 
 	}
+
+
   }
 
 
