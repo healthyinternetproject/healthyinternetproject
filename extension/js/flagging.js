@@ -129,8 +129,8 @@ jQuery(document).ready(function ($) {
 			{
 				//populate the flagging with details of the site
 
-				let title = getPageTitle( tabs[0].title );				
-				let favicon = "chrome://favicon/" + displayUrl;					
+				let title          = getPageTitle( tabs[0].title );				
+				let favicon        = "chrome://favicon/" + displayUrl;					
 				let messageDetails = isPermalink( displayUrl );
 
 				if ( messageDetails )
@@ -144,6 +144,7 @@ jQuery(document).ready(function ($) {
 					}
 
 					$(".flagging .message").css('display','block');
+					$(".flagging .pages").css('display','none');
 
 					adjustPopupSize(true); //toggle message screen size
 				}
@@ -533,11 +534,13 @@ function adjustPopupSize (messageToggle)
 	let $activePage   = $(".page.active");
 	let $button       = $activePage.find(".button");
 	let bottomPadding = 20;
-	let $flagging = $(".flagging");
+	let $flagging     = $(".flagging");
 
-	if(messageToggle){
+	if (messageToggle)
+	{
 		$flagging.height("auto");	//set height to auto for messages with no "page"
-	}else if ($button.length > 0)
+	}
+	else if ($button.length > 0)
 	{
 		newHeight = $button.offset().top + $button.outerHeight() + bottomPadding;
 
@@ -701,14 +704,10 @@ function restoreStoredReport (url)
 	//update the UI with stored report data
 	$("#reasoning").val(currentReport.notes);
 
-	debug("Flags in report: " + currentReport.flags.length);
-
 	for (var i=0; i < currentReport.flags.length; i++)
 	{
 		
 		let currentFlag = currentReport.flags[i];
-		debug("Setting flag id " + currentFlag.flag_type_id);
-		
 
 		for (let j=0; j < $flags.length; j++)
 		{
@@ -724,12 +723,7 @@ function restoreStoredReport (url)
 			}
 
 		}
-		
-
-		debug("i = " + i);
 	}
-
-	debug("Done with flags, i = " + i);
 
 	if (storedReport.campaignId)
 	{
