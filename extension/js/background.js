@@ -1,6 +1,7 @@
 
 //if you change this, also update the matching permissions in manifest.json
 var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/"; 
+//var API_ROOT_URL = "https://127.0.0.1/api/v1/"; //for local testing only
 
 var CONFIG = {
 	'userId'           : false,
@@ -385,7 +386,12 @@ function sendToAPI ( term, data, authenticate, callback )
 
 function registerUser ( callback )
 {
-	return sendToAPI( "register", false, false, callback );
+	let language = navigator.languages[0]; //this may need to be more robust, I'm not sure -AB
+
+	let data = {
+		'locale' : language
+	};
+	return sendToAPI( "register", data, false, callback );
 }
 
 
@@ -404,7 +410,6 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 	{	
 		campaignId = 5; //default to 'none'
 	}
-
 
 	let data = {
 		'url'         : encodeURIComponent(url),
