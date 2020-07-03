@@ -1,8 +1,10 @@
 
 #import sys
+
+import os
 import json
 import flask
-from flask import request, jsonify, abort
+from flask import request, jsonify, abort, send_from_directory
 from datetime import datetime
 import random
 import string
@@ -35,7 +37,7 @@ def quit_with_error(title,message,code=500):
 	print(title + ": " + message)
 	#return "<h1>" + title + "</h1><p>" + message + "</p>", code
 	#sys.exit()
-	abort(code, description=title)
+	#abort(code, description=title)
 
 	results = {
 		'status': 'error',
@@ -58,7 +60,8 @@ def random_string(string_length=10):
 
 def random_number(digits=9):
 	"""Generate a random number of fixed length """
-	firstdigit = '123456789' # zero not allowed as first digit
+	# zero not allowed as first digit, otherwise you get fewer digits than you expect if you convert to int
+	firstdigit = '123456789' 
 	characters = string.digits
 	randomstring = random.choice(firstdigit) + ''.join(random.choice(characters) for i in range(digits-1))
 	return randomstring
@@ -103,11 +106,33 @@ def authenticate_user(user_id, password):
 			return user
 		else:
 			print("Incorrect password\n")
+			return False
 	else:
 		print("User not found\n")
-	
-	return False
-	
+		return False
+
+
+def get_locale_id(locale_string):
+
+	if locale_string: 
+		# we use a LIKE query because the browser might send a less specific language code
+		# e.g., 'en' rather than 'en-US'
+		locale_query = "SELECT * FROM locale WHERE code LIKE %s LIMIT 1"
+		locale       = db.fetchone(locale_query, ('%' + locale_string + '%',))
+
+		if (locale and locale['locale_id']):
+			logging.debug("Locale id is " + str(locale['locale_id']))
+			return locale['locale_id']
+		else:
+			logging.debug("Locale not found")
+
+	return config['default_locale_id']
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -121,21 +146,37 @@ def home():
 
 @app.route('/api/v1/register', methods=['GET','POST'])
 def api_register():
-	timestamp = datetime.now()	
-	password  = random_string(20)
-	ph        = PasswordHasher()
-	hash      = ph.hash(password)	
+	requestJson = request.form.get("json")
+	timestamp   = datetime.now()	
+	password    = random_string(20)
+	ph          = PasswordHasher()
+	hash        = ph.hash(password)	
+	params      = ''
+	locale      = ''
 
 	logging.debug("Trying to register user...")
 
-	try:
+	try:		
+		requestJson = request.form.get("json")
+
+		if not requestJson:
+			# check if sent via GET, probably testing
+			requestJson = request.args.get('json')
+
+		if (requestJson):
+			params = json.loads(requestJson)
+			locale = params.get("locale")
+		else:
+			logging.debug("Locale not found in params (" + str(requestJson) + ")");
+
 		user_id = get_unique_user_id()
+		locale_id = get_locale_id(locale)
 
 		add_user = ("INSERT INTO user "
 			"(user_id, created, password_hash, locale_id) "
 			"VALUES (%s, %s, %s, %s)")
 
-		user_data = (user_id, timestamp, hash, 1)
+		user_data = (user_id, timestamp, hash, locale_id)
 
 		# Insert new user
 		db.execute(add_user, user_data)
@@ -143,7 +184,6 @@ def api_register():
 
 		logging.debug("Added user ID " + str(user_id))
 
-		# todo: Add role link
 		add_role_link = ("INSERT INTO user_role_link"
 			"(user_id, role_id, begin) "
 			"VALUES (%s, %s, %s)"

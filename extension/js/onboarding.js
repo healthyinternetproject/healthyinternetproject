@@ -110,7 +110,8 @@ jQuery(document).ready(function ($) {
 			},2000);
 
 		}
-		else if (request.command == 'move-hand-submit'){
+		else if (request.command == 'move-hand-submit')
+		{
 			$("#pointer-hand").removeClass();
 			$("#pointer-tip").removeClass();
 
@@ -138,6 +139,10 @@ jQuery(document).ready(function ($) {
 			window.location.href = window.location.pathname + "#6";
 			sendResponse({result: "success"});
 			browser.runtime.sendMessage({command: 'onboarding-done'}, function () {});
+		}
+		else
+		{
+			console.log("Unrecognized command");
 		}
 
 		return Promise.resolve("Dummy response to keep the console quiet");
@@ -291,16 +296,19 @@ jQuery(document).ready(function ($) {
 		});
 
 
-		$("#button-container-notif").each(function () {
+		$("#button-container-notif").each(function () 
+		{
 
 			let $buttonNotif = $("#button-container-notif");
 			let $tips = $("#tips");
 
 			count = 0;
-			$buttonNotif.click(function () {
+			$buttonNotif.click(function () 
+			{
 
 				count += 1;
-				if(count > 2){
+				if(count > 2)
+				{
 					$tips.css({'display':'block'});
 				}
 			});
