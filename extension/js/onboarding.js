@@ -362,6 +362,9 @@ function goToOnboardingStep (index)
 		let $button            = $('#button-container-notif');
 		let $buttonText        = $('#send-notification');
 		let $overlay           = $("#bg-overlay");
+		let $tedconf           = $("#ted-conf");
+		let $copyright         = $("#copyright");
+
 
 		window.location.href = window.location.pathname + "#" + index;
 
@@ -374,8 +377,17 @@ function goToOnboardingStep (index)
 		else if (index == 4){
 			$button.css({"left": "0px", "bottom": "0px", "position":"relative", "top": "10px"});
 			$buttonText.css({"font-size": "20px"});
+			$tedconf.css({'color':'white'});
+			$copyright.css({'color':'white'});
 			$panels.css({'top':'20%','transform':'translate(-50%,0)'});
 			$overlay.fadeOut(WELCOME_ANIMATION_TIME);
+		}
+		else if (index > 4){
+			$tedconf.css({'color':'white'});
+			$copyright.css({'color':'white'});
+			$panels.css({'top':'20%','transform':'translate(-50%,0)'});
+			$overlay.fadeOut(WELCOME_ANIMATION_TIME);
+
 		}
 		else
 		{
