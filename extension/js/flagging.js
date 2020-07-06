@@ -89,7 +89,12 @@ jQuery(document).ready(function ($) {
 			currentUrl = url;
 
 
-			if (!config.userId || (!config.onboardingDone && !config.onboardingOptOut && !onboarding) )
+			if (!config.userId)
+			{
+				//missing user id, launch onboarding to get a user id from the api
+				window.open("/html/onboarding.html");
+			}
+			else if ( !config.onboardingDone && !config.onboardingOptOut && !onboarding )
 			{
 				debug("Onboarding incomplete");
 				debug(config);
