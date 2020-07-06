@@ -1,6 +1,6 @@
 {
     "name": "__MSG_extension_title__",
-    "version": "2020.07.06.1",
+    "version": "2020.07.06.2",
     "default_locale" : "en",
     "description": "__MSG_extension_description__",
     "permissions": [ 

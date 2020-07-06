@@ -89,7 +89,7 @@ jQuery(document).ready(function ($) {
 			currentUrl = url;
 
 
-			if (!config.onboardingDone && !config.onboardingOptOut && !onboarding )
+			if (!config.userId || (!config.onboardingDone && !config.onboardingOptOut && !onboarding) )
 			{
 				debug("Onboarding incomplete");
 				debug(config);
