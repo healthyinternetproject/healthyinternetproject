@@ -70,7 +70,6 @@ jQuery(document).ready(function ($) {
 	{
 		if (uiInitialized) { return; }
 
-		debug("Initializing UI");
 		uiInitialized = true;
 
 		let manifestData = browser.runtime.getManifest();
@@ -78,7 +77,7 @@ jQuery(document).ready(function ($) {
 
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
-		
+
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
 
@@ -97,7 +96,7 @@ jQuery(document).ready(function ($) {
 			else if ( !config.onboardingDone && !config.onboardingOptOut && !onboarding )
 			{
 				debug("Onboarding incomplete");
-				debug(config);
+				//debug(config);
 
 				showError( 
 					'onboarding_incomplete', 
@@ -357,9 +356,16 @@ jQuery(document).ready(function ($) {
 			});
 
 
-			$(".flagging .menu-open").click(function () {
+			$(".flagging .menu-open").click(function (ev) {
 
-				$(".flagging .pane").addClass("open");
+				if (ev.ctrlKey || ev.metaKey)
+				{
+					toggleDevConsole();
+				}
+				else
+				{
+					$(".flagging .pane").addClass("open");
+				}
 			});
 
 			$(".flagging .menu-close").click(function () {
@@ -407,7 +413,7 @@ function sendFlagData (currentReport, currentUrl)
 
 function debug (data)
 {
-	let $debug = $("#debugger");
+	let $debug = $("#debugger .messages");
 	let existing = $debug.html();
 	let json = JSON.stringify(data);
 
@@ -746,4 +752,19 @@ function restoreStoredReport (url)
 	}
 
 	autofilling = false; //set global var
+}
+
+
+function toggleDevConsole ()
+{
+	let $body = $("body");
+
+	if ($body.hasClass('debug'))
+	{
+		$body.removeClass("debug");
+	}
+	else
+	{
+		$body.addClass("debug");
+	}
 }
