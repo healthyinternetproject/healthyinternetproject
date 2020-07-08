@@ -406,6 +406,8 @@ function sendMissionToAPI (mission_id)
 
 function sendFlagDataToAPI (url, campaignId, flags, notes)
 {
+	let language = navigator.languages[0]; 
+
 	if (!campaignId)
 	{	
 		campaignId = 5; //default to 'none'
@@ -415,7 +417,8 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 		'url'         : encodeURIComponent(url),
 		'campaign_id' : campaignId,
 		'flags'       : flags,
-		'notes'       : encodeURIComponent(notes)
+		'notes'       : encodeURIComponent(notes),
+		'locale'      : language
 	};
 
 	let callback = function (data) 

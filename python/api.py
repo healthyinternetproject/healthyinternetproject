@@ -115,6 +115,10 @@ def authenticate_user(user_id, password):
 def get_locale_id(locale_string):
 
 	if locale_string: 
+
+		# replace underscore with hyphen to match our format
+		locale_string = locale_string.replace("_", "-")
+
 		# we use a LIKE query because the browser might send a less specific language code
 		# e.g., 'en' rather than 'en-US'
 		locale_query = "SELECT * FROM locale WHERE code LIKE %s LIMIT 1"
@@ -269,6 +273,7 @@ def api_flag():
 	notes             = params.get("notes")
 	flags             = params.get("flags")
 	campaign_id       = params.get("campaign_id")
+	locale            = params.get("locale")
 	user_id           = request.form.get('user_id')
 	password          = request.form.get('password')
 	timestamp         = datetime.now()	
@@ -284,6 +289,8 @@ def api_flag():
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
 	
 	try:
+		locale_id = get_locale_id(locale)
+
 		# url is encoded on arrival, decode it before storing
 		url = urllib.parse.unquote(url)
 
@@ -294,7 +301,7 @@ def api_flag():
 			"(user_id, locale_id, url, notes, campaign_id) "
 			"VALUES (%s, %s, %s, %s, %s)")
 
-		event_data = (user['user_id'], user['locale_id'], url, notes, campaign_id)
+		event_data = (user['user_id'], locale_id, url, notes, campaign_id)
 
 		# Insert new event
 		db.execute(add_event, event_data)
