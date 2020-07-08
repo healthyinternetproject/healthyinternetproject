@@ -167,6 +167,7 @@ def api_register():
 			params = json.loads(requestJson)
 			locale = params.get("locale")
 			logging.debug("Request JSON: " + requestJson)
+			logging.debug("Locale string: " + locale)
 		else:
 			logging.debug("Locale not found in params (" + str(requestJson) + ")");
 
