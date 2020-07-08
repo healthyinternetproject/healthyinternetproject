@@ -23,9 +23,7 @@ jQuery(document).ready(function ($) {
 
 	debug('Document ready.');
 
-	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-
-		debug(request);
+	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {		
 
 		if (request.command == 'config')
 		{				
@@ -57,7 +55,12 @@ jQuery(document).ready(function ($) {
 		{				
 			debug(request.data);
 			goToThanksPage();
-		}		
+		}	
+		else
+		{
+			debug("Unrecognized request:");
+			debug(request);
+		}	
 
 		return Promise.resolve("Dummy response to keep the console quiet");
 	});
@@ -255,7 +258,7 @@ jQuery(document).ready(function ($) {
 				}
 				$this.attr("data-severity", newSeverity);
 
-				debug("Severity is " + newSeverity);
+				//debug("Severity is " + newSeverity);
 
 				updateCurrentReport();
 			});
@@ -433,7 +436,7 @@ function updateCurrentReport ()
 {
 	if (autofilling == true)
 	{
-		debug("Autofilling, ignoring updateCurrentReport");
+		//debug("Autofilling, ignoring updateCurrentReport");
 		return;
 	}
 
@@ -676,13 +679,13 @@ function setStoredReport (url, report)
 	if (autofilling == true)
 	{
 		//dont save the report if it's the stored report being autofilled
-		debug("Autofilling, ignoring setStoredReport");
+		//debug("Autofilling, ignoring setStoredReport");
 		return;
 	}
 	let json = JSON.stringify(report);
 	localStorage[encodeURIComponent(url)] = json;
-	debug("Saved report");
-	debug(json);
+	//debug("Saved report");
+	//debug(json);
 }
 
 
