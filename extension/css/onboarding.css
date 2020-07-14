@@ -97,7 +97,7 @@
 
 .onboarding #pointer-hand.point-at-flag
 {
-	top: 80px;
+	top: 60px;
 	right: 620px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
@@ -108,7 +108,7 @@
 
 .onboarding #pointer-hand.point-at-text
 {
-	top: 370px !important;
+	top: 340px !important;
 	right: 620px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
@@ -120,7 +120,7 @@
 
 .onboarding #pointer-hand.point-at-dropdown
 {
-	top: 450px !important;
+	top: 410px !important;
 	right: 620px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
@@ -132,8 +132,8 @@
 
 .onboarding #pointer-hand.point-at-submit
 {
-	top: 555px !important;
-	right: 175px;	
+	top: 495px !important;
+	right: 205px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
 	animation: slide-frames ease-in-out infinite;
@@ -193,7 +193,7 @@
 .onboarding #pointer-tip.point-at-dropdown
 {
 	opacity: 1;
-	top: 400px  !important;
+	top: 410px  !important;
 	right: 690px;	
 	opacity: 1;
 	background-image: none;
@@ -204,7 +204,7 @@
 .onboarding #pointer-tip.point-at-submit
 {
 	opacity: 1;
-	top: 640px !important;
+	top: 580px !important;
 	right: 85px;		
 	opacity: 1;
 	background-image: none;
