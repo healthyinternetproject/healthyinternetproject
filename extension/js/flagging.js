@@ -593,10 +593,11 @@ function isPermalink ( url )
 	{
 		//todo: there's probably a better way to do this
 		if ( 
-			url.indexOf("/posts/") === -1 &&
+			url == "https://www.facebook.com/"
+			/*url.indexOf("/posts/") === -1 &&
 			url.indexOf("/photos/") === -1 &&
 			url.indexOf("/permalink/") === -1 &&
-			url.indexOf("/photo.php") === -1
+			url.indexOf("/photo.php") === -1*/
 		) 
 		{
 			return {
