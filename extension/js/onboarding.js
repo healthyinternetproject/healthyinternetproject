@@ -293,6 +293,16 @@ jQuery(document).ready(function ($) {
 
 
 			});
+        });
+        
+        $(".inspiration").each(function () {
+
+			let $inspiration = $("#inspiration");
+			let $inspirationFlag = $("#inspirationFlag");
+
+			$inspiration.click(function () {
+				$inspirationFlag.css({'display':'block'});
+			});
 		});
 
 

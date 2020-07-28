@@ -767,17 +767,18 @@
 	height: auto;
 }
 
+h3{
+	font-weight: 600;
+	font-size: 24px;
+	margin-bottom: 0.3em;
+}
+
 .onboarding .icon-info li label
 {
 	display: block;
 	font-weight: 600;
 	font-size: 24px;
 	margin-bottom: 0.3em;
-}
-
-.onboarding .icon-info li label .description
-{
-
 }
 
 .onboarding .details .three
@@ -862,6 +863,38 @@
     transition: all 1s ease-in-out;
     top: 40%;
 }
+
+.onboarding .next-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.onboarding .next-container .words{
+    margin-top:40px;
+    flex:6;
+}
+.onboarding .next-container .words div{
+    margin-bottom:20px;
+    max-width:90%;
+}
+
+.onboarding .next-container .words .body{
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.onboarding .next-container .image{
+    flex:4;
+}
+
+.onboarding .next-container .image img{
+    display: none;
+    width:100%;
+    max-height: 400px;
+    object-fit: contain;
+}
+
 
 .onboarding .panels .panel .tips div span .apple-icon{
 	width: 70px;
