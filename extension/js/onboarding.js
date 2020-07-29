@@ -266,6 +266,56 @@ jQuery(document).ready(function ($) {
 			}
 		});
 
+		$("#launch-demo").click(function () {
+			let $demo = $(".demo");
+			let $bgoverlay = $("#bg-overlay");
+			let $browserbar = $(".browserbar");
+			let $demoarticle = $(".demo-article");
+			let $button = $("#button-container-demo")
+			let $content = $(".content")
+			let $panels = $(".panels");
+			let $contentwarning = $(".content-warning");
+
+
+			$panels.css({ 'color': 'rgba(255, 255, 255, .15)', 'filter': 'blur(5px)'});
+			$contentwarning.css({'display':'block'})
+
+
+			$demo.css({'display':'block',
+			'position': 'absolute',
+			'top': '-40px',
+			'left': '0'});
+
+			$bgoverlay.css({'display': 'block', 'background-color': '#2FC38E'});	
+			$browserbar.css({'width': '1000px', 'max-width': '1000px'});
+			$demoarticle.css({'width': '1000px', 'max-width': '1000px', 'height': '570px'});
+			$button.css({'display':'none'});
+			$content.css({'font-size': '20px'});
+			
+		});
+
+
+		$("#button-container-review").click(function () {
+			let $contentwarning = $(".content-warning");
+			let $panels = $(".panels");
+
+			$panels.css({ 'filter': 'blur(0px)'});
+			$contentwarning.css({'display':'none'})
+
+		});
+
+		$("#uncomfortable-link").click(function () {
+			let $first = $(".first");
+			let $noreview = $(".no-review");
+
+			$first.css({'display':'none'})
+			$noreview.css({'display': 'block'})
+
+		});
+
+
+		
+
 
 		$(".timed-appearance").each(function () {
 

@@ -27,7 +27,7 @@
 	"contains"                            : { "message" : "contains..." },
 
 
-	"cws_main"                            : { "message" : "The internet can either educate and inspire us all, or provide a platform for fear-mongering, hate, and lies. With the Healthy Internet Project, incubated at TED, we want to identify and uplift content that benefits society while discouraging content that harms people and societies. But with well over one billion sites on the web, plus so much content across social media services, we can’t do it alone.	<br> This tool lets you flag the best and the worst you see online — be it a news article, a video, or a social media post. We’re partnering with journalists, community leaders, and tech companies, who will see your flags and take action. They’ll write stories, educate locally in the real world, and remove content that violates their policies. It’s an audacious experiment in crowdsourced moderation.  <br> As a new user, your flags will be reviewed by a more experienced member of the community—a “mentor”—before they’re added to our database. After developing a track record, you can become a mentor yourself. <br> We do not request personal information from you: There’s no log-ins, no emails, no names, no phone numbers. <br> Join us, and help make the internet what it should be."},
+	"cws_main"                            : { "message" : "The internet can either educate and inspire us all, or provide a platform for fear-mongering, hate, and lies. With the Healthy Internet Project, incubated at TED, we want to identify and uplift content that benefits society while discouraging content that harms people and societies. But with well over one billion sites on the web, plus so much content across social media services, we can’t do it alone. <br> This tool lets you flag the best and the worst you see online — be it a news article, a video, or a social media post. We’re partnering with journalists, community leaders, and tech companies, who will see your flags and take action. They’ll write stories, educate locally in the real world, and remove content that violates their policies. It’s an audacious experiment in crowdsourced moderation.  <br> As a new user, your flags will be reviewed by a more experienced member of the community—a \"mentor\"—before they’re added to our database. After developing a track record, you can become a mentor yourself. <br> We do not request personal information from you: There’s no log-ins, no emails, no names, no phone numbers. <br> Join us, and help make the internet what it should be."},
 	"cws_lets_rebuild"                    : { "message" : "Lets rebuild a healthy internet!" },
 	"cws_our_online_lives"                : { "message" : "Our online lives should be full of healthy conversations and truthful information, not hate and lies" },
 	"cws_quickly_flag"                    : { "message" : "Quickly flag harmful sites" },
@@ -118,6 +118,8 @@
 	"mentorship_avoid_short_vague" 		  : { "message": "<em> Avoid short, vague feedback"},
 	"mentorship_avoid_short_vague_ex" 	  : { "message": "“Great job. I agree!”"},
 	"mentorship_chat" 		  			  : { "message": "Chat with the TED HIP team"},
+	"mentorship_dont_see_notification"    : { "message" : "Not seeing a notification? View our  <a href='javascript:void(0)' id = 'troubleshoot' class = 'troubleshoot' onclick = 'showTips()'>troubleshooting options</a> or  <a href='onboarding-mentor.html#3'>skip this step</a>." },
+	
 	"mentorship_feedback_examples" 		  : { "message": "Some feedback examples:"},
 	"mentorship_join_slack" 		  	  : { "message": "Join the mentor Slack"},
 	"mentorship_mission_opt_out" 		  : { "message": "Mission opt-out"},
@@ -137,6 +139,7 @@
 	"mentorship_thank_you"				  : { "message": "We are excited for your larger role in fighting the missions we care about! The Internet is getting healthier already!"},
 	"mentorship_view_feedback_guide" 	  : { "message": "View our <a href='http://healthyinternetproject.org/resources' target='_blank'>feedback guide</a>."},
 	"mentorship_what_do_you_want" 	      : { "message": "What do you want to review?"},
+	"mentorship_youll_get"				  : { "message": "You’ll get a notification when a flag needs your expert review."},
 
 
 
