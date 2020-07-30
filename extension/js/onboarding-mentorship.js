@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
 		else if (request.command == 'notification-click')
 		{
 			console.log("Notification clicked");
-			window.location.href = window.location.pathname + "#5";
+			window.location.href = window.location.pathname + "#3";
 			sendResponse({result: "success"});
 		}
 		else if (request.command == 'move-hand-flag')
@@ -50,19 +50,19 @@ jQuery(document).ready(function ($) {
 			var top = 0;
 			switch($(".mission-name").text()) {
 				case "worthwhile ideas":
-					top = 50;
+					top = 95;
 				  break;
 				case "lies or manipulation":
-					top = 125;
+					top = 170;
 					break;
 				case "abuse or harassment":
-					top = 187;
+					top = 227;
 					break;
 				case "division or fear":
-					top = 245;
+					top = 293;
 				  break;
 				default:
-					top = 55;
+					top = 95;
 			  }
 			$(".onboarding #pointer-hand.point-at-flag").css("top", top);
 			$(".onboarding #pointer-tip.point-at-flag").css("top", top);
@@ -264,7 +264,32 @@ jQuery(document).ready(function ($) {
 			{
 				browser.runtime.sendMessage({command: 'sample-notification'}, function (response) { console.log(response); });
 			}
-		});
+        });
+
+        $(".submit_feedback").click(function () {
+
+            let $current = $(".panel.current");
+            let $contentwarning = $(".content-warning");
+			let currentIndex = $current.attr("data-index");
+            let nextIndex = parseInt(currentIndex) + 1;
+            let $panels = $(".panels");
+
+
+			//console.log(nextIndex);
+
+						
+            window.location.href = window.location.pathname + "#" + nextIndex;
+            $contentwarning.css({'display':'none'})
+            $panels.css({ 'filter': 'blur(0px)'});
+
+        });
+        
+        $(".close").click(function () {
+            window.location.href = "https://www.google.com"
+
+
+        });
+ 
 
 		$("#launch-demo").click(function () {
 			let $demo = $(".demo");
@@ -342,16 +367,6 @@ jQuery(document).ready(function ($) {
 				$tips.css({'display':'block'});
 
 
-			});
-        });
-        
-        $(".inspiration").each(function () {
-
-			let $inspiration = $("#inspiration");
-			let $inspirationFlag = $("#inspirationFlag");
-
-			$inspiration.click(function () {
-				$inspirationFlag.css({'display':'block'});
 			});
 		});
 
@@ -436,7 +451,7 @@ function goToOnboardingStep (index)
 
 		window.location.href = window.location.pathname + "#" + index;
 
-		if (index == 0 || index == 5)
+		if (index == 0)
 		{
 			$panels.css('transform','translate(-50%,-50%)'); 
 			$panels.css('top','50%'); 
