@@ -143,6 +143,7 @@
      "we_care_about_user_privacy"           : { "message": "A privacidade do usuário é importante para nós, e por isso não coletamos seu email nem telefone, e nem mesmo seu nome. Tudo o que importa é seu registro de marcações, que é armazenado apenas em nosso servidor -- não em seu dispositivo. Por favor não revele sua identidade em nenhum lugar nesta ferramenta -- nós não a queremos!" },
      "we_share_your_findings"               : { "message": "Finalmente, nós compartilhamos suas descobertas com pessoas em posição de agir. Vamos manter você informado(a) sobre o impacto que gerou." },
      "we_want_zero_personal_info"           : { "message": "Não queremos <em> nenhuma </em> informação pessoal." },
+     "we_will_share_your_flag"       	      : { "message" : "Vamos enviar suas marcações para jornalistas em 3 organizações, e notificar você caso queira saber mais" },
      "welcome_to_hip_onboarding"            : { "message": "Bem-vindo(a) ao Healthy Internet Project!" },
      "well_tailor_the_experience"           : { "message": "Vamos ajustar a experiência baseada nas suas escolhas. Você pode mudar isso depois." },
      "what_unites_us"                       : { "message": "Comunidades são sustentáveis apenas quando algo que as une é mais forte do algo que as divide." },
