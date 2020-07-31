@@ -1,0 +1,1345 @@
+
+.onboarding
+{
+	min-width: 100vw;
+	min-height: 100vh;
+}
+
+.onboarding #debugger
+{
+	display: none;
+}
+
+.onboarding.debug #debugger
+{	
+	color: #fff;
+	display: block;
+	background-color: #000;
+	font-size: 12px;
+	position: absolute;
+	bottom: 0;	
+	right: 0;
+	width: 400px;
+	height: 400px;
+	padding: 10px;
+	z-index: 10;
+	overflow: auto;
+}
+
+.onboarding #error-overlay
+{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.9);
+	z-index: 11;
+}
+
+.onboarding #error-overlay .message
+{
+	background-color: #fff;
+	border: 3px solid #000;
+	padding: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+
+
+.onboarding #civic-logo
+{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 160px;
+	max-width: 20%;
+	height: auto;
+	z-index: 2;
+}
+
+.onboarding #bg-overlay
+{
+	background-color: #5762D5;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+}
+
+.onboarding .content-warning {
+	display: none;
+    position: absolute;
+    z-index: 4;
+    width: 600px;
+    height: 400px;
+    top: 25%;
+    left: 30%;
+    background: #fff;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.onboarding .content-warning h1{
+	font-weight: bold;
+    font-size: 40px;
+	letter-spacing: -1.97px;
+	text-align: center;
+}
+
+.onboarding .content-warning h2{
+	font-size: 20px;
+	letter-spacing: -0.75px;	
+	line-height: 1.4em;
+	text-align: center;
+}
+.onboarding .content-warning .first .button-container{
+	font-size: 18px;
+	position:absolute;
+	left: 39%;
+}
+
+.onboarding .content-warning .no-review .button-container{
+
+
+	position: absolute;
+	bottom: 20%;
+	right: 20%;
+}
+.onboarding .content-warning .first .uncomfortable {
+	position: absolute;
+    bottom: 110px;
+    left: 30%;
+}
+
+.onboarding .content-warning .no-review{
+	display: none;
+}
+
+
+.onboarding .content-warning .no-review .reasoning {
+	position: absolute;
+    left: 22%;
+    width: 350px;
+    height: 100px;
+    top: 40%;
+    border-radius: 10px;
+}
+
+
+
+
+.onboarding #pointer-hand img{
+	width:60px;
+}
+
+.onboarding #pointer-hand
+{
+	position: fixed;	
+	opacity: 0;
+	z-index: -1;
+	transition: opacity 300ms ease-in-out;
+}
+
+.onboarding #pointer-hand.point-at-extension
+{
+	top: 5px;
+	right: 120px;	
+	animation-fill-mode: forwards;
+	animation: slide-frames ease-in-out infinite;
+	animation-duration: 2s;	
+	z-index: 10;
+}
+
+.onboarding #pointer-hand.point-at-flag
+{
+	top: 80px;
+	right: 620px;	
+	opacity: 1;
+	animation-fill-mode: forwards;
+	animation: slide-frames-rotate ease-in-out infinite;
+	animation-duration: 2s;	
+	z-index: 10;
+}
+
+.onboarding #pointer-hand.point-at-text
+{
+	top: 370px !important;
+	right: 620px;	
+	opacity: 1;
+	animation-fill-mode: forwards;
+	animation: slide-frames-rotate ease-in-out infinite;
+	animation-duration: 2s;	
+	transition: top 600ms ease-in-out;
+	z-index: 10;
+}
+
+.onboarding #pointer-hand.point-at-dropdown
+{
+	top: 450px !important;
+	right: 620px;	
+	opacity: 1;
+	animation-fill-mode: forwards;
+	animation: slide-frames-rotate ease-in-out infinite;
+	animation-duration: 2s;	
+	transition: top 400ms ease-in-out;
+	z-index: 10;
+}
+
+.onboarding #pointer-hand.point-at-submit
+{
+	top: 555px !important;
+	right: 175px;	
+	opacity: 1;
+	animation-fill-mode: forwards;
+	animation: slide-frames ease-in-out infinite;
+	animation-duration: 2s;	
+	z-index: 10;
+}
+
+.onboarding #pointer-tip
+{
+	position: fixed;
+	top: 80px;
+	right: 20px;
+	opacity: 0;
+	z-index: 10;
+	background: #FFFFFF;
+	border: 2px solid #252B36;
+	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+	border-radius: 6px;	
+	font-weight: bold;
+	line-height: 1.3em;
+	font-size: 18px;
+	padding: 18px 18px 18px 80px;
+	width: 300px;
+	background-image: url(/images/icon-48.png);
+    background-position: 10px;
+    background-size: 55px;
+	background-repeat: no-repeat;
+	transition: opacity 300ms ease-in-out;
+}
+
+.onboarding #pointer-tip.point-at-extension
+{
+	opacity: 1;
+}
+
+.onboarding #pointer-tip.point-at-flag
+{
+	opacity: 1;
+	top: 80px;
+	right: 690px;	
+	opacity: 1;
+	background-image: none;
+	padding: 18px 18px 18px 18px;
+}
+
+.onboarding #pointer-tip.point-at-text
+{
+	opacity: 1;
+	top: 340px  !important;
+	right: 690px;	
+	opacity: 1;
+	background-image: none;
+	padding: 18px 18px 18px 18px;
+	transition: top 600ms ease-in-out
+}
+
+.onboarding #pointer-tip.point-at-dropdown
+{
+	opacity: 1;
+	top: 400px  !important;
+	right: 690px;	
+	opacity: 1;
+	background-image: none;
+	transition: top 400ms ease-in-out;
+	padding: 18px 18px 18px 18px;
+}
+
+.onboarding #pointer-tip.point-at-submit
+{
+	opacity: 1;
+	top: 640px !important;
+	right: 85px;		
+	opacity: 1;
+	background-image: none;
+	padding: 18px 18px 18px 18px;
+}
+
+.onboarding .message-box
+{
+	border: 4px solid #26A65B;
+	background-color: #fff;
+	position: absolute;	
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: none;
+	z-index: 2;
+}
+
+.onboarding .illustrations
+{
+	position: relative;
+	margin-bottom: 18px;
+	height: 105px;
+}
+
+.onboarding .illustrations.type-a
+{
+	padding-top: 64px;
+}
+
+.onboarding .illustrations.type-a:after
+{
+	content: "";
+	position: absolute;
+	bottom: 4px;
+	right: -30px;
+	width: 30px;
+	height: 30px;
+	background-image: url(/images/arrow-blue.svg);
+	background-size: 100% auto;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.onboarding .illustrations .word-box
+{
+	position: relative;
+	display: inline-block;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 10px;
+}
+
+.onboarding .panels .panel .example-notif {
+	padding-top:15px;
+}
+
+.onboarding .panels .panel #button-container-demo{
+	position: absolute;
+    left: 50px;
+    top: 170px;
+}
+
+.onboarding .panels .panel #launch-demo{
+	font-size: 20px;
+}
+
+.onboarding .illustrations.type-a .word-box
+{
+	border: 3px solid #1B1F27;	
+	padding: 8px 26px 8px 26px;
+	font-size: 24px;
+	letter-spacing: -0.95px;	
+}
+
+.onboarding .illustrations.type-b {
+    border: 3px solid #1B1F27;
+    padding: 8px 12px 7px 12px;
+    font-size: 19px;
+    letter-spacing: -0.65px;
+    margin: 35px 8px 9px 0;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    height: 80px;
+}
+
+
+.onboarding .illustrations .word-box img
+{
+	position: absolute;
+	width: 30px;
+	height: auto;	
+	top: -20px;
+	right: -16px;
+}
+
+.onboarding .illustrations.type-b .word-box:nth-child(1)
+{
+	margin-left: 70px;
+	
+}
+
+.onboarding .illustrations.type-b .word-box:nth-child(2),
+.onboarding .illustrations.type-b .word-box:nth-child(3)
+{
+	max-width: 45%;
+}
+
+.onboarding .progress
+{
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-gap: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.onboarding .progress:before
+{
+	/* this is the blue filler of the bg progress meter */
+	content: "";	
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 0;
+	background-color: #2FC38E;
+	transition: width 500ms linear;
+}
+
+.onboarding .progress.progress-20:before
+{
+	width: 20%;
+}
+
+.onboarding .progress.progress-40:before
+{
+	width: 40%;
+}
+
+.onboarding .progress.progress-60:before
+{
+	width: 60%;
+}
+
+.onboarding .progress.progress-80:before
+{
+	width: 80%;
+}
+
+.onboarding .progress.progress-100:before
+{
+	width: 100%;
+}
+
+
+.onboarding .progress .step
+{	
+	border: 1px solid #CFCFCF;
+	color: #7F8DA7;
+	transition: color 500ms ease-in-out;
+}
+
+
+.onboarding .progress .step [href]
+{
+	position: relative;
+	display: block;
+	padding: 36px 20px 0 20px;
+	width: 100%;
+	height: 100%;
+	text-decoration: none;
+	color: inherit;
+	user-select: none;
+}
+
+
+
+.onboarding .progress .step.ahead [href]
+{
+	cursor: default;
+}
+
+
+.onboarding .progress .step .step-count
+{
+	font-size: 15px;
+	line-height: 16px;
+	letter-spacing: -0.45px;
+	display: none;
+	transition: all 500ms ease-in-out;
+}
+
+.onboarding .progress .step h1
+{
+	position: relative;	
+	font-weight: bold;
+	font-size: 16px;	
+	transition: all 500ms ease-in-out;
+}
+
+.onboarding .progress .step [href] h1:before
+{
+	content: "";
+	position: absolute;
+	top: -6px;
+	left: 0;
+	width: 40px;
+	height: 2px;
+	background-color: #7F8DA7;
+}
+
+.onboarding .progress .step.current,
+.onboarding .progress .step.behind
+{
+	border-color: #2FC38E;
+	color: #fff;
+}
+
+
+
+.onboarding .progress .step.behind
+{
+	color: #D8DBF4;
+}
+
+.onboarding .progress .step.behind h1:before
+{
+	background-color: #D8DBF4;
+}
+
+.onboarding .progress .step.current h1
+{
+	font-size: 36px;
+	line-height: 40px;
+}
+
+.onboarding .progress .step.current .step-count
+{
+	display: block;	
+}
+
+.onboarding .progress .step.current h1:before
+{
+	display: none;
+}
+
+.onboarding .panels
+{
+	position: absolute;	
+	top: 50%;
+	left: 50%;
+	width: 80%;
+	max-width: 1000px;
+	height: 70%;
+	background: #fff;
+	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);	
+	z-index: 4;
+	transform: translate(-50%,-50%);
+	transition: all 900ms ease-in-out;	
+}
+
+.onboarding .panels .panel
+{
+	display: none;
+	
+	padding: 50px 140px 50px 50px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.onboarding .panels .panel.ahead
+{
+	/*left: 150%;*/
+}
+
+.onboarding .panels .panel.behind
+{
+	/*left: -150%;*/
+}
+
+.onboarding .panels .panel h1
+{
+	font-weight: bold;
+	font-size: 48px;
+	letter-spacing: -1.97px;	
+	color: black;
+}
+
+
+.onboarding .panels .panel h2
+{
+	font-size: 20px;
+	margin: 1em 0 0 0;
+	letter-spacing: -0.75px;	
+	line-height: 1.4em;
+}
+
+
+.onboarding .panels .panel h2 em
+{
+	font-weight: 700;
+}
+.onboarding .panels .panel .details{
+	/* margin-top: 3em; */
+}
+.onboarding .panels .panel .browserbar{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: row;
+	padding-left:6px;
+	margin-top: 2em;
+	width: 75%;
+	max-width:600px;
+    height: 25px;
+    background: #3A4354;
+	border-radius: 7px 7px 0px 0px;
+}
+
+.onboarding .panels .panel .browserbar .dot{
+	height: 12px;
+	width: 12px;
+	border-radius: 50%;
+	display: inline-block;
+	margin-left:10px;
+}
+.onboarding .panels .panel .browserbar .dot:nth-child(1) {
+	background-color:#D91E18;
+}
+.onboarding .panels .panel .browserbar .dot:nth-child(2) {
+	background-color:#FFC000;
+}
+.onboarding .panels .panel .browserbar .dot:nth-child(3) {
+	background-color:#26A65B;
+}
+
+.onboarding .panels .panel .demo-article
+{
+	position: relative;
+	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+	width: 75%;
+	max-width:600px;
+	border: 1px solid #252B36;
+	padding:25px;
+	background-color: white;
+}
+.onboarding .panels .panel .demo-article .headline{
+	display: block;
+	position: relative;
+	font-weight: 700;
+	font-size: 28px;
+	line-height: 115%;
+	letter-spacing: -0.015em;
+	color: #E62B1E;
+	text-transform: uppercase;
+}
+
+.onboarding .panels .panel .demo-article .headline:before{
+	content:'';
+	position: absolute;
+	background-color: black;
+	width:100%;
+	height:2px;
+	top:-10px;
+	left:0;
+
+}
+
+.onboarding .panels .panel .demo-article .content{
+	display: block;
+	font-family: serif;
+	font-size: 18.1px;
+	line-height: 115%;
+	text-align: justify;
+	color: #000000;
+	margin-top:5px;
+}
+
+.onboarding .panels .panel .preferences h2{
+	font-weight: bold;
+	display: inline-block;
+	
+}
+
+.onboarding .panels .panel .preferences h4{
+	font-weight: bold;
+	font-size: 17px;
+	
+	
+}
+
+.onboarding .panels .panel .preferences span{
+	color: black;
+	
+	
+}
+
+.onboarding .panels .panel .preferences .hashtag {
+	color: #E62B1E;
+	font-weight: normal;
+	border-radius: 7px;
+	border: 2px solid #E62B1E;
+	background-color: white;
+	margin-top:15px;
+}
+
+
+.onboarding .panels .panel .preferences .hashtag span{
+	color: #E62B1E;
+	font-weight: normal;
+
+}
+
+.onboarding .panels .panel .nextsteps #slack-image{
+    width: 80px;
+	height: 80px;
+	margin-left: 24px;
+
+
+}
+.onboarding .panels .panel .nextsteps #newsletter-image{
+    width: 72px;
+    height: 52px;
+    margin-bottom: 19px;
+    margin-left: 12px;
+    margin-top: 10px;
+    margin-right: 7px;
+
+
+}
+.onboarding .panels .panel .nextsteps #zoom-image{
+    width: 100px;
+    height: 22px;
+	margin-bottom: 27px;
+	margin-top: 20px;
+
+
+}
+.onboarding .panels .panel .nextsteps #twitter-image{
+    width: 85px;
+    height: 85px;
+    margin-left: 10px;
+    margin-top: -15px;
+	
+}
+
+.onboarding .panels .panel .nextsteps #slack{
+	position: absolute;
+	display: inline-grid;
+
+	
+
+}
+.onboarding .panels .panel .nextsteps #newsletter{
+   position: absolute;
+   left: 22%;
+
+}
+.onboarding .panels .panel .nextsteps #zoom{
+	position: absolute;
+	left: 39%;
+
+}
+.onboarding .panels .panel .nextsteps #socialmedia{
+	position: absolute;
+	left: 56%;
+
+}
+.onboarding .panels .panel .nextsteps .option{
+	width: 150px;
+	height: 150px;
+	display: inline-block;
+	margin-right: 20px;
+	margin-top: 20px;
+	border: 2px solid #9DA8BC;
+	border-radius: 7px;
+	position: relative;
+	top: 30%;
+	color: black;
+}
+
+.onboarding .panels .panel .nextsteps .option span{
+	display: absolute;
+	bottom: 0px;
+}
+.onboarding .panels .panel .nextsteps button{
+	background-color: white;
+}
+
+.onboarding .panels .panel .nextsteps {
+	color: black;
+}
+
+.onboarding .panels .panel .button-container .close a{
+	color: white;
+    text-decoration: none;
+
+
+}
+
+
+
+.onboarding .panels .panel .preferences em{
+	font-weight: bold;
+	color: black;
+	
+}
+
+.onboarding .panels .panel .preferences .checkbox{
+	left: 7%;
+	position: relative;
+	padding-top: 20px;
+}
+
+.onboarding .panels .panel .preferences .optional{
+	display: inline-block;
+	padding-left: 8px;
+	color: #9DA8BC;
+}
+
+
+.onboarding .panels .panel .button-container
+{
+	position: absolute;
+	bottom: 20px;
+	right: 30px;
+	font-size: 18px;
+}
+
+
+
+.onboarding button
+{
+	background-color: #5762D5;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 16px;	
+	color: #fff;
+	border-radius: 3px;
+	border: 0;
+	padding: 8px 14px;
+	margin-top: 0.3em;
+	user-select: none;
+	transition: opacity 200ms ease-in-out;
+}
+
+.onboarding button.disabled
+{
+	opacity: 0.4;
+	cursor: default;
+
+}
+
+.onboarding button.disabled:focus 
+{
+	outline: 0;
+}
+
+.onboarding .panels .panel button.next
+{
+	width: 75px;
+	height: 75px;
+	border-radius: 50%;
+	padding: 0;
+	margin-top: 0;
+}
+
+.onboarding .panels .panel button.next:before
+{
+	content: "";
+	position: absolute;
+	background-image: url(../images/Arrow.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 51px;
+	height: 51px;
+	top: 12px;
+	left: 12px;
+}
+
+/*
+.onboarding .panels .panel.current
+{
+	opacity: 1;
+	display: block;	
+}
+*/
+
+
+.onboarding .panels .panel.welcome
+{
+	text-align: center;
+	padding-left: 140px;
+}
+
+.onboarding .panels .panel.welcome .boxes
+{
+	width: inherit;
+	position: absolute;
+	top: 40%;
+	left: 0%;
+}
+
+.onboarding .panels .panel.welcome .box1
+{
+	width: 150px;
+	height: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	margin: 10px;
+
+}
+.onboarding .panels .panel.welcome .box2
+{
+	width: 150px;
+	height: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	margin: 10px;
+}
+.onboarding .panels .panel.welcome .box3
+{
+	width: 150px;
+	height: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	margin: 10px;
+}
+
+.onboarding .panels .panel.welcome img
+{
+	position: absolute;
+	width: 390px;
+	max-width: 100%;
+	top: -60px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.onboarding .panels .panel.welcome h1
+{
+	margin-bottom: 0.4em;
+}
+
+.onboarding .panels .panel.welcome p
+{
+	line-height: 1.4em;
+}
+
+.onboarding .panels .panel.welcome .next
+{
+	opacity: 0;	
+	animation: fade-in-frames ease-in-out 1;
+	animation-duration: 1s;		
+	animation-delay: 1.25s;
+	animation-fill-mode: forwards;
+}
+
+.onboarding ul.missions
+{
+	display: block;
+	max-width: 70%;
+	margin-top: 2em;
+}
+
+
+.onboarding ul.missions li
+{
+	margin-bottom: 18px;
+	user-select: none;
+	cursor: pointer;
+	padding-top: 8px;
+}
+
+
+
+.onboarding .note
+{
+	color: #7F8DA7;
+	font-size: 12px;
+	margin-top: 30px; 
+}
+
+
+.onboarding ul.missions li:hover .icon
+{
+	/* border: 2px solid rgba(230,43,30, 1); */
+}
+
+.onboarding ul.missions li.good:hover .icon
+{
+	/* border: 2px solid #26A65B; */
+}
+
+.onboarding ul.missions li.active .icon,
+.onboarding ul.missions li.active:hover .icon
+{
+	background-color: rgba(230,43,30, 1);
+}
+
+.onboarding ul.missions li.good.active .icon,
+.onboarding ul.missions li.good.active:hover .icon
+{
+	background-color: #26A65B;
+}
+
+.onboarding ul.missions li label
+{
+	display: block;
+	font-size: 16px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.onboarding ul.missions li .description
+{
+	
+	font-size: 12px;
+	color: #596781;
+	line-height: 1em!important;
+}
+
+.onboarding .icon-info
+{
+}
+
+.onboarding .icon-info li
+{
+	position: relative;
+	display: block;
+	margin-bottom: 2em;
+	font-size: 16px;
+	padding-left: 50px;
+	line-height: 1.3em;
+}
+
+.onboarding .icon-info li .icon
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 30px;
+	height: auto;
+}
+
+.onboarding .icon-info li label
+{
+	display: block;
+	font-weight: 600;
+	font-size: 24px;
+	margin-bottom: 0.3em;
+}
+
+.onboarding .icon-info li label .description
+{
+
+}
+
+.onboarding .details .three
+{
+	display: grid;
+	grid-template-columns: 2fr 2fr 3fr;
+	grid-column-gap: 50px;
+	font-size: 15px;
+	line-height: 1.3em;
+}
+
+.onboarding .timed-appearance
+{
+	display: block;
+}
+
+.onboarding .tip
+{
+	font-size: 13px;
+	max-width: 200px;
+	margin-top: 12px;
+	line-height: 1.4em;
+	width: 150px;
+}
+
+.onboarding #footer{
+    position: fixed;
+    bottom: 0px;
+    right: 20px;
+    z-index: 2;
+	width: 100%;
+	height: 20px;
+	font-size: 12px;
+}
+
+.onboarding .footer #privacy_policy {
+	float: right;
+	/* right: 2%; */
+	color: black;
+}
+.onboarding .footer #terms_use {
+	float: right;
+	color: black;
+	margin-right: 2%;
+}
+.onboarding .footer #ted-conf #copyright {
+	color: black;
+	font-weight:400;
+	display: inline;
+	
+}
+.onboarding .footer #ted-conf {
+	position: fixed;
+	right: 45%;
+	color: black;
+	font-weight: 700;
+	margin-left: 3px;
+	
+}
+
+.onboarding .footer #hip-logo-white{
+	z-index: 2;
+    position: fixed;
+    height: 90px;
+    bottom: 15px;
+	left: 30px;
+	transition: all 1s linear;
+
+}
+
+.onboarding .panels .panel .tips{
+	position: absolute;
+    display: none;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 60%;
+    height: 54%;
+    left: 38%;
+    font-size: 16px;
+    line-height: 25px;
+    padding: 13px;
+    transition: all 1s ease-in-out;
+    top: 29%;
+}
+
+.onboarding .panels .panel .tips div span .apple-icon{
+	width: 70px;
+    padding-right: 5px;
+}
+
+
+.onboarding .panels .panel .video{
+	border: 2px solid black;
+	width: 80%;
+	height: 80%;
+	margin-top: 20px;
+
+}
+.onboarding .panels .panel .mentorship-feedback {
+	width: 550px;
+}
+.onboarding .panels .panel .mentorship-feedback .feedback-guide {
+	color: black;
+	font-size: 19px;
+	letter-spacing: -0.65px;
+	font-weight: bold;
+}
+
+.onboarding .panels .panel .mentorship-feedback .feedback-guide a {
+	color: #E62B1E;
+	font-size: 19px;
+	letter-spacing: -0.65px;
+	font-weight: bold;
+}
+.onboarding .panels .panel .mentorship-feedback h2{
+	color: #26A65B;
+	font-size: 19px;
+	letter-spacing: -0.65px;
+	font-weight: bold;
+
+}
+
+.onboarding .panels .panel .mentorship-feedback h3{
+	color: #596781;
+	font-size: 15px;
+	letter-spacing: -0.65px;
+	font-style: italic;
+
+}
+
+
+.onboarding .panels .panel #button-container-notif{
+	position: absolute;
+	left: 5%;
+    top: 28%;
+	
+}
+
+.onboarding .panels .panel #send-notification{
+	font-size: 20px;
+	
+}
+
+
+/*
+@keyframes bounce-frames { 
+	0% { opacity: 1;transform:translateY(25px); } 
+	50% { opacity: 1;transform:translateY(0); } 
+	100% { opacity: 1;transform:translateY(25px); } 
+} 
+*/
+
+@keyframes slide-frames { 
+	0% { opacity:1;transform:translateX(0); } 
+	50% { opacity:1;transform:translateX(90px); } 
+	100% { opacity:1;transform:translateX(0); }
+} 
+
+@keyframes slide-frames-rotate { 
+	0% { opacity:1;transform:translateX(0) rotate(90deg); } 
+	50% { opacity:1;transform:translateX(90px) rotate(90deg); } 
+	100% { opacity:1;transform:translateX(0) rotate(90deg); }
+} 
+
+@keyframes fade-in-frames { 
+	0% { opacity: 0; } 
+	100% { opacity: 1; } 
+} 
+
+
+@media only screen and (max-width: 1250px) {
+	.onboarding .footer #hip-logo-white{
+		height:75px;
+
+	}
+
+	.onboarding .progress .step.current h1 {
+		font-size: 25px;
+		line-height: 30px;
+		transition: all 1s linear;
+
+		
+	}
+
+	.onboarding .panels .panel button.next {
+		width: 50px;
+		height: 50px;
+		transition: all 1s linear;
+
+
+	}
+
+	.onboarding .panels .panel button.next:before {
+		width: 28px;
+		height: 25px;
+		transition: all 1s linear;
+
+
+	}
+	.onboarding .panels .panel h1 {
+		font-size: 35px;
+		transition: all 1s linear;
+
+		
+	}
+	.onboarding .panels .panel {
+		padding-top: 30px;
+	}
+
+
+
+	.onboarding .illustrations.type-b {
+		border: 3px solid #1B1F27;
+		padding: 8px 12px 7px 12px;
+		font-size: 19px;
+		letter-spacing: -0.65px;
+		margin: 35px 8px 9px 0;
+		border-radius: 10px;
+		font-weight: bold;
+		text-align: center;
+		height: 80px;
+	}
+
+	.onboarding .illustrations.word-box{
+		 
+	}
+
+	.onboarding .panels .panel .button-container{	
+		width: 50px;
+	}
+
+	.onboarding .panels .panel .tips{
+		height: 65%;
+		top: 29%;
+	}
+
+	
+  }
+
+
+  @media only screen and (max-width: 700px) {
+	.onboarding .footer #hip-logo-white{
+		height:60px;
+
+	}
+
+
+	.onboarding .progress .step.current h1{
+		font-size: 20px;	
+		line-height: 24x;
+		transition: all 1s linear;
+
+	}
+
+	.onboarding .panels .panel h1 {
+		font-size: 25px;
+
+		
+	}
+
+	.onboarding .panels .panel {
+		padding-right: 5%;
+		padding-left: 5%;
+	}
+
+	.onboarding .progress .step [href] {
+		padding: 36px 9px 0 20px;
+	}
+
+	.onboarding .panels .panel.welcome {
+		padding-left: 30px;
+	}
+
+	.onboarding .details .three {
+		grid-column-gap: 10px;
+	}
+
+	
+
+
+	
+	
+  }
+
+
+  @media only screen and (max-height: 600px) {
+	.onboarding .panels .panel h1 {
+		font-size: 35px;
+		transition: all 1s linear;
+
+		
+	}
+
+	.onboarding .panels .panel {
+		padding-top: 30px;
+		padding-right: 5%;
+	}
+
+	.onboarding .footer #hip-logo-white{
+		height:70px;
+
+	}
+
+
+  }
+
+
+
