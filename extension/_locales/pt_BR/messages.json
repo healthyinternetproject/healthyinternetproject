@@ -79,7 +79,7 @@
      "intentionally_confuses"               : { "message": "Conteúdo que intencionalmente confunde e explora leitores pode frequentemente ter efeitos negativos." },
      "how_your_work_matters"                : { "message": "Veja como seu trabalho <em> funciona. </em>" },
      "inspiration_answer"                   : { "message" : "<a href='javascript:void(0)' id = 'inspiration' class = 'inspiration' onclick = 'showInspirationFlag()'>Veja um exemplo</a> de uma bandeira bem escrita." },
-     "inspiration_image"                    : { "message" : "<img src='../images/exampleFlag.png' id='inspirationFlag'>" },
+     "inspiration_image"                    : { "message" : "<img src='../images/exampleFlagPT.png' id='inspirationFlag'>" },
      "inspiration_question"                 : { "message" : "Quer inspiração?" },
      "intentionally_confuses"               : { "message": "Conteúdo que intencionalmente confunde e explora leitores pode frequentemente causar danos." },
      "journalists"                          : { "message": "3) Jornalistas" },
