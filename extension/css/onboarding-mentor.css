@@ -73,6 +73,68 @@
 	z-index: 3;
 }
 
+.onboarding .content-warning {
+	display: none;
+    position: absolute;
+    z-index: 4;
+    width: 600px;
+    height: 400px;
+    top: 25%;
+    left: 30%;
+    background: #fff;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.onboarding .content-warning h1{
+	font-weight: bold;
+    font-size: 40px;
+	letter-spacing: -1.97px;
+	text-align: center;
+}
+
+.onboarding .content-warning h2{
+	font-size: 20px;
+	letter-spacing: -0.75px;	
+	line-height: 1.4em;
+	text-align: center;
+}
+.onboarding .content-warning .first .button-container{
+	font-size: 18px;
+	position:absolute;
+	left: 39%;
+}
+
+.onboarding .content-warning .no-review .button-container{
+
+
+	position: absolute;
+	bottom: 20%;
+	right: 20%;
+}
+.onboarding .content-warning .first .uncomfortable {
+	position: absolute;
+    bottom: 110px;
+    left: 30%;
+}
+
+.onboarding .content-warning .no-review{
+	display: none;
+}
+
+
+.onboarding .content-warning .no-review .reasoning {
+	position: absolute;
+    left: 22%;
+    width: 350px;
+    height: 100px;
+    top: 40%;
+    border-radius: 10px;
+}
+
+
+
+
 .onboarding #pointer-hand img{
 	width:60px;
 }
@@ -97,7 +159,7 @@
 
 .onboarding #pointer-hand.point-at-flag
 {
-	top: 60px;
+	top: 80px;
 	right: 620px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
@@ -108,7 +170,7 @@
 
 .onboarding #pointer-hand.point-at-text
 {
-	top: 340px !important;
+	top: 370px !important;
 	right: 620px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
@@ -120,7 +182,7 @@
 
 .onboarding #pointer-hand.point-at-dropdown
 {
-	top: 410px !important;
+	top: 450px !important;
 	right: 620px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
@@ -132,8 +194,8 @@
 
 .onboarding #pointer-hand.point-at-submit
 {
-	top: 495px !important;
-	right: 205px;	
+	top: 555px !important;
+	right: 175px;	
 	opacity: 1;
 	animation-fill-mode: forwards;
 	animation: slide-frames ease-in-out infinite;
@@ -193,7 +255,7 @@
 .onboarding #pointer-tip.point-at-dropdown
 {
 	opacity: 1;
-	top: 410px  !important;
+	top: 400px  !important;
 	right: 690px;	
 	opacity: 1;
 	background-image: none;
@@ -204,7 +266,7 @@
 .onboarding #pointer-tip.point-at-submit
 {
 	opacity: 1;
-	top: 580px !important;
+	top: 640px !important;
 	right: 85px;		
 	opacity: 1;
 	background-image: none;
@@ -241,7 +303,7 @@
 	content: "";
 	position: absolute;
 	bottom: 4px;
-	right: 0;
+	right: -30px;
 	width: 30px;
 	height: 30px;
 	background-image: url(/images/arrow-blue.svg);
@@ -257,6 +319,20 @@
 	font-weight: bold;
 	text-align: center;
 	border-radius: 10px;
+}
+
+.onboarding .panels .panel .example-notif {
+	padding-top:15px;
+}
+
+.onboarding .panels .panel #button-container-demo{
+	position: absolute;
+    left: 50px;
+    top: 170px;
+}
+
+.onboarding .panels .panel #launch-demo{
+	font-size: 20px;
 }
 
 .onboarding .illustrations.type-a .word-box
@@ -324,7 +400,7 @@
 	left: 0;
 	height: 100%;
 	width: 0;
-	background-color: #5762D5;
+	background-color: #2FC38E;
 	transition: width 500ms linear;
 }
 
@@ -413,7 +489,7 @@
 .onboarding .progress .step.current,
 .onboarding .progress .step.behind
 {
-	border-color: #5762D5;
+	border-color: #2FC38E;
 	color: #fff;
 }
 
@@ -487,7 +563,9 @@
 	font-weight: bold;
 	font-size: 48px;
 	letter-spacing: -1.97px;	
+	color: black;
 }
+
 
 .onboarding .panels .panel h2
 {
@@ -497,12 +575,13 @@
 	line-height: 1.4em;
 }
 
+
 .onboarding .panels .panel h2 em
 {
 	font-weight: 700;
 }
 .onboarding .panels .panel .details{
-	margin-top: 3em;
+	/* margin-top: 3em; */
 }
 .onboarding .panels .panel .browserbar{
 	display: flex;
@@ -577,6 +656,149 @@
 	margin-top:5px;
 }
 
+.onboarding .panels .panel .preferences h2{
+	font-weight: bold;
+	display: inline-block;
+	
+}
+
+.onboarding .panels .panel .preferences h4{
+	font-weight: bold;
+	font-size: 17px;
+	
+	
+}
+
+.onboarding .panels .panel .preferences span{
+	color: black;
+	
+	
+}
+
+.onboarding .panels .panel .preferences .hashtag {
+	color: #E62B1E;
+	font-weight: normal;
+	border-radius: 7px;
+	border: 2px solid #E62B1E;
+	background-color: white;
+	margin-top:15px;
+}
+
+
+.onboarding .panels .panel .preferences .hashtag span{
+	color: #E62B1E;
+	font-weight: normal;
+
+}
+
+.onboarding .panels .panel .nextsteps #slack-image{
+    width: 80px;
+	height: 80px;
+	margin-left: 24px;
+
+
+}
+.onboarding .panels .panel .nextsteps #newsletter-image{
+    width: 72px;
+    height: 52px;
+    margin-bottom: 19px;
+    margin-left: 12px;
+    margin-top: 10px;
+    margin-right: 7px;
+
+
+}
+.onboarding .panels .panel .nextsteps #zoom-image{
+    width: 100px;
+    height: 22px;
+	margin-bottom: 27px;
+	margin-top: 20px;
+
+
+}
+.onboarding .panels .panel .nextsteps #twitter-image{
+    width: 85px;
+    height: 85px;
+    margin-left: 10px;
+    margin-top: -15px;
+	
+}
+
+.onboarding .panels .panel .nextsteps #slack{
+	position: absolute;
+	display: inline-grid;
+
+	
+
+}
+.onboarding .panels .panel .nextsteps #newsletter{
+   position: absolute;
+   left: 22%;
+
+}
+.onboarding .panels .panel .nextsteps #zoom{
+	position: absolute;
+	left: 39%;
+
+}
+.onboarding .panels .panel .nextsteps #socialmedia{
+	position: absolute;
+	left: 56%;
+
+}
+.onboarding .panels .panel .nextsteps .option{
+	width: 150px;
+	height: 150px;
+	display: inline-block;
+	margin-right: 20px;
+	margin-top: 20px;
+	border: 2px solid #9DA8BC;
+	border-radius: 7px;
+	position: relative;
+	top: 30%;
+	color: black;
+}
+
+.onboarding .panels .panel .nextsteps .option span{
+	display: absolute;
+	bottom: 0px;
+}
+.onboarding .panels .panel .nextsteps button{
+	background-color: white;
+}
+
+.onboarding .panels .panel .nextsteps {
+	color: black;
+}
+
+.onboarding .panels .panel .button-container .close a{
+	color: white;
+    text-decoration: none;
+
+
+}
+
+
+
+.onboarding .panels .panel .preferences em{
+	font-weight: bold;
+	color: black;
+	
+}
+
+.onboarding .panels .panel .preferences .checkbox{
+	left: 7%;
+	position: relative;
+	padding-top: 20px;
+}
+
+.onboarding .panels .panel .preferences .optional{
+	display: inline-block;
+	padding-left: 8px;
+	color: #9DA8BC;
+}
+
+
 .onboarding .panels .panel .button-container
 {
 	position: absolute;
@@ -584,6 +806,8 @@
 	right: 30px;
 	font-size: 18px;
 }
+
+
 
 .onboarding button
 {
@@ -647,8 +871,41 @@
 .onboarding .panels .panel.welcome
 {
 	text-align: center;
-	padding-top: 300px;
 	padding-left: 140px;
+}
+
+.onboarding .panels .panel.welcome .boxes
+{
+	width: inherit;
+	position: absolute;
+	top: 40%;
+	left: 0%;
+}
+
+.onboarding .panels .panel.welcome .box1
+{
+	width: 150px;
+	height: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	margin: 10px;
+
+}
+.onboarding .panels .panel.welcome .box2
+{
+	width: 150px;
+	height: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	margin: 10px;
+}
+.onboarding .panels .panel.welcome .box3
+{
+	width: 150px;
+	height: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	margin: 10px;
 }
 
 .onboarding .panels .panel.welcome img
@@ -767,18 +1024,17 @@
 	height: auto;
 }
 
-h3{
-	font-weight: 600;
-	font-size: 24px;
-	margin-bottom: 0.3em;
-}
-
 .onboarding .icon-info li label
 {
 	display: block;
 	font-weight: 600;
 	font-size: 24px;
 	margin-bottom: 0.3em;
+}
+
+.onboarding .icon-info li label .description
+{
+
 }
 
 .onboarding .details .three
@@ -861,45 +1117,68 @@ h3{
     line-height: 25px;
     padding: 13px;
     transition: all 1s ease-in-out;
-    top: 40%;
+    top: 29%;
 }
-
-.onboarding .next-container{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-.onboarding .next-container .words{
-    margin-top:40px;
-    flex:6;
-}
-.onboarding .next-container .words div{
-    margin-bottom:20px;
-    max-width:90%;
-}
-
-.onboarding .next-container .words .body{
-    font-size: 16px;
-    line-height: 22px;
-}
-
-.onboarding .next-container .image{
-    flex:4;
-}
-
-.onboarding .next-container .image img{
-    display: none;
-    width:100%;
-    max-height: 400px;
-    object-fit: contain;
-}
-
 
 .onboarding .panels .panel .tips div span .apple-icon{
 	width: 70px;
     padding-right: 5px;
 }
+
+
+.onboarding .panels .panel .video{
+	border: 2px solid black;
+	width: 80%;
+	height: 80%;
+	margin-top: 20px;
+
+}
+.onboarding .panels .panel .mentorship-feedback {
+	width: 550px;
+}
+.onboarding .panels .panel .mentorship-feedback .feedback-guide {
+	color: black;
+	font-size: 19px;
+	letter-spacing: -0.65px;
+	font-weight: bold;
+}
+
+.onboarding .panels .panel .mentorship-feedback .feedback-guide a {
+	color: #E62B1E;
+	font-size: 19px;
+	letter-spacing: -0.65px;
+	font-weight: bold;
+}
+.onboarding .panels .panel .mentorship-feedback h2{
+	color: #26A65B;
+	font-size: 19px;
+	letter-spacing: -0.65px;
+	font-weight: bold;
+
+}
+
+.onboarding .panels .panel .mentorship-feedback h3{
+	color: #596781;
+	font-size: 15px;
+	letter-spacing: -0.65px;
+	font-style: italic;
+
+}
+
+
+.onboarding .panels .panel #button-container-notif{
+	position: absolute;
+	left: 5%;
+    top: 28%;
+	
+}
+
+.onboarding .panels .panel #send-notification{
+	font-size: 20px;
+	
+}
+
+
 /*
 @keyframes bounce-frames { 
 	0% { opacity: 1;transform:translateY(25px); } 
@@ -968,10 +1247,19 @@ h3{
 
 
 	.onboarding .illustrations.type-b {
-		font-size: 15px;
-		width: 130px;
-		height: 130px;
-		transition: all 250ms linear;
+		border: 3px solid #1B1F27;
+		padding: 8px 12px 7px 12px;
+		font-size: 19px;
+		letter-spacing: -0.65px;
+		margin: 35px 8px 9px 0;
+		border-radius: 10px;
+		font-weight: bold;
+		text-align: center;
+		height: 80px;
+	}
+
+	.onboarding .illustrations.word-box{
+		 
 	}
 
 	.onboarding .panels .panel .button-container{	
@@ -980,7 +1268,7 @@ h3{
 
 	.onboarding .panels .panel .tips{
 		height: 65%;
-		top: 30%;
+		top: 29%;
 	}
 
 	
@@ -1025,7 +1313,6 @@ h3{
 	}
 
 	
-
 
 
 	

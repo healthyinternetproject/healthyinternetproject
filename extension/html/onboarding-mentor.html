@@ -4,7 +4,7 @@
 		<title>Welcome to Civic Mentorship!</title>
 		<link href="/css/reset.css" rel="stylesheet">
 		<link href="/css/common.css" rel="stylesheet">
-		<link href="/css/onboarding.css" rel="stylesheet">
+		<link href="/css/onboarding-mentor.css" rel="stylesheet">
 		<meta charset="UTF-8">
 	</head>
 	<body class="onboarding">
@@ -13,29 +13,31 @@
 			<li class="step current" data-index="|1|" data-progress="20">
 				<a href="#1">
 					<span class="step-count"><span data-i18n-message="step_1_of_5"></span></span>
-					<h1><span data-i18n-message="welcome"></span></h1>					
+					<h1><span data-i18n-message="quick_setup"></span></h1>					
 				</a>
 			</li>
-			<li class="step" data-index="|2|3|" data-progress="40">
+			<li class="step" data-index="|2|" data-progress="40">
 				<a href="#2">
 					<span class="step-count"><span data-i18n-message="step_2_of_5"></span></span>
-					<h1><span data-i18n-message="getting_set_up"></span></h1>
+					<h1><span data-i18n-message="stay_updated"></span></h1>
 				</a>
 			</li>
-			<li class="step" data-index="|4|" data-progress="60">
+			<li class="step" data-index="|3|4|" data-progress="60">
 				<a href="#4">
 					<span class="step-count"><span data-i18n-message="step_3_of_5"></span></span>
-					<h1><span data-i18n-message="notify_me"></span></h1>
+					<h1><span data-i18n-message="your_first_review"></span></h1>
+
+				
 				</a>
 			</li>
 			<li class="step" data-index="|5|" data-progress="80">
-				<a href="#5">
+				<a href="#4">
 					<span class="step-count"><span data-i18n-message="step_4_of_5"></span></span>
-					<h1><span data-i18n-message="your_first_flag"></span></h1>
+					<h1><span data-i18n-message="mentorship_preferences"></span></h1>
 				</a>
 			</li>
 			<li class="step" data-index="|6|" data-progress="100">
-				<a href="#6">
+				<a href="#5">
 					<span class="step-count"><span data-i18n-message="step_5_of_5"></span></span>
 					<h1><span data-i18n-message="off_to_the_races"></span></h1>
 				</a>
@@ -45,86 +47,28 @@
 
 		<div class="panels">
 			<div class="panel current welcome" data-index="0">
-				<img src="/images/celebration.svg">
-
-				<h1><span data-i18n-message="congratulations_mentor"></span></h1>
-				<p><span data-i18n-message="you_have_contributed"></span></p>
+				
+				<h1><span data-i18n-message="mentorship_congratulations_mentor"></span></h1>
+				<p><span data-i18n-message="mentorship_you_have_contributed"></span></p>
+				<div class = "boxes">
+					<div class = "box1"> </div>
+					<div class = "box2"> </div>
+					<div class = "box3"> </div>
+				</div>
 
 				<div class="button-container">
-					<!--button class="next from-welcome-screen"></button-->
-				</div>			
+					<button class="next from-welcome-screen"></button>
+				</div>	
+						
 			</div>
+
+		
+
 
 			<div class="panel ahead" data-index="1">
-				<h1><span data-i18n-message="whatre_your_missions"></span></h1>
-				<h2><span data-i18n-message="well_tailor_the_experience"></span></h2>
+				<h1><span data-i18n-message="mentorship_remember_this"></span></h1>
+				<h2><span data-i18n-message="mentorship_you_now_play_a_role"></span></h2>
 
-				<ul class="missions">
-					<li class="lies" data-message-root="lies_or_manipulation">
-						<div class="icon"><img src="/images/lies-red.svg" data-active="/images/lies-white.svg"></div>
-						<label><span data-i18n-message="diminish_lies_or_manipulation"></span></label>
-						<span class="description"><span data-i18n-message="youre_bothered_by_lies"></span></span>
-					</li>
-
-					<li class="harrassment" data-message-root="abuse_or_harassment">
-						<div class="icon"><img src="/images/abuse-red.svg" data-active="/images/abuse-white.svg"></div>
-						<label><span data-i18n-message="lower_abuse_or_harassment"></span></label>
-						<span class="description"><span data-i18n-message="turn_the_temperature_down"></span></span>
-					</li>
-
-					<li class="division" data-message-root="division_or_fear">
-						<div class="icon"><img src="/images/division-red.svg" data-active="/images/division-white.svg"></div>
-						<label><span data-i18n-message="reduce_division_or_fear"></span></label>
-						<span class="description"><span data-i18n-message="your_thick_skin"></span></span>
-					</li>
-
-					<li class="good" data-message-root="good_ideas">
-						<div class="icon"><img src="/images/good-green.svg" data-active="/images/good-white.svg"></div>
-						<label><span data-i18n-message="spread_good_ideas"></span></label>
-						<span class="description"><span data-i18n-message="elevate_the_good"></span></span>
-					</li>
-
-				</ul>
-
-				<!--div class="note"><span data-i18n-message="choose_all_that_apply"></span></div-->
-
-				<div class="button-container">
-					<button class="next disabled"></button>
-				</div>
-			</div>
-
-			<div class="panel ahead" data-index="2">
-				<h1><span data-i18n-message="we_collect_zero_personal_info"></span></h1>
-				
-				<div class="details">
-					<ul class="icon-info">
-						<li class="privacy">
-							<img class="icon" src="/images/persona.svg">
-							<label><span data-i18n-message="full_privacy"></span></label>
-							<span class="description"><span data-i18n-message="we_care_about_user_privacy"></span></span>
-						</li>
-
-						<li class="logins">
-							<img class="icon" src="/images/lock.svg">
-							<label><span data-i18n-message="no_more_forgotten_logins"></span></label>
-							<span class="description"><span data-i18n-message="every_user_unique_id"></span></span>
-						</li>
-
-						<li>
-							<span data-i18n-message="view_more_privacy_info"></span>
-						</li>
-					</ul>
-
-				</div>
-
-				<div class="button-container">
-					<button class="next"></button>
-				</div>
-			</div>
-
-
-			<div class="panel ahead" data-index="3">
-				<h1><span data-i18n-message="how_your_work_matters"></span></h1>
 				
 				<div class="details">
 					<ul class="three">
@@ -132,27 +76,28 @@
 							<div class="illustrations type-a">
 								<div class="word-box">
 									<img src="/images/flag-black-bordered.svg">
-									<span data-i18n-message="you"></span>
+									<span data-i18n-message="contributors"></span>
 								</div>
 							</div>
-							<span data-i18n-message="first_you_come_across_lies"></span>
+							<span data-i18n-message="first_they_come_across_X"></span>
 						</li>
 
 						<li>
 							<div class="illustrations type-a">
 								<div class="word-box">
 									<img src="/images/persona-black-bordered.svg">
-									<span data-i18n-message="mentor"></span>
+									<span data-i18n-message="you"></span>
 								</div>
 							</div>
-							<span data-i18n-message="experienced_user_gives_feedback"></span>
+							<span data-i18n-message="you_can_review"></span>
 						</li>
 
 						<li>
 							<div class="illustrations type-b">
-								<div class="word-box"><span data-i18n-message="journalists"></span></div>
-								<div class="word-box"><span data-i18n-message="tech_platforms"></span></div>
-								<div class="word-box"><span data-i18n-message="community_leaders"></span></div>
+								<span data-i18n-message="tech_platforms"></span><br>
+								<span data-i18n-message="community_leaders"></span><br>
+								<span data-i18n-message="journalists"></span>
+
 							</div>
 
 							<span data-i18n-message="we_share_your_findings"></span>
@@ -165,30 +110,134 @@
 				</div>
 			</div>
 
-			<div class="panel ahead" data-index="4">
-				<h1><span data-i18n-message="heres_how_notifications_work"></span></h1>
-				<h2><span data-i18n-message="since_we_dont_collect_your_email"></span></h2>
+			<div class="panel ahead" data-index="2">
+				<h1><span data-i18n-message="mentorship_notifications_are_still"></span></h1>
+				<h2><span data-i18n-message="mentorship_youll_get"></span></h2>
 
-				<div class="button-container">
-					<span data-i18n-message="try_it_out"></span><br>
+				<div class="button-container" id = "button-container-notif">
 					<button id="send-notification" class="action sample-notification"><span data-i18n-message="send_me_a_notification"></span></button>
-					<div class="tip timed-appearance" data-trigger="send-notification" data-delay="5000"><span data-i18n-message="dont_see_notification"></span></div>
+					<div class="tip timed-appearance" id = "dontsee" data-trigger="send-notification" data-delay="3000"><span data-i18n-message="mentorship_dont_see_notification"></span></div>
+				</div>
+				<div class = "tips" id = "tips">
+					
+					<div><span data-i18n-message="tips_1"></span></div><br>
+					<div><span data-i18n-message="tips_2"></span></div><br>
+					<div><span data-i18n-message="tips_3"></span></div><br>
 				</div>
 			</div>
 
-			<div class="panel ahead" data-index="5" data-hand="point-at-extension">				
-				<h1><span data-i18n-message="lets_make_your_first_flag"></span></h1>
-				<h2><span data-i18n-message="click_the_chrome_extension"></span></h2>
+			<div class="panel ahead" data-index="3">				
+				<h1><span data-i18n-message="lets_try_it"></span></h1>
+				<h2><span data-i18n-message="mentorship_check_out_interface"></span></h2>
 
-				<div class="details">
-					<img src="/images/fake-article.png">
+				<div class="button-container" id = "button-container-demo">
+					<button id="launch-demo" class="action launch-demo"><span data-i18n-message="launch_demo"></span></button>
 				</div>
 
+			<div class = "demo" style = "display:none;">
+				<div class="browserbar">
+					<div class="dot"></div>
+					<div class="dot"></div>
+					<div class="dot"></div>
+
+				</div>
+				<div class="demo-article">
+					<span data-i18n-message="lies_or_manipulation_headline" class="headline"></span><br>
+					<span data-i18n-message="lies_or_manipulation_content" class="content"></span>
+				</div>
+
+				<div class="button-container">
+					<button class="next"></button>
+				</div>
+			</div>
+			</div>
+
+			<div class="panel ahead" data-index="4">
+				<h1><span data-i18n-message="mentorship_feedback_examples"></span></h1>
+ 
+				<div class = "mentorship-feedback">
+					<h2><span data-i18n-message="mentorship_start_positive"></span></h2>
+					<h3><span data-i18n-message="mentorship_start_positive_ex"></span></h2>
+
+					<h2><span data-i18n-message="mentorship_avoid_short_vague"></span></h2>
+					<h3><span data-i18n-message="mentorship_avoid_short_vague_ex"></span></h2>
+
+					<h2><span data-i18n-message="mentorship_point_out"></span></h2>
+					<h3><span data-i18n-message="mentorship_point_out_ex"></span></h2>
+
+					<h2><span data-i18n-message="mentorship_provide_links"></span></h2>
+					<h3><span data-i18n-message="mentorship_provide_links_ex"></span></h2>
+
+					<h2><span data-i18n-message="mentorship_acknowledge"></span></h2>
+					<h3><span data-i18n-message="mentorship_acknowledge_ex"></span></h2>
+
+					<h2 class = "feedback-guide"><span data-i18n-message="mentorship_view_feedback_guide"></span></h2>
+
+
+				</div>
+
+				<div class="button-container">
+					<button class="next"></button>
+				</div>
+				
+			</div>
+			<div class="panel ahead" data-index="5">
+				<div class = "preferences">
+
+					<h1><span data-i18n-message="mentorship_what_do_you_want"></span></h1>
+ 					<h2><span data-i18n-message="mentorship_mission_opt_out"></span><h3 class = "optional"><span data-i18n-message="optional"></span></h3></h2>
+					<h3><span data-i18n-message="mentorship_opt_out"></span></h3>
+
+					<div class = "checkbox">
+
+					<h4><span data-i18n-message="mentorship_i_would_like"></span></h4>
+				
+						<input type="checkbox" name="lies_or_manipulation" value="lies_or_manipulation">
+						<label for="lies_or_manipulation"> <span data-i18n-message="lies_or_manipulation_on"></span></label><br>
+						<input type="checkbox" name="abuse_or_harassment" value="abuse_or_harassment">
+						<label for="abuse_or_harassment"><span data-i18n-message="abuse_or_harassment_on"></span></label><br>
+						<input type="checkbox" name="division_or_fear" value="division_or_fear">
+						<label for="division_or_fear"> <span data-i18n-message="division_or_fear_on"></span></label><br><br>
+					</div>
+
+					<h2><span data-i18n-message="mentorship_expertise"></span><h3 class = "optional"><span data-i18n-message="optional"></span></h3>
+					</h2>
+					<h3><span data-i18n-message="mentorship_expertise_message"></span></h3>
+
+					<div class = "hashtags"></div>
+						<button class="hashtag"><span data-i18n-message="category_culture"></span></button>
+						<button class="hashtag"><span data-i18n-message="category_discrimination"></span></button>
+						<button class="hashtag"><span data-i18n-message="category_elections"></span></button>
+						<button class="hashtag"><span data-i18n-message="category_education"></span></button>
+						<button class="hashtag"><span data-i18n-message="category_environment"></span></button>
+						<button class="hashtag"><span data-i18n-message="category_science"></span></button>
+	
+					
+				</div>
+
+				<div class="button-container">
+					<button class = "next"></button>
+
+
+				</div>
 			</div>
 
 			<div class="panel ahead" data-index="6">
+				<div class = "nextsteps">
+
 				<h1><span data-i18n-message="thank_you"></span></h1>
-				<h2><span data-i18n-message="more_info_available_here"></span></h2>
+				<h2><span data-i18n-message="mentorship_thank_you"></span></h2>
+					<button class="option"  id = "slack" value = "slack"><img id = "slack-image" src = "/images/slack.png"> <span data-i18n-message="mentorship_join_slack"></span></button>
+					<button class="option"  id = "newsletter" value = "newsletter"><img id = "newsletter-image" src = "/images/mail.png"><span data-i18n-message="mentorship_sign_up"></span></button>
+					<button class="option"  id = "zoom" value = "zoom"><img id = "zoom-image" src = "/images/zoom.png"><span data-i18n-message="mentorship_chat"></span></button>
+					<button class="option"  id = "socialmedia" value = "socialmedia"><img id = "twitter-image" src = "/images/twitter.png"><span data-i18n-message="mentorship_share_social_media"></span></button>
+
+				</div>
+				<div class="button-container">
+					<button class = "close"><span data-i18n-message="close"></span></button>
+
+
+				</div>
 				
 			</div>
 		</div>
@@ -197,13 +246,38 @@
 
 		<div id="pointer-tip"><span data-i18n-message="tooltip_find_the_civic_button"></span></div>
 
-		<img id="civic-logo" src="/images/logo.png">
+	<div class="content-warning">
+		<div class = "first">
+			<h1><span data-i18n-message="flag_review" class="headline"></span></h1><br>
+			<h2><span data-i18n-message="mentorship_content_warning" class="content"></span></h2>
+			<div class="button-container" id = "button-container-review">
+				<button id="begin_review" class="action begin_review"><span data-i18n-message="begin_review"></span></button>
+			</div>
+			<a href = "javascript:void(0)" id = "uncomfortable-link"><span data-i18n-message="mentorship_i_feel_uncomfortable" class="uncomfortable"></span></a>
+		</div>
+			<div class = "no-review"> 
+				<h1><span data-i18n-message="mentorship_sorry" class="sorry"></span></h1><br>
+				<h2><span data-i18n-message="mentorship_tell_us_why" class="tell_us_why"></span></h2>
+				<textarea class = "reasoning" name="reasoning" id="reasoning"></textarea>
+				<div class="button-container">
+					<button class="submit_feedback"><span data-i18n-message="submit"></span></button>
+				</div>
 
+			</div>
+
+	</div>
+	<div class = "footer" id = "footer">
+			<img id="hip-logo-white" src="/images/Logowhite.png">
+			<div id = "ted-conf"> <p id = "copyright"> ©</p>TED Conferences LLC </div>
+			<a href="https://www.ted.com/about/our-organization/our-policies-terms/privacy-policy" target=“_blank” id = "privacy_policy"><span data-i18n-message="privacy_policy"></span></a>
+			<a href="https://www.ted.com/about/our-organization/our-policies-terms/ted-com-terms-of-use" target=“_blank” id = "terms_use"><span data-i18n-message="terms_of_use"></span></a>
+
+		</div>
 		<div id="bg-overlay"></div>
 		
 		<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 		<script type="text/javascript" src="/js/common.js"></script>
-		<script type="text/javascript" src="/js/onboarding.js"></script>
+		<script type="text/javascript" src="/js/onboarding-mentorship.js"></script>
 
 	</body>
 </html>
