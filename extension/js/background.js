@@ -164,6 +164,20 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 				CONFIG.onboardingOptOut = 1;
 				//console.log("Trying to opt out");
 			}
+			else if (request.command == 'inject-mentor-code')
+			{
+				browser.tabs.insertCSS({
+					file: '/css/mentor-review.css'
+				});
+				browser.tabs.executeScript({
+					file: '/js/mentor-review.js'
+				});
+			}
+			else
+			{
+				console.log("Unrecognized or missing command");
+				console.log(request);
+			}			
 
 			return Promise.resolve("Dummy response to keep the console quiet");		
 		}
@@ -285,7 +299,10 @@ function isUserRegistered ()
 					CONFIG.userId = 123456;
 					CONFIG.password = 'sdfjalsfjhlsjdk';
 
-					window.open("/html/onboarding.html");
+					//window.open("/html/onboarding.html");
+					browser.tabs.create({
+						'url': "/html/onboarding.html"
+					});
 					return;
 				}
 				else
@@ -301,7 +318,9 @@ function isUserRegistered ()
 						'password': data.password
 					}, 
 					function() {
-						window.open("/html/onboarding.html");
+						browser.tabs.create({
+							'url': "/html/onboarding.html"
+						});
 					}
 				);				
 			});

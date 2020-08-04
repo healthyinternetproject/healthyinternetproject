@@ -94,7 +94,7 @@ jQuery(document).ready(function ($) {
 			if (!config.userId)
 			{
 				//missing user id, launch onboarding to get a user id from the api
-				window.open("/html/onboarding.html");
+				window.open("/html/onboarding.html");				
 			}
 			else if ( !config.onboardingDone && !config.onboardingOptOut && !onboarding )
 			{
@@ -162,7 +162,8 @@ jQuery(document).ready(function ($) {
 						//TODO: get headline title from demo article dynamically and fill flagging window title with that
 
 						//move the pointy hand to the next step ONLY on the correct onboarding step
-						if(url.slice(-2) == "#5"){
+						if(url.slice(-2) == "#5")
+						{
 							//we are looking at an extension page, work in demo mode
 							title = getString("example_site_title");
 							displayUrl = "http://example.com";
