@@ -71,6 +71,7 @@
      "hip_site_easy_install"		            : { "message" : "Instalação fácil"},
      "hip_site_simple_whiz"		     	        : { "message" : "Veja este breve formulário para receber nosso link mágico e fazer o download de nossa extensão na Web Store do Google Chrome. Aderir ao Healthy Internet Project não exige que você compartilhe seu nome, email ou telefone."},
      "hip_site_start_here"		      	      : { "message" : "Comece aqui. "},
+
    
      
      
@@ -78,6 +79,8 @@
      "how_your_work_matters"                : { "message": "Veja como a ferramenta <em> funciona. </em>" },
      "intentionally_confuses"               : { "message": "Conteúdo que intencionalmente confunde e explora leitores pode frequentemente ter efeitos negativos." },
      "how_your_work_matters"                : { "message": "Veja como seu trabalho <em> funciona. </em>" },
+     "icfj_logo"               			        : { "message" : "<img id = \"icfj-logo\" src= \"/images/icfj-logo.png \"> " },
+
      "inspiration_answer"                   : { "message" : "<a href='javascript:void(0)' id = 'inspiration' class = 'inspiration' onclick = 'showInspirationFlag()'>Veja um exemplo</a> de uma bandeira bem escrita." },
      "inspiration_image"                    : { "message" : "<img src='../images/exampleFlagPT.png' id='inspirationFlag'>" },
      "inspiration_question"                 : { "message" : "Quer inspiração?" },

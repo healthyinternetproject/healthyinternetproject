@@ -839,6 +839,13 @@ h3{
 	
 }
 
+.onboarding .footer #icfj-logo{
+	height: 45px;
+    position: relative;
+    left: 62px;
+    bottom: 145px;
+}
+
 .onboarding .footer #hip-logo-white{
 	z-index: 2;
     position: fixed;

@@ -91,7 +91,10 @@
 	"hip_site_start_here"		      	  : { "message" : "Start here"},
 	"how_your_work_matters"               : { "message" : "Here’s how your work <em>matters</em>." },
 	"mentorship_i_feel_uncomfortable"	  : { "message" : "I feel uncomfortable reading this"},
-    "how_your_work_matters"               : { "message" : "Here’s how your work <em>matters</em>." },
+	"how_your_work_matters"               : { "message" : "Here’s how your work <em>matters</em>." },
+	"icfj_logo"               			  : { "message" : " " },
+
+	
     "inspiration_answer"                  : { "message" : "<a href='javascript:void(0)' id = 'inspiration' class = 'inspiration' onclick = 'showInspirationFlag()'>View an example</a> of a well-written flag." },
     "inspiration_image"                   : { "message" : "<img src='../images/exampleFlag.png' id='inspirationFlag'>" },
 	"inspiration_question"                : { "message" : "Want inspiration?" },
