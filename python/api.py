@@ -379,6 +379,48 @@ def api_listcampaigns():
 
 		return jsonify(results)
 
+
+@app.route('/api/v1/notifications', methods=['POST'])
+def api_notifications():	
+	logging.debug(request.form.get("json"))
+	user_id           = request.form.get('user_id')
+	password          = request.form.get('password')
+	timestamp         = datetime.now()	
+	user              = authenticate_user(user_id, password)
+	flagging_event_id = 0;
+
+	if user is None or user is False:
+		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
+	
+	try:
+		notifications = []
+		# select this user's notifications
+		# some will be assigned directly by user id, others will be open but eligible for this user
+		notification_query = "SELECT * FROM notification WHERE "
+		rows = db.fetchall(notification_query)
+		
+		for row in rows:
+			# do any processing here
+			notifications.append(row)
+			
+		results = {
+			'status': 'success',
+			'notifications': notifications
+		}
+
+		return jsonify(results)
+
+
+	except mysql.connector.errors.DatabaseError as err:
+
+		results = {
+			'error': "Error: {}".format(err),
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		return jsonify(results)
+
 	
 
 if __name__ == '__main__':
