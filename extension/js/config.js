@@ -1,0 +1,1 @@
+var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/"; 
