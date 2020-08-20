@@ -1,8 +1,4 @@
 
-//if you change this, also update the matching permissions in manifest.json
-var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/"; 
-//var API_ROOT_URL = "https://127.0.0.1/api/v1/"; //for local testing only
-
 var CONFIG = {
 	'userId'           : false,
 	'onboardingDone'   : false,
