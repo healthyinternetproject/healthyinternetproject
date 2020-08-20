@@ -11,8 +11,6 @@ class CivicDB:
 
 
 	def connect(self, config):
-		#todo: move this to config file
-		#self.connection = mysql.connector.connect(host='localhost',database='civic',user='civic',password='DZjf#8W3XEvSvCx')
 		self.connection = mysql.connector.connect(host=config['host'],database=config['database'],user=config['username'],password=config['password'])
 		db_info = self.connection.get_server_info()
 		print("Connected to DB Server ", db_info)

@@ -133,10 +133,6 @@ def get_locale_id(locale_string):
 	return config['default_locale_id']
 
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -146,6 +142,11 @@ def page_not_found(e):
 @app.route('/', methods=['GET'])
 def home():
     return '<h1>Civic API (' + config['version'] + ')</h1>'
+
+
+@app.route('/favicon.ico')
+def favicon():
+	return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/api/v1/register', methods=['GET','POST'])
@@ -396,9 +397,11 @@ def api_notifications():
 		notifications = []
 		# select this user's notifications
 		# some will be assigned directly by user id, others will be open but eligible for this user
-		notification_query = "SELECT * FROM notification WHERE "
-		rows = db.fetchall(notification_query)
-		
+		notification_query = "SELECT * FROM notification WHERE user_id = %s OR user_id_strict = %s"
+		notification_query_data = (user_id, user_id)
+
+		rows = db.fetchall(notification_query, notification_query_data)
+
 		for row in rows:
 			# do any processing here
 			notifications.append(row)
@@ -407,6 +410,8 @@ def api_notifications():
 			'status': 'success',
 			'notifications': notifications
 		}
+
+		#TODO: archive sent notifications
 
 		return jsonify(results)
 

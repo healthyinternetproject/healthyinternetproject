@@ -565,11 +565,11 @@ function adjustPopupSize (messageToggle)
 			$flagging.css('transition','height 200ms ease-in-out');	
 		}, 100);
 		
-		console.log($button.offset().top, $button.outerHeight(), newHeight);
+		//console.log($button.offset().top, $button.outerHeight(), newHeight);
 	}
 	else
 	{
-		console.log("No buttons");
+		//console.log("No buttons");
 	}
 }
 
