@@ -4,4 +4,3 @@ api-config.json
 *.zip
 nohup.out
 google-api-credentials*
-config.js

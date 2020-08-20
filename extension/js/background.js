@@ -1,11 +1,14 @@
 
+var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/"; 
+
 var CONFIG = {
 	'userId'           : false,
 	'onboardingDone'   : false,
 	'onboardingOptOut' : false,
 	'debug'            : false,
 	'skipAPI'          : false,
-	'initialized'      : false
+	'initialized'      : false,
+	'apiUrl'           : false
 };
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
@@ -13,7 +16,19 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 	browser = chrome;
 }
 
-(function() {
+if ( isDevMode() )
+{
+	API_ROOT_URL = "http://127.0.0.1:8080/api/v1/"; 
+}
+
+initializeExtension();
+
+
+
+function initializeExtension () 
+{
+
+	CONFIG.apiUrl = API_ROOT_URL;
 
 	
 	browser.runtime.onInstalled.addListener(function() {
@@ -196,7 +211,7 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 	*/
 
 
-}());
+}
 
 /*
 function showNotification (title, bodyText)
@@ -337,7 +352,7 @@ function sendToAPI ( term, data, authenticate, callback )
 	getConfigFromStorage(function (result) {
 
 		let xhr = new XMLHttpRequest();
-		let url = API_ROOT_URL + term;
+		let url = window.API_ROOT_URL + term;
 		let params = [];
 		let postData = "";
 
@@ -453,3 +468,7 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 }
 
 
+function isDevMode () 
+{
+	return !('update_url' in browser.runtime.getManifest());
+}
