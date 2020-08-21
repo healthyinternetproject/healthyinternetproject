@@ -77,6 +77,8 @@ jQuery(document).ready(function ($) {
 
 		let manifestData = browser.runtime.getManifest();
 
+		debug("API is " + CONFIG.apiUrl);
+
 
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
@@ -565,11 +567,11 @@ function adjustPopupSize (messageToggle)
 			$flagging.css('transition','height 200ms ease-in-out');	
 		}, 100);
 		
-		console.log($button.offset().top, $button.outerHeight(), newHeight);
+		//console.log($button.offset().top, $button.outerHeight(), newHeight);
 	}
 	else
 	{
-		console.log("No buttons");
+		//console.log("No buttons");
 	}
 }
 

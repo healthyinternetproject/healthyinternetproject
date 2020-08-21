@@ -3,3 +3,4 @@ api-config.json
 *.log
 *.zip
 nohup.out
+google-api-credentials*
