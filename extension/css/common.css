@@ -163,8 +163,7 @@ em.good
 }
 
 /* 
- ATTEMPT TO CONSOLIDATE "PANEL" STYLING ACROSS HTML FILES
- TODO: REMOVE REDUNDANT CLASSES IN ONBOARDING.CSS AND ONBOARDING-MENTOR.CSS 
+CONSOLIDATED "PANELS" STYLING
  */
 
 .panels
@@ -231,9 +230,9 @@ em.good
     line-height: 1.2em;
 }
 
-.panels .panel .details {
+/* .panels .panel .details {
     margin-top: 3em;
-}
+} */
 
 .panels .panel button.next
 {
@@ -263,8 +262,7 @@ em.good
 }
 
 /* 
- ATTEMPT TO CONSOLIDATE "FLAGGING CARD" STYLING ACROSS HTML FILES
- TODO: REMOVE REDUNDANT CLASSES IN ONBOARDING.CSS AND ONBOARDING-MENTOR.CSS 
+CONSOLIDATED "FLAGGING CARD" STYLING
  */
 
  .card
@@ -312,8 +310,7 @@ em.good
 
 
 /* 
- ATTEMPT TO CONSOLIDATE "FOOTER" STYLING ACROSS HTML FILES
- TODO: REMOVE REDUNDANT CLASSES IN ONBOARDING.CSS AND ONBOARDING-MENTOR.CSS 
+CONSOLIDATED "FOOTER" STYLING
  */
 
 #footer{
@@ -364,6 +361,8 @@ em.good
 	transition: all 1s linear;
 
 }
+
+/* RESPONSIVE STYLING */
 
 @media only screen and (max-width: 1250px) {
 	.footer #hip-logo-white{

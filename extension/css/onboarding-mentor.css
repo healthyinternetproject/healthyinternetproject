@@ -521,68 +521,6 @@
 	display: none;
 }
 
-.onboarding .panels
-{
-	position: absolute;	
-	top: 50%;
-	left: 50%;
-	width: 80%;
-	max-width: 1000px;
-	height: 70%;
-	background: #fff;
-	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);	
-	z-index: 4;
-	transform: translate(-50%,-50%);
-	transition: all 900ms ease-in-out;	
-}
-
-.onboarding .panels .panel
-{
-	display: none;
-	
-	padding: 50px 140px 50px 50px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-
-.onboarding .panels .panel.ahead
-{
-	/*left: 150%;*/
-}
-
-.onboarding .panels .panel.behind
-{
-	/*left: -150%;*/
-}
-
-.onboarding .panels .panel h1
-{
-	font-weight: bold;
-	font-size: 48px;
-	letter-spacing: -1.97px;	
-	color: black;
-}
-
-
-.onboarding .panels .panel h2
-{
-	font-size: 20px;
-	margin: 1em 0 0 0;
-	letter-spacing: -0.75px;	
-	line-height: 1.4em;
-}
-
-
-.onboarding .panels .panel h2 em
-{
-	font-weight: 700;
-}
-.onboarding .panels .panel .details{
-	/* margin-top: 3em; */
-}
 .onboarding .panels .panel .browserbar{
 	display: flex;
 	justify-content: flex-start;
@@ -836,29 +774,6 @@
 	outline: 0;
 }
 
-.onboarding .panels .panel button.next
-{
-	width: 75px;
-	height: 75px;
-	border-radius: 50%;
-	padding: 0;
-	margin-top: 0;
-}
-
-.onboarding .panels .panel button.next:before
-{
-	content: "";
-	position: absolute;
-	background-image: url(../images/Arrow.svg);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center center;
-	width: 51px;
-	height: 51px;
-	top: 12px;
-	left: 12px;
-}
-
 /*
 .onboarding .panels .panel.current
 {
@@ -1060,50 +975,6 @@
 	width: 150px;
 }
 
-.onboarding #footer{
-    position: fixed;
-    bottom: 0px;
-    right: 20px;
-    z-index: 2;
-	width: 100%;
-	height: 20px;
-	font-size: 12px;
-}
-
-.onboarding .footer #privacy_policy {
-	float: right;
-	/* right: 2%; */
-	color: black;
-}
-.onboarding .footer #terms_use {
-	float: right;
-	color: black;
-	margin-right: 2%;
-}
-.onboarding .footer #ted-conf #copyright {
-	color: black;
-	font-weight:400;
-	display: inline;
-	
-}
-.onboarding .footer #ted-conf {
-	position: fixed;
-	right: 45%;
-	color: black;
-	font-weight: 700;
-	margin-left: 3px;
-	
-}
-
-.onboarding .footer #hip-logo-white{
-	z-index: 2;
-    position: fixed;
-    height: 90px;
-    bottom: 15px;
-	left: 30px;
-	transition: all 1s linear;
-
-}
 
 .onboarding .panels .panel .tips{
 	position: absolute;
@@ -1162,16 +1033,17 @@
 	font-size: 15px;
 	letter-spacing: -0.65px;
 	font-style: italic;
-
+    font-weight: 400;
+    line-height: 1em;
 }
 
 
-.onboarding .panels .panel #button-container-notif{
+/* .onboarding .panels .panel #button-container-notif{
 	position: absolute;
 	left: 5%;
     top: 28%;
 	
-}
+} */
 
 .onboarding .panels .panel #send-notification{
 	font-size: 20px;
@@ -1206,11 +1078,6 @@
 
 
 @media only screen and (max-width: 1250px) {
-	.onboarding .footer #hip-logo-white{
-		height:75px;
-
-	}
-
 	.onboarding .progress .step.current h1 {
 		font-size: 25px;
 		line-height: 30px;
@@ -1218,33 +1085,6 @@
 
 		
 	}
-
-	.onboarding .panels .panel button.next {
-		width: 50px;
-		height: 50px;
-		transition: all 1s linear;
-
-
-	}
-
-	.onboarding .panels .panel button.next:before {
-		width: 28px;
-		height: 25px;
-		transition: all 1s linear;
-
-
-	}
-	.onboarding .panels .panel h1 {
-		font-size: 35px;
-		transition: all 1s linear;
-
-		
-	}
-	.onboarding .panels .panel {
-		padding-top: 30px;
-	}
-
-
 
 	.onboarding .illustrations.type-b {
 		border: 3px solid #1B1F27;
@@ -1257,47 +1097,17 @@
 		text-align: center;
 		height: 80px;
 	}
-
-	.onboarding .illustrations.word-box{
-		 
-	}
-
-	.onboarding .panels .panel .button-container{	
-		width: 50px;
-	}
-
-	.onboarding .panels .panel .tips{
-		height: 65%;
-		top: 29%;
-	}
-
 	
   }
 
 
   @media only screen and (max-width: 700px) {
-	.onboarding .footer #hip-logo-white{
-		height:60px;
-
-	}
-
 
 	.onboarding .progress .step.current h1{
 		font-size: 20px;	
 		line-height: 24x;
 		transition: all 1s linear;
 
-	}
-
-	.onboarding .panels .panel h1 {
-		font-size: 25px;
-
-		
-	}
-
-	.onboarding .panels .panel {
-		padding-right: 5%;
-		padding-left: 5%;
 	}
 
 	.onboarding .progress .step [href] {
@@ -1317,28 +1127,6 @@
 
 	
 	
-  }
-
-
-  @media only screen and (max-height: 600px) {
-	.onboarding .panels .panel h1 {
-		font-size: 35px;
-		transition: all 1s linear;
-
-		
-	}
-
-	.onboarding .panels .panel {
-		padding-top: 30px;
-		padding-right: 5%;
-	}
-
-	.onboarding .footer #hip-logo-white{
-		height:70px;
-
-	}
-
-
   }
 
 
