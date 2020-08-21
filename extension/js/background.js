@@ -18,7 +18,7 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 
 if ( isDevMode() )
 {
-	API_ROOT_URL = "http://127.0.0.1:8080/api/v1/"; 
+	//API_ROOT_URL = "http://127.0.0.1:8080/api/v1/"; 
 }
 
 initializeExtension();
