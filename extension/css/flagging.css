@@ -624,51 +624,6 @@
 	cursor: default;
 }
 
-
-.flagging .page.thanks .card
-{
-	background-color: #FFFFFF;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
-	border-radius: 7px;	
-	padding: 20px;
-}
-
-
-.flagging .page.thanks .card h2
-{
-	font-weight: bold;
-	font-size: 18px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	width: 270px;		
-}
-
-.flagging .page.thanks .card .selected-campaign
-{
-	margin: 8px 0 8px 0;
-}
-
-.flagging .page.thanks .card .selected-campaign span
-{
-	color: #fff;
-	background-color: #E62B1E;
-	border-radius: 4px;
-	padding: 3px 10px 3px 10px;
-	font-size: 12px;
-}
-
-.flagging .page.thanks .card .notes
-{
-	color: #1B1F27;
-	font-size: 12px;
-	margin-top: 20px;
-	border: 1px solid #1B1F27;	
-	border-radius: 4px;	
-	padding: 8px;
-	line-height: 1.3em;
-}
-
 .flagging .selected-flags
 {
 	margin-top: 10px;

@@ -156,7 +156,7 @@
 	line-height: 1.3em;
 	font-size: 18px;
 	padding: 18px 18px 18px 80px;
-	width: 300px;
+	width: 310px;
 	background-image: url(/images/icon-48.png);
     background-position: 10px;
     background-size: 55px;
@@ -445,65 +445,6 @@
 	display: none;
 }
 
-.onboarding .panels
-{
-	position: absolute;	
-	top: 50%;
-	left: 50%;
-	width: 80%;
-	max-width: 1000px;
-	height: 70%;
-	background: #fff;
-	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);	
-	z-index: 4;
-	transform: translate(-50%,-50%);
-	transition: all 900ms ease-in-out;	
-}
-
-.onboarding .panels .panel
-{
-	display: none;
-	
-	padding: 50px 140px 50px 50px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-
-.onboarding .panels .panel.ahead
-{
-	/*left: 150%;*/
-}
-
-.onboarding .panels .panel.behind
-{
-	/*left: -150%;*/
-}
-
-.onboarding .panels .panel h1
-{
-	font-weight: bold;
-	font-size: 48px;
-	letter-spacing: -1.97px;	
-}
-
-.onboarding .panels .panel h2
-{
-	font-size: 20px;
-	margin: 1em 0 0 0;
-	letter-spacing: -0.75px;	
-	line-height: 1.4em;
-}
-
-.onboarding .panels .panel h2 em
-{
-	font-weight: 700;
-}
-.onboarding .panels .panel .details{
-	margin-top: 3em;
-}
 .onboarding .panels .panel .browserbar{
 	display: flex;
 	justify-content: flex-start;
@@ -612,29 +553,6 @@
 	outline: 0;
 }
 
-.onboarding .panels .panel button.next
-{
-	width: 75px;
-	height: 75px;
-	border-radius: 50%;
-	padding: 0;
-	margin-top: 0;
-}
-
-.onboarding .panels .panel button.next:before
-{
-	content: "";
-	position: absolute;
-	background-image: url(../images/Arrow.svg);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center center;
-	width: 51px;
-	height: 51px;
-	top: 12px;
-	left: 12px;
-}
-
 /*
 .onboarding .panels .panel.current
 {
@@ -644,14 +562,14 @@
 */
 
 
-.onboarding .panels .panel.welcome
+.panels .panel.welcome
 {
 	text-align: center;
 	padding-top: 300px;
 	padding-left: 140px;
 }
 
-.onboarding .panels .panel.welcome img
+.panels .panel.welcome img
 {
 	position: absolute;
 	width: 390px;
@@ -661,17 +579,17 @@
 	transform: translateX(-50%);
 }
 
-.onboarding .panels .panel.welcome h1
+.panels .panel.welcome h1
 {
 	margin-bottom: 0.4em;
 }
 
-.onboarding .panels .panel.welcome p
+.panels .panel.welcome p
 {
 	line-height: 1.4em;
 }
 
-.onboarding .panels .panel.welcome .next
+.panels .panel.welcome .next
 {
 	opacity: 0;	
 	animation: fade-in-frames ease-in-out 1;
@@ -695,8 +613,6 @@
 	cursor: pointer;
 	padding-top: 8px;
 }
-
-
 
 .onboarding .note
 {
@@ -767,10 +683,11 @@
 	height: auto;
 }
 
-h3{
+.onboarding .panels .panel h3{
 	font-weight: 600;
 	font-size: 24px;
-	margin-bottom: 0.3em;
+    margin-bottom: 0.3em;
+    color:var(--black);
 }
 
 .onboarding .icon-info li label
@@ -804,57 +721,6 @@ h3{
 	width: 150px;
 }
 
-.onboarding #footer{
-    position: fixed;
-    bottom: 0px;
-    right: 20px;
-    z-index: 2;
-	width: 100%;
-	height: 20px;
-	font-size: 12px;
-}
-
-.onboarding .footer #privacy_policy {
-	float: right;
-	/* right: 2%; */
-	color: black;
-}
-.onboarding .footer #terms_use {
-	float: right;
-	color: black;
-	margin-right: 2%;
-}
-.onboarding .footer #ted-conf #copyright {
-	color: black;
-	font-weight:400;
-	display: inline;
-	
-}
-.onboarding .footer #ted-conf {
-	position: fixed;
-	right: 45%;
-	color: black;
-	font-weight: 700;
-	margin-left: 3px;
-	
-}
-
-.onboarding .footer #icfj-logo{
-	height: 45px;
-    position: relative;
-    left: 62px;
-    bottom: 145px;
-}
-
-.onboarding .footer #hip-logo-white{
-	z-index: 2;
-    position: fixed;
-    height: 90px;
-    bottom: 15px;
-	left: 30px;
-	transition: all 1s linear;
-
-}
 
 .onboarding .panels .panel .tips{
 	position: absolute;
@@ -933,133 +799,43 @@ h3{
 } 
 
 
+/* most media queries moved to common.css */
+
 @media only screen and (max-width: 1250px) {
-	.onboarding .footer #hip-logo-white{
-		height:75px;
-
-	}
-
-	.onboarding .progress .step.current h1 {
+    .onboarding .progress .step.current h1 {
 		font-size: 25px;
 		line-height: 30px;
 		transition: all 1s linear;
-
-		
-	}
-
-	.onboarding .panels .panel button.next {
-		width: 50px;
-		height: 50px;
-		transition: all 1s linear;
-
-
-	}
-
-	.onboarding .panels .panel button.next:before {
-		width: 28px;
-		height: 25px;
-		transition: all 1s linear;
-
-
-	}
-	.onboarding .panels .panel h1 {
-		font-size: 35px;
-		transition: all 1s linear;
-
-		
-	}
-	.onboarding .panels .panel {
-		padding-top: 30px;
-	}
-
-
-
-	.onboarding .illustrations.type-b {
+    }
+    
+    .onboarding .illustrations.type-b {
 		font-size: 15px;
 		width: 130px;
 		height: 130px;
 		transition: all 250ms linear;
 	}
+}
 
-	.onboarding .panels .panel .button-container{	
-		width: 50px;
-	}
+@media only screen and (max-width: 700px) {
 
-	.onboarding .panels .panel .tips{
-		height: 65%;
-		top: 30%;
-	}
-
-	
-  }
-
-
-  @media only screen and (max-width: 700px) {
-	.onboarding .footer #hip-logo-white{
-		height:60px;
-
-	}
-
-
-	.onboarding .progress .step.current h1{
+    .onboarding .progress .step.current h1{
 		font-size: 20px;	
 		line-height: 24x;
 		transition: all 1s linear;
+    }
+    
+    .onboarding .panels .panel.welcome {
+		padding-left: 30px;
+    }
 
-	}
-
-	.onboarding .panels .panel h1 {
-		font-size: 25px;
-
-		
-	}
-
-	.onboarding .panels .panel {
-		padding-right: 5%;
-		padding-left: 5%;
-	}
-
-	.onboarding .progress .step [href] {
+    .onboarding .details .three {
+		grid-column-gap: 10px;
+    }
+    
+    .onboarding .progress .step [href] {
 		padding: 36px 9px 0 20px;
 	}
-
-	.onboarding .panels .panel.welcome {
-		padding-left: 30px;
-	}
-
-	.onboarding .details .three {
-		grid-column-gap: 10px;
-	}
-
-	
-
-
-
-	
-	
-  }
-
-
-  @media only screen and (max-height: 600px) {
-	.onboarding .panels .panel h1 {
-		font-size: 35px;
-		transition: all 1s linear;
-
-		
-	}
-
-	.onboarding .panels .panel {
-		padding-top: 30px;
-		padding-right: 5%;
-	}
-
-	.onboarding .footer #hip-logo-white{
-		height:70px;
-
-	}
-
-
-  }
+}
 
 
 

@@ -8,6 +8,16 @@
 	Dark gray 2: #7F8DA7 e.g., (optional)
 */
 
+:root {
+    --white:#fff;
+    --black:#111;
+    --red:#e62b1e;
+    --green:#26A65B;
+    --blue: #5762D5;
+    --light-blue:#A6ADE7;
+    --light-grey:#E8EBEF;
+}
+
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -45,18 +55,18 @@ body
 
 em
 {
-	color: #E62B1E;
+	color: var(--red);
 }
 
 em.good
 {
-	color: #26A65B;
+	color: var(--green);
 }
 
 
 [href]
 {
-	color: #5762D5;
+	color: var(--blue);
 }
 
 .centered
@@ -72,10 +82,11 @@ em.good
 {
 	display: inline-block;
 	padding: 8px 12px 8px 12px;
-	background-color: #5762D5;
+	background-color: var(--blue);
 	color: #fff;
 	font-weight: bold;
-	font-size: 16px;
+    font-size: 16px;
+    border:none;
 	border-radius: 3px;
 	text-align: center;
 	cursor: pointer;
@@ -120,7 +131,7 @@ em.good
 	top: 0;
 	width: 48px;
 	height: 48px;
-	background-color: #fff;
+	background-color: var(--white);
 	border-radius: 7px;
 	box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.2);
 	transition: background-color 200ms linear, transform 350ms ease-in-out;
@@ -150,6 +161,278 @@ em.good
 	max-height: 26px;
 	height: auto;
 }
+
+/* 
+ ATTEMPT TO CONSOLIDATE "PANEL" STYLING ACROSS HTML FILES
+ TODO: REMOVE REDUNDANT CLASSES IN ONBOARDING.CSS AND ONBOARDING-MENTOR.CSS 
+ */
+
+.panels
+{
+	position: absolute;	
+	top: 50%;
+	left: 50%;
+	width: 80%;
+	max-width: 1000px;
+	height: 70%;
+	background: var(--white);
+	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);	
+	z-index: 4;
+	transform: translate(-50%,-50%);
+	transition: all 900ms ease-in-out;	
+}
+
+.panels .panel
+{
+	display: none;
+	padding: 50px 140px 50px 50px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.panels .panel h1
+{
+	font-weight: bold;
+	font-size: 48px;
+	letter-spacing: -1.97px;	
+	color: black;
+}
+
+
+.panels .panel h2
+{
+	font-size: 20px;
+	margin: 1em 0 0 0;
+	letter-spacing: -0.75px;	
+	line-height: 1.4em;
+}
+
+
+.panels .panel h2 em
+{
+	font-weight: 700;
+}
+
+.panels .panel h3
+{
+    font-size: 30px;
+    color:var(--blue);
+	letter-spacing: -0.75px;	
+    line-height: 1.4em;
+    font-weight: 700;
+}
+
+.panels .panel .caption{
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 1.2em;
+}
+
+.panels .panel .details {
+    margin-top: 3em;
+}
+
+.panels .panel button.next
+{
+	width: 75px;
+	height: 75px;
+	border-radius: 50%;
+	padding: 0;
+	margin-top: 0;
+}
+
+.panels .panel button.next:before
+{
+	content: "";
+	position: absolute;
+	background-image: url(../images/Arrow.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 51px;
+	height: 51px;
+	top: 12px;
+	left: 12px;
+}
+
+.bold{
+    font-weight: 700;
+}
+
+/* 
+ ATTEMPT TO CONSOLIDATE "FLAGGING CARD" STYLING ACROSS HTML FILES
+ TODO: REMOVE REDUNDANT CLASSES IN ONBOARDING.CSS AND ONBOARDING-MENTOR.CSS 
+ */
+
+ .card
+{
+	background-color: #FFFFFF;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+	border-radius: 7px;	
+	padding: 20px;
+}
+
+.card h2
+{
+	font-weight: bold;
+	font-size: 18px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 270px;		
+}
+
+.card .selected-campaign
+{
+	margin: 8px 0 8px 0;
+}
+
+.card .selected-campaign span
+{
+	color: var(--white);
+	background-color: var(--red);
+	border-radius: 4px;
+	padding: 3px 10px 3px 10px;
+	font-size: 12px;
+}
+
+.card .notes
+{
+	color: #1B1F27;
+	font-size: 12px;
+	margin-top: 20px;
+	border: 1px solid #1B1F27;	
+	border-radius: 4px;	
+	padding: 8px;
+	line-height: 1.3em;
+}
+
+
+/* 
+ ATTEMPT TO CONSOLIDATE "FOOTER" STYLING ACROSS HTML FILES
+ TODO: REMOVE REDUNDANT CLASSES IN ONBOARDING.CSS AND ONBOARDING-MENTOR.CSS 
+ */
+
+#footer{
+    position: fixed;
+    bottom: 0px;
+    right: 20px;
+    z-index: 2;
+	width: 100%;
+	height: 20px;
+    font-size: 12px;
+    color:var(--black);
+}
+
+#footer.negative{
+    color:var(--white);
+}
+
+#footer.negative [href]{
+    color:var(--white);
+}
+
+.footer #privacy_policy {
+	float: right;
+}
+.footer #terms_use {
+	float: right;
+	margin-right: 2%;
+}
+.footer #ted-conf #copyright {
+	font-weight:400;
+	display: inline;
+	
+}
+.footer #ted-conf {
+	position: fixed;
+	right: 45%;
+	font-weight: 700;
+	margin-left: 3px;
+	
+}
+
+.footer #hip-logo-white{
+	z-index: 2;
+    position: fixed;
+    height: 90px;
+    bottom: 15px;
+	left: 30px;
+	transition: all 1s linear;
+
+}
+
+@media only screen and (max-width: 1250px) {
+	.footer #hip-logo-white{
+		height:75px;
+	}
+
+	.panels .panel button.next {
+		width: 50px;
+		height: 50px;
+		transition: all 1s linear;
+	}
+
+	.panels .panel button.next:before {
+		width: 28px;
+		height: 25px;
+		transition: all 1s linear;
+	}
+	.panels .panel h1 {
+		font-size: 35px;
+		transition: all 1s linear;
+	}
+	.panels .panel {
+		padding-top: 30px;
+	}
+
+	.panels .panel .button-container{	
+		width: 50px;
+	}
+
+	.panels .panel .tips{
+		height: 65%;
+		top: 30%;
+	}
+  }
+
+
+  @media only screen and (max-width: 700px) {
+	.footer #hip-logo-white{
+		height:60px;
+	}
+
+	.panels .panel h1 {
+		font-size: 25px;
+	}
+
+	.panels .panel {
+		padding-right: 5%;
+		padding-left: 5%;
+	}
+	
+  }
+
+
+  @media only screen and (max-height: 600px) {
+	.panels .panel h1 {
+		font-size: 35px;
+		transition: all 1s linear;
+	}
+
+	.panels .panel {
+		padding-top: 30px;
+		padding-right: 5%;
+	}
+
+	.footer #hip-logo-white{
+		height:70px;
+
+	}
+  }
 
 
 

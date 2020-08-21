@@ -1,0 +1,103 @@
+.notification{
+    background-color:var(--blue)
+}
+
+.button{
+    display: block;
+    margin-bottom:5px;
+}
+
+.panels .panel{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    padding: 0;
+    /* padding: 50px 50px 50px 50px; */
+}
+
+/* .panels .panel::after{
+    content:"";
+    position: absolute;
+    right:0;
+    top:0;
+    height:100%;
+    width:calc(20px + 20px + 270px + 50px + 50px);
+    background-color: var(--light-grey);
+    z-index:1;
+} */
+
+.panel .left{
+    z-index:2;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.panel .right{
+    z-index:2;
+    padding: 50px;
+    background-color: var(--light-grey);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel .message-container{
+    flex:auto;
+    display:flex;
+    align-items: center;
+    width: 100%;
+}
+
+.panel #message{
+	font-family: 'Inter', sans-serif;
+    display: block;
+    height: 75%;
+    width:100%;
+    margin-left:25px;
+    border-left:1px solid var(--black);
+    font-size:15px;
+    font-style: italic;
+    line-height: 1.25em;
+    border:none;
+    overflow-x: hidden;
+    appearance: none;
+    resize: none;
+}
+
+input:focus, textarea {
+    outline: none !important;
+}
+
+textarea:hover{
+    cursor: initial;
+}
+
+.card{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.card h2{
+    width:unset;
+    min-width:175px;
+}
+
+.caption{
+    width:100%;
+}
+
+@media only screen and (max-width: 700px) {
+	.panels .panel .left, .panels .panel .right{
+		padding: 5%;
+    }
+    
+    .panels .panel h3{
+        font-size:24px;
+        line-height: 1em;
+    }
+	
+  }
