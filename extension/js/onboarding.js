@@ -38,7 +38,7 @@ jQuery(document).ready(function ($) {
 			console.log("Notification clicked");
 			window.location.href = window.location.pathname + "#5";
 			sendResponse({result: "success"});
-		}
+        }
 		else if (request.command == 'move-hand-flag')
 		{
 			$("#pointer-hand").removeClass();
@@ -150,8 +150,6 @@ jQuery(document).ready(function ($) {
 
 	browser.runtime.sendMessage({command: 'get-config'}, function () {});
 
-
-
 	function initializeUI ()
 	{
 		if (uiInitialized) { return; }
@@ -220,7 +218,37 @@ jQuery(document).ready(function ($) {
 				}
 			}
 
-		});	
+        });	
+
+        $('.onboarding #pointer-tip').on('click','.help-button',function(){
+            var helpInterface = `
+            <div class="help-container">
+                <div><img src='/images/puzzle.png'><span class='puzzle-row' data-i18n-message='tooltip_puzzle_icon'></span></div>
+                <div><img src='/images/icon-48.png'><span class='hip-row' data-i18n-message='tooltip_hip_icon'></span></div>
+                <div><img src='/images/pin.png'><span class='pin-row' data-i18n-message='tooltip_pin_icon'></span></div>
+                <button class='done-button'><span data-i18n-message='tooltip_done_button'></span></button>
+            </div>
+            `;
+            $("#pointer-tip").addClass("help-tip");
+
+            $("#pointer-tip").html(helpInterface);
+            console.log(helpInterface);
+
+            $("#pointer-tip .puzzle-row").html( getString("tooltip_puzzle_icon"));
+            $("#pointer-tip .hip-row").html( getString("tooltip_hip_icon"));
+            $("#pointer-tip .pin-row").html( getString("tooltip_pin_icon"));
+            $("#pointer-tip .done-button span").html( getString("tooltip_done_button"));
+        });
+
+        $('.onboarding #pointer-tip').on('click','.done-button',function(){
+            var clearSpan = "<span></span>"
+            $("#pointer-tip").html(clearSpan);
+            $("#pointer-tip").removeClass("help-tip");
+
+            $("#pointer-tip span").attr("data-i18n-message","tooltip_find_the_hip_button");
+			//change content of tip!
+            $("#pointer-tip span").html( getString("tooltip_find_the_hip_button"));
+        });
 
 
 		$(".onboarding .panel.mission-selector .next").click(function () {
