@@ -36,8 +36,13 @@ jQuery(document).ready(function ($) {
 		else if (request.command == 'notification-click')
 		{
 			console.log("Notification clicked");
-			window.location.href = window.location.pathname + "#5";
-			sendResponse({result: "success"});
+			var segment_array = window.location.href.split( '/' );
+			var last_segment = segment_array.pop();
+			if (last_segment == '/html/onboarding.html#4'){
+				window.location.href = window.location.pathname + "#5";
+				sendResponse({result: "success"});
+			}
+
         }
 		else if (request.command == 'move-hand-flag')
 		{
