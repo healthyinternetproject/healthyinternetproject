@@ -38,10 +38,13 @@ jQuery(document).ready(function ($) {
 			console.log("Notification clicked");
 			var segment_array = window.location.href.split( '/' );
 			var last_segment = segment_array.pop();
-			if (last_segment == '/html/onboarding.html#4'){
+			console.log(last_segment)
+			if (last_segment == 'onboarding.html#4'){
 				window.location.href = window.location.pathname + "#5";
 				sendResponse({result: "success"});
 			}
+			sendResponse({result: "success"});
+
 
         }
 		else if (request.command == 'move-hand-flag')

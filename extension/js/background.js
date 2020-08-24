@@ -362,7 +362,15 @@ function dismissNotification (notificationId)
 	sendMessageToClientScript( { command: 'notification-click' }, function () {} );
 	setTimeout(function () { browser.notifications.clear(notificationId); }, 100);
 }
+function openNotification (notificationId) 
+{
+	console.log('clicked')
+	window.location.href = 'html/notification.html';
 
+	sendMessageToClientScript( { command: 'notification-click' }, function () {
+	} );
+	setTimeout(function () { browser.notifications.clear(notificationId); }, 100);
+}
 
 function sendToAPI ( term, data, authenticate, callback )
 {
@@ -534,8 +542,8 @@ function showNotifications ( data )
 
 			if (notification.type == "journalist-contact")
 			{
-				browser.notifications.onClicked.addListener(showJournalistMessage);
-				browser.notifications.onButtonClicked.addListener(showJournalistMessage);
+				browser.notifications.onClicked.addListener(openNotification);
+				browser.notifications.onButtonClicked.addListener(openNotification);
 				browser.notifications.onClosed.addListener(showJournalistMessage);
 				browser.notifications.onShowSettings.addListener(showJournalistMessage);				
 			}
