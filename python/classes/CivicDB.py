@@ -1,6 +1,7 @@
 
 import mysql.connector
 
+
 class CivicDB:
 
 	def __init__(self, config, logging):

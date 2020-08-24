@@ -6,13 +6,12 @@ import json
 import flask
 from flask import request, jsonify, abort, send_from_directory
 from datetime import datetime
-import random
 import string
 from argon2 import PasswordHasher
 import logging
 from classes.CivicDB import CivicDB
-import mysql.connector
 import urllib.parse
+import random
 
 
 with open("../api-config.json") as json_data_file:
