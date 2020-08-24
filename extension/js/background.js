@@ -1,5 +1,6 @@
 
 var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/"; 
+var NOTIFICATION_CHECK_MIN_TIME = 300000; //5 minutes in milliseconds
 
 var CONFIG = {
 	'userId'           : false,
@@ -10,6 +11,9 @@ var CONFIG = {
 	'initialized'      : false,
 	'apiUrl'           : false
 };
+
+var lastNotificationCheck = false;
+
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 {
@@ -132,12 +136,6 @@ function initializeExtension ()
 			}
 			else if (request.command == 'sample-notification')
 			{		
-				let dismissNotification = function (notificationId) 
-				{
-					sendMessageToClientScript( { command: 'notification-click' }, function () {} );
-					setTimeout(function () { browser.notifications.clear(notificationId); }, 100);
-				};	
-
 				let notification = browser.notifications.create({
 					"type"               : "basic",
 					"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
@@ -195,6 +193,11 @@ function initializeExtension ()
 	);
   
 
+	browser.tabs.onUpdated.addListener( getNotificationsFromAPI );
+	browser.tabs.onActivated.addListener( getNotificationsFromAPI );
+	browser.windows.onFocusChanged.addListener( getNotificationsFromAPI );
+
+	getNotificationsFromAPI();
 
 
 
@@ -346,6 +349,13 @@ function isUserRegistered ()
 }
 
 
+function dismissNotification (notificationId) 
+{
+	sendMessageToClientScript( { command: 'notification-click' }, function () {} );
+	setTimeout(function () { browser.notifications.clear(notificationId); }, 100);
+}
+
+
 function sendToAPI ( term, data, authenticate, callback )
 {
 
@@ -468,7 +478,66 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 }
 
 
+function getNotificationsFromAPI ()
+{
+	let data = {};
+	let now = Date.now();
+
+	if (lastNotificationCheck == 0 || lastNotificationCheck + NOTIFICATION_CHECK_MIN_TIME <= now)
+	{
+		console.log("Getting notifications from API");
+		lastNotificationCheck = now;
+		return sendToAPI( "notifications", data, true, showNotifications );
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+function showNotifications ( data ) 
+{
+	if (data.notifications && data.notifications.length > 0)
+	{
+		console.log(data.notifications.length + " new notifications for user " + CONFIG.userId);
+
+		for (let i=0; i < data.notifications.length; i++)
+		{
+			let notification = data.notifications[i];
+
+			console.log(notification);
+
+			let n = browser.notifications.create(getNotificationId(), {
+				"type"               : "basic",
+				"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
+				"title"              : notification.title,
+				"message"            : notification.body,
+				"requireInteraction" : true,
+				"buttons"            : []
+			});	
+
+			browser.notifications.onClicked.addListener(dismissNotification);
+			browser.notifications.onButtonClicked.addListener(dismissNotification);
+			browser.notifications.onClosed.addListener(dismissNotification);
+			browser.notifications.onShowSettings.addListener(dismissNotification);
+		}
+	}
+	else
+	{
+		console.log("No new notifications for user " + CONFIG.userId);
+	}
+}
+
+
 function isDevMode () 
 {
 	return !('update_url' in browser.runtime.getManifest());
+}
+
+
+function getNotificationId () 
+{
+    var id = Math.floor(Math.random() * 9007199254740992) + 1;
+    return id.toString();
 }

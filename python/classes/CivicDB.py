@@ -6,8 +6,8 @@ class CivicDB:
 	def __init__(self, config, logging):
 		self.lastid = False		
 		self.logging = logging
+		self.in_transaction = False
 		self.connect(config)	
-
 
 
 	def connect(self, config):
@@ -32,11 +32,31 @@ class CivicDB:
 
 		self.logging.debug("Query: " + getattr(cursor,'statement', '[none]'))
 
-		if commit:
+		if commit and self.in_transaction is False:
 			self.connection.commit()
 
 		self.lastid = getattr(cursor,'lastrowid', None)
 		return result
+
+
+	def start_transaction(self):
+		cursor = self.get_cursor()
+		cursor.execute("START TRANSACTION")
+		self.in_transaction = True
+
+
+	def commit(self):
+		if (self.in_transaction):
+			cursor = self.get_cursor()
+			cursor.execute("COMMIT")
+			self.in_transaction = False
+
+
+	def rollback(self):
+		if (self.in_transaction):
+			cursor = self.get_cursor()
+			cursor.execute("ROLLBACK")
+			self.in_transaction = False
 
 
 	def fetchone(self, sql, params=(), commit=True):

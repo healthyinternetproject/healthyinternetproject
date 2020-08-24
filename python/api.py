@@ -133,6 +133,18 @@ def get_locale_id(locale_string):
 	return config['default_locale_id']
 
 
+def get_localized_string( string_key, locale_id ):
+	string_query = "SELECT text FROM string WHERE string_key = %s AND locale_id = %s LIMIT 1"
+	string       = db.fetchone(string_query, (string_key, locale_id))
+
+	if (string):
+		return string['text']
+	elif (locale_id != 1):
+		# default to English
+		return get_localized_string( string_key, 1 )
+	else:
+		return "[Error: string not found]";
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -383,12 +395,12 @@ def api_listcampaigns():
 
 @app.route('/api/v1/notifications', methods=['POST'])
 def api_notifications():	
-	logging.debug(request.form.get("json"))
+	# logging.debug(request.form.get("json"))
 	user_id           = request.form.get('user_id')
 	password          = request.form.get('password')
 	timestamp         = datetime.now()	
 	user              = authenticate_user(user_id, password)
-	flagging_event_id = 0;
+	flagging_event_id = 0;	
 
 	if user is None or user is False:
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
@@ -399,19 +411,47 @@ def api_notifications():
 		# some will be assigned directly by user id, others will be open but eligible for this user
 		notification_query = "SELECT * FROM notification WHERE user_id = %s OR user_id_strict = %s"
 		notification_query_data = (user_id, user_id)
+		locale_id = user['locale_id']
 
 		rows = db.fetchall(notification_query, notification_query_data)
 
+		db.start_transaction()
+
 		for row in rows:
-			# do any processing here
-			notifications.append(row)
+			notification = {
+				'title': get_localized_string( row['title_string_key'], locale_id ),
+				'body': get_localized_string( row['body_string_key'], locale_id )
+			}
+			notifications.append(notification)
+
+			# archive sent notifications
+			archive_query = ("INSERT INTO notification_archive"
+				"(notification_id, flagging_event_id, notification_type_id, user_id, user_id_strict, title_string_key, body_string_key, timestamp) "
+				"VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+			)
+
+			db.execute(
+				archive_query, 
+				(
+					row['notification_id'], 
+					row['flagging_event_id'], 
+					row['notification_type_id'], 
+					row['user_id'], 
+					row['user_id_strict'], 
+					row['title_string_key'], 
+					row['body_string_key'], 
+					datetime.now()
+				)
+			)
+
+			db.execute("DELETE FROM notification WHERE notification_id = %s", (row['notification_id'],))
 			
 		results = {
 			'status': 'success',
 			'notifications': notifications
 		}
 
-		#TODO: archive sent notifications
+		db.commit()
 
 		return jsonify(results)
 
@@ -423,6 +463,8 @@ def api_notifications():
 			'status': 'error',
 			'message': 'Database error'
 		}
+
+		db.rollback()
 
 		return jsonify(results)
 
