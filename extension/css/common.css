@@ -230,9 +230,9 @@ CONSOLIDATED "PANELS" STYLING
     line-height: 1.2em;
 }
 
-/* .panels .panel .details {
+.panels .panel .details {
     margin-top: 3em;
-} */
+}
 
 .panels .panel button.next
 {
