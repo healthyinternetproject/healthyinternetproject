@@ -1,6 +1,8 @@
 
 #import sys
 
+
+
 import os
 import json
 import flask
@@ -12,6 +14,9 @@ import logging
 from classes.CivicDB import CivicDB
 import urllib.parse
 import random
+import faulthandler
+
+faulthandler.enable()
 
 
 with open("../api-config.json") as json_data_file:
@@ -585,8 +590,5 @@ def api_message():
 if __name__ == '__main__':
 	from waitress import serve
 	serve(app, host="0.0.0.0", port=8080, url_scheme='https')
-
-
-
 
 
