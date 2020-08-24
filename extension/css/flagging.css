@@ -249,13 +249,13 @@
 	user-select: none;
 }
 
-.flagging .site-title,
-.flagging .message h1
+.site-title,
+.message h1
 {
 	color: #5762D5;
 }
 
-.flagging .site-title
+.site-title
 {
 	display: inline-block;
 	position: relative;
@@ -268,14 +268,14 @@
 	
 }
 
-.flagging .with-favicon
+.with-favicon
 {
 	position: relative;
 	min-height: 16px;
 
 }
 
-.flagging .with-favicon img
+.with-favicon img
 {
 	position: absolute;
 	top: 2px;
@@ -315,7 +315,7 @@
 	user-select: none;
 }
 
-.flagging ul.flags
+ul.flags
 {
 	display: block;
 	margin-top: 20px;
@@ -323,8 +323,8 @@
 }
 
 
-.flagging ul.flags li,
-.flagging .selected-flags li
+ul.flags li,
+.selected-flags li
 {
 	display: block;
 	position: relative;
@@ -335,7 +335,7 @@
 	transition: all 300ms ease-in-out;
 }
 
-.flagging ul.flags hr
+ul.flags hr
 {
 	display: block;
 	top: 0;
@@ -346,19 +346,19 @@
 	margin: 10px 0 10px 0;
 }
 
-.flagging ul.flags li a
+ul.flags li a
 {
 	display: block;	
 }
 
-.flagging .page[data-index="0"] li,
-.flagging .selected-flags li
+.page[data-index="0"] li,
+.selected-flags li
 {
 	margin-bottom: 8px;
 }
 
-.flagging ul.flags li .severity,
-.flagging ul.selected-flags li .severity
+ul.flags li .severity,
+ul.selected-flags li .severity
 {
 	font-size: 12px;
 	font-weight: normal;
@@ -366,8 +366,8 @@
 	transition: max-height 300ms ease-in-out;	
 }
 
-.flagging ul.flags li .thermometer,
-.flagging ul.selected-flags li .thermometer
+ul.flags li .thermometer,
+ul.selected-flags li .thermometer
 {
 	position: absolute;
 	left: 56px;
@@ -380,8 +380,8 @@
 }
 
 /* this is the red in the thermometer */
-.flagging ul.flags li .thermometer:before, 
-.flagging ul.selected-flags li .thermometer:before
+ul.flags li .thermometer:before, 
+ul.selected-flags li .thermometer:before
 {
 	content: "";
 	position: absolute;
@@ -395,21 +395,21 @@
 }
 
 /* this is the green in the thermometer */
-.flagging ul.flags li.good .thermometer:before, 
-.flagging ul.selected-flags li.good .thermometer:before
+ul.flags li.good .thermometer:before, 
+ul.selected-flags li.good .thermometer:before
 {
 	background-color: #26A65B;
 }
 
 /* this is so the animation delay only applies to first click */
-.flagging ul.flags li.first-click .thermometer:before
+ul.flags li.first-click .thermometer:before
 {
 	transition-delay: 250ms;
 }
 
 /* this is the thermometer foreground */
-.flagging ul.flags li .thermometer:after,
-.flagging ul.selected-flags li .thermometer:after 
+ul.flags li .thermometer:after,
+ul.selected-flags li .thermometer:after 
 {
 	content: "";
 	position: absolute;
@@ -424,28 +424,28 @@
 	z-index: 1;
 }
 
-.flagging ul.flags li.on,
-.flagging ul.selected-flags li
+ul.flags li.on,
+ul.selected-flags li
 {
 	color: #E62B1E;
 	padding-top: 8px;
 	padding-left: 78px;
 }
 
-.flagging ul.flags li.on.good,
-.flagging ul.selected-flags li.good
+ul.flags li.on.good,
+ul.selected-flags li.good
 {
 	color: #26A65B;
 }
 
-.flagging ul.flags li.on .severity,
-.flagging ul.selected-flags li .severity
+ul.flags li.on .severity,
+ul.selected-flags li .severity
 {
 	max-height: 12px;
 }
 
-.flagging ul.flags li.on .thermometer,
-.flagging ul.selected-flags li .thermometer
+ul.flags li.on .thermometer,
+ul.selected-flags li .thermometer
 {
 	width: 12px;
 	opacity: 1;
@@ -453,25 +453,25 @@
 	/*animation: wiggle 750ms 200ms;*/
 }
 
-.flagging ul.flags li[data-severity="1"] .thermometer:before,
-.flagging ul.selected-flags li[data-severity="1"] .thermometer:before
+ul.flags li[data-severity="1"] .thermometer:before,
+ul.selected-flags li[data-severity="1"] .thermometer:before
 {
 	height: 22px;
 }
 
-.flagging ul.flags li[data-severity="2"] .thermometer:before,
-.flagging ul.selected-flags li[data-severity="2"] .thermometer:before
+ul.flags li[data-severity="2"] .thermometer:before,
+ul.selected-flags li[data-severity="2"] .thermometer:before
 {
 	height: 33px;
 }
 
-.flagging ul.flags li[data-severity="3"] .thermometer:before,
-.flagging ul.selected-flags li[data-severity="3"] .thermometer:before
+ul.flags li[data-severity="3"] .thermometer:before,
+ul.selected-flags li[data-severity="3"] .thermometer:before
 {
 	height: 100%;
 }
 
-.flagging form textarea
+form textarea
 {
 	width: 100%;
 	height: 80px;
@@ -486,7 +486,7 @@
 	color: #000;
 }
 
-.flagging form textarea:focus {
+form textarea:focus {
     outline: none !important;
     border:1px solid #5762D5;
 }
@@ -624,18 +624,18 @@
 	cursor: default;
 }
 
-.flagging .selected-flags
+.selected-flags
 {
 	margin-top: 10px;
 }
 
-.flagging .selected-flags li .icon
+.selected-flags li .icon
 {
 	box-shadow: none;
 	border: 1.5px solid #E62B1E;
 }
 
-.flagging .selected-flags li.good .icon
+.selected-flags li.good .icon
 {
 	border-color: #26A65B;
 }

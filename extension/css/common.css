@@ -103,9 +103,9 @@ em.good
 	/* background-color: #E62B1E; */
 }
 
-.onboarding ul.missions li,
-.flagging .page[data-index="0"] li,
-.flagging .selected-flags li
+ul.missions li,
+.page[data-index="0"] li,
+.selected-flags li
 {
 	display: block;
 	position: relative;
@@ -114,17 +114,17 @@ em.good
 	min-height: 50px;
 }
 
-.onboarding ul.missions li label,
-.flagging .page[data-index="0"] li label,
-.flagging .selected-flags li label
+ul.missions li label,
+.page[data-index="0"] li label,
+.selected-flags li label
 {
 	cursor: inherit;
 }
 
 
-.onboarding ul.missions li .icon,
-.flagging .page[data-index="0"] li .icon,
-.flagging .selected-flags li .icon
+ul.missions li .icon,
+.page[data-index="0"] li .icon,
+.selected-flags li .icon
 {
 	position: absolute;
 	left: 0;
@@ -137,21 +137,21 @@ em.good
 	transition: background-color 200ms linear, transform 350ms ease-in-out;
 }
 
-.onboarding ul.missions li .icon:hover,
-.flagging .page[data-index="0"] li .icon:hover,
-.flagging .selected-flags li .icon:hover
+ul.missions li .icon:hover,
+.page[data-index="0"] li .icon:hover,
+.selected-flags li .icon:hover
 {
 	transform: scale(1.1);
 }
 
-.flagging .selected-flags li .icon:hover
+.selected-flags li .icon:hover
 {
 	transform: none;
 }
 
-.onboarding ul.missions li .icon img,
-.flagging .page[data-index="0"] li .icon img,
-.flagging .selected-flags li .icon img
+ul.missions li .icon img,
+.page[data-index="0"] li .icon img,
+.selected-flags li .icon img
 {
 	position: absolute;
 	top: 50%;
