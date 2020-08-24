@@ -491,7 +491,7 @@ function getNotificationsFromAPI (force=false)
 	let data = {};
 	let now = Date.now();
 
-	if (force || lastNotificationCheck == 0 || lastNotificationCheck + NOTIFICATION_CHECK_MIN_TIME <= now)
+	if (force === true || lastNotificationCheck == 0 || now > lastNotificationCheck + NOTIFICATION_CHECK_MIN_TIME)
 	{
 		console.log("Getting notifications from API");
 		lastNotificationCheck = now;
@@ -532,16 +532,25 @@ function showNotifications ( data )
 				"buttons"            : []
 			});	
 
-			browser.notifications.onClicked.addListener(dismissNotification);
-			browser.notifications.onButtonClicked.addListener(dismissNotification);
-			browser.notifications.onClosed.addListener(dismissNotification);
-			browser.notifications.onShowSettings.addListener(dismissNotification);
+			if (notification.type == "journalist-contact")
+			{
+				browser.notifications.onClicked.addListener(showJournalistMessage);
+				browser.notifications.onButtonClicked.addListener(showJournalistMessage);
+				browser.notifications.onClosed.addListener(showJournalistMessage);
+				browser.notifications.onShowSettings.addListener(showJournalistMessage);				
+			}
 		}
 	}
 	else
 	{
 		console.log("No new notifications for user " + CONFIG.userId);
 	}
+}
+
+
+function showJournalistMessage ( messageId )
+{
+	console.log("Showing journalist message");
 }
 
 

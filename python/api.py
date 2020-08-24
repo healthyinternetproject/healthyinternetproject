@@ -146,6 +146,12 @@ def get_localized_string( string_key, locale_id ):
 		return "[Error: string not found]";
 
 
+def get_notification_type_name (notification_type_id):
+	query = "SELECT name FROM notification_type WHERE notification_type_id = %s"
+	row = db.fetchone(query, (notification_type_id,))
+	return row['name']
+
+
 @app.errorhandler(404)
 def page_not_found(e):
 	return quit_with_error("Not Found","The resource could not be found.", 404)
@@ -415,13 +421,14 @@ def api_notifications():
 
 		rows = db.fetchall(notification_query, notification_query_data)
 
-		db.start_transaction()
+		#db.start_transaction()
 
 		for row in rows:
 			notification = {
 				'title': get_localized_string( row['title_string_key'], locale_id ),
 				'body': get_localized_string( row['body_string_key'], locale_id ),
-				'message_id': row['message_id']
+				'message_id': row['message_id'],
+				'type': get_notification_type_name(row['notification_type_id'])
 			}
 			notifications.append(notification)
 
@@ -453,7 +460,7 @@ def api_notifications():
 			'notifications': notifications
 		}
 
-		db.commit()
+		#db.commit()
 
 		return jsonify(results)
 
@@ -465,7 +472,7 @@ def api_notifications():
 			'message': 'Database error'
 		}
 
-		db.rollback()
+		#db.rollback()
 
 		return jsonify(results)
 
@@ -482,8 +489,6 @@ def message_test():
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
 	
 	try:
-		db.start_transaction()
-
 		message_query = ("INSERT INTO message" 
 			"(user_id, subject, text, timestamp, reply_to)"
 			"VALUES (%s, %s, %s, %s, %s)"
@@ -503,8 +508,6 @@ def message_test():
 		results = {
 			'status': 'success'
 		}
-
-		db.commit()
 
 		return jsonify(results)
 
