@@ -182,6 +182,14 @@ function initializeExtension ()
 					file: '/js/mentor-review.js'
 				});
 			}
+			else if (request.command == 'test-message')
+			{
+				generateTestMessage();
+			}
+			else if (request.command == 'get-notifications')
+			{
+				getNotificationsFromAPI(true);
+			}
 			else
 			{
 				console.log("Unrecognized or missing command");
@@ -478,12 +486,12 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 }
 
 
-function getNotificationsFromAPI ()
+function getNotificationsFromAPI (force=false)
 {
 	let data = {};
 	let now = Date.now();
 
-	if (lastNotificationCheck == 0 || lastNotificationCheck + NOTIFICATION_CHECK_MIN_TIME <= now)
+	if (force || lastNotificationCheck == 0 || lastNotificationCheck + NOTIFICATION_CHECK_MIN_TIME <= now)
 	{
 		console.log("Getting notifications from API");
 		lastNotificationCheck = now;
@@ -493,6 +501,13 @@ function getNotificationsFromAPI ()
 	{
 		return false;
 	}
+}
+
+
+function generateTestMessage ()
+{
+	let data = {};
+	return sendToAPI( "message-test", data, true );
 }
 
 

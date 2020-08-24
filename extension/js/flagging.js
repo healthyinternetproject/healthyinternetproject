@@ -82,6 +82,8 @@ jQuery(document).ready(function ($) {
 
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
+		$(".test-journalism-request").click( generateTestMessage );
+		$(".test-notification-ping").click( getNotifications );
 
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
@@ -400,7 +402,7 @@ function sendFlagData (currentReport, currentUrl)
 	debug("Saving flag...");
 	debug(data);
 
-	//save mission to API
+	//save flag to API
 	browser.runtime.sendMessage( data, function () {} ); 
 
 	// for onboarding demo, move tool tip to next location
@@ -414,6 +416,28 @@ function sendFlagData (currentReport, currentUrl)
 
 	adjustPopupSize();
 	updateThanksPage();	
+}
+
+
+function generateTestMessage ()
+{
+	let data = {
+		'command' : 'test-message'
+	};
+
+	browser.runtime.sendMessage( data ); 
+	debug("Test message requested...");
+}
+
+
+function getNotifications ()
+{
+	let data = {
+		'command' : 'get-notifications'
+	};
+
+	browser.runtime.sendMessage( data ); 
+	debug("Pinging for notifications...");
 }
 
 

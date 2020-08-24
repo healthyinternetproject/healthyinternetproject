@@ -280,7 +280,7 @@ def api_mission():
 
 @app.route('/api/v1/flag', methods=['POST'])
 def api_flag():	
-	logging.debug(request.form.get("json"))
+	# logging.debug(request.form.get("json"))
 	params            = json.loads(request.form.get("json"))
 	url               = params.get("url")
 	notes             = params.get("notes")
@@ -393,11 +393,11 @@ def api_listcampaigns():
 		return jsonify(results)
 
 
-@app.route('/api/v1/notifications', methods=['POST'])
+@app.route('/api/v1/notifications', methods=['GET','POST'])
 def api_notifications():	
 	# logging.debug(request.form.get("json"))
-	user_id           = request.form.get('user_id')
-	password          = request.form.get('password')
+	user_id           = request.values.get('user_id')
+	password          = request.values.get('password')
 	timestamp         = datetime.now()	
 	user              = authenticate_user(user_id, password)
 	flagging_event_id = 0;	
@@ -420,14 +420,15 @@ def api_notifications():
 		for row in rows:
 			notification = {
 				'title': get_localized_string( row['title_string_key'], locale_id ),
-				'body': get_localized_string( row['body_string_key'], locale_id )
+				'body': get_localized_string( row['body_string_key'], locale_id ),
+				'message_id': row['message_id']
 			}
 			notifications.append(notification)
 
 			# archive sent notifications
 			archive_query = ("INSERT INTO notification_archive"
-				"(notification_id, flagging_event_id, notification_type_id, user_id, user_id_strict, title_string_key, body_string_key, timestamp) "
-				"VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+				"(notification_id, flagging_event_id, notification_type_id, user_id, user_id_strict, title_string_key, body_string_key, message_id, timestamp) "
+				"VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 			)
 
 			db.execute(
@@ -440,6 +441,7 @@ def api_notifications():
 					row['user_id_strict'], 
 					row['title_string_key'], 
 					row['body_string_key'], 
+					row['message_id'], 
 					datetime.now()
 				)
 			)
@@ -455,6 +457,56 @@ def api_notifications():
 
 		return jsonify(results)
 
+	except mysql.connector.errors.DatabaseError as err:
+
+		results = {
+			'error': "Error: {}".format(err),
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		db.rollback()
+
+		return jsonify(results)
+
+
+@app.route('/api/v1/message-test', methods=['GET','POST'])
+def message_test():	
+
+	user_id   = request.values.get('user_id')
+	password  = request.values.get('password')
+	timestamp = datetime.now()	
+	user      = authenticate_user(user_id, password)
+
+	if user is None or user is False:
+		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
+	
+	try:
+		db.start_transaction()
+
+		message_query = ("INSERT INTO message" 
+			"(user_id, subject, text, timestamp, reply_to)"
+			"VALUES (%s, %s, %s, %s, %s)"
+		)		
+
+		db.execute(message_query, (user_id, "Test Subject", "Test Message", datetime.now(), "alan@alanbellows.com"))
+
+		message_id = db.lastrowid()
+
+		notification_query = ("INSERT INTO notification"
+			"(notification_type_id, user_id_strict, title_string_key, body_string_key, message_id, timestamp) "
+			"VALUES (%s, %s, %s, %s, %s, %s)"
+		)
+
+		db.execute(notification_query, (1, user_id, 'message_from_a_journalist', 'click_here_to_read', message_id, datetime.now()))
+
+		results = {
+			'status': 'success'
+		}
+
+		db.commit()
+
+		return jsonify(results)
 
 	except mysql.connector.errors.DatabaseError as err:
 
@@ -468,6 +520,64 @@ def api_notifications():
 
 		return jsonify(results)
 
+
+@app.route('/api/v1/message', methods=['GET','POST'])
+def api_message():	
+	requestJson = request.values.get("json")
+	user_id     = request.values.get('user_id')
+	password    = request.values.get('password')
+	user        = authenticate_user(user_id, password)
+	results     = {}
+
+	if user is None or user is False:
+		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
+	
+	try:
+
+		if (requestJson):
+			params = json.loads(requestJson)
+			message_id = params.get("message_id")
+
+			message_query = "SELECT * FROM message WHERE user_id = %s AND message_id = %s"
+			message_query_data = (user_id, message_id)
+
+			message = db.fetchone(message_query, message_query_data)
+
+			if message:
+				
+				results = {
+					'status': 'success',
+					'message': {
+						'subject': message['subject'],
+						'text': message['text'],
+						'timestamp': message['timestamp'],
+						'reply_to': message['reply_to']
+					}
+				}
+
+				db.execute("UPDATE message SET viewed = %s WHERE user_id = %s AND message_id = %s", (datetime.now(),user_id,message_id))
+
+				return jsonify(results)
+
+			else:
+
+				return page_not_found(False)		
+
+		else:
+			results = {
+				'status': 'error',
+				'message': "Error: Missing json parameter",				
+			}			
+
+	except mysql.connector.errors.DatabaseError as err:
+
+		results = {
+			'error': "Error: {}".format(err),
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		return jsonify(results)
 	
 
 if __name__ == '__main__':
