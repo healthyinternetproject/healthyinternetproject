@@ -456,6 +456,7 @@ function goToThanksPage ()
 	$(".page[data-index]").css({ 'transform':'translateX(-200%)' }).removeClass('active');
 	$(".page[data-index=2]").addClass('active');
 	adjustPopupSize();	
+	clearStoredReport(currentUrl);
 }
 
 
