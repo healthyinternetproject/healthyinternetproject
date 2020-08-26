@@ -6,10 +6,11 @@ var WELCOME_ANIMATION_TIME = 900; //matches transition time for .onboarding .wel
 var uiInitialized = false;
 
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function ($) 
+{
 
-
-	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) 
+	{
 
 		console.log(request);
 
@@ -59,7 +60,8 @@ jQuery(document).ready(function ($) {
 			$("#pointer-tip").addClass("point-at-flag");
 			//move height to the selected mission
 			var top = 0;
-			switch($(".mission-name").text()) {
+			switch($(".mission-name").text()) 
+			{
 				case "worthwhile ideas":
 					top = 50;
 				  break;
@@ -74,7 +76,8 @@ jQuery(document).ready(function ($) {
 				  break;
 				default:
 					top = 55;
-			  }
+			}
+
 			$(".onboarding #pointer-hand.point-at-flag").css("top", top);
 			$(".onboarding #pointer-tip.point-at-flag").css("top", top);
 
@@ -170,7 +173,8 @@ jQuery(document).ready(function ($) {
 
 		$(".onboarding .user-id").html( formatUserId(CONFIG.userId) );
 
-		$(".onboarding .progress .step [href]").click(function (ev) {
+		$(".onboarding .progress .step [href]").click(function (ev) 
+		{
 
 			let $this = $(this);
 			let $step = $this.closest('.step');
@@ -183,7 +187,8 @@ jQuery(document).ready(function ($) {
 		});
 
 
-		$(".onboarding .missions li").on('click', function (ev) {
+		$(".onboarding .missions li").on('click', function (ev) 
+		{
 
 			console.log('click ' + Date.now());
 			ev.stopPropagation();
@@ -235,7 +240,8 @@ jQuery(document).ready(function ($) {
 
         $('.onboarding #pointer-tip').on('click','.done-button',removePinHelper);
 
-		$(".onboarding .panel.mission-selector .next").click(function () {
+		$(".onboarding .panel.mission-selector .next").click(function () 
+		{
 
 			let id = parseInt( $(".onboarding .missions li.active").attr("data-mission-id") );
 
@@ -251,7 +257,8 @@ jQuery(document).ready(function ($) {
 
 
 		//activate 'next' buttons in onboarding
-		$(".onboarding .panel .next").click(function () {
+		$(".onboarding .panel .next").click(function () 
+		{
 
 			let $this = $(this);
 			let $current = $(".panel.current");
@@ -266,7 +273,8 @@ jQuery(document).ready(function ($) {
 		});
 
 
-		$(".sample-notification").click(function () {
+		$(".sample-notification").click(function () 
+		{
 
 			if (Notification.permission == "denied")
 			{
@@ -278,7 +286,8 @@ jQuery(document).ready(function ($) {
 			}
 		});
 
-		$("#launch-demo").click(function () {
+		$("#launch-demo").click(function () 
+		{
 			let $demo = $(".demo");
 			let $bgoverlay = $("#bg-overlay");
 			let $browserbar = $(".browserbar");
@@ -307,7 +316,8 @@ jQuery(document).ready(function ($) {
 		});
 
 
-		$("#button-container-review").click(function () {
+		$("#button-container-review").click(function () 
+		{
 			let $contentwarning = $(".content-warning");
 			let $panels = $(".panels");
 
@@ -316,7 +326,8 @@ jQuery(document).ready(function ($) {
 
 		});
 
-		$("#uncomfortable-link").click(function () {
+		$("#uncomfortable-link").click(function () 
+		{
 			let $first = $(".first");
 			let $noreview = $(".no-review");
 
@@ -329,40 +340,45 @@ jQuery(document).ready(function ($) {
 		
 
 
-		$(".timed-appearance").each(function () {
+		$(".timed-appearance").each(function () 
+		{
 
 			let $this   = $(this);
 			let delay   = $this.attr("data-delay");
 			let trigger = $this.attr("data-trigger");
 
-			$("#" + trigger).click(function () {
-
-				setTimeout(function () {
-
+			$("#" + trigger).click(function () 
+			{
+				setTimeout(function () 
+				{
 					$this.slideDown();
 				}, delay);
 			});
 		});
 
 
-		$(".troubleshoot").each(function () {
+		$(".troubleshoot").each(function () 
+		{
 
 			let $troubleshoot = $("#troubleshoot");
 			let $tips = $("#tips");
 
-			$troubleshoot.click(function () {
+			$troubleshoot.click(function () 
+			{
 				$tips.css({'display':'block'});
 
 
 			});
         });
         
-        $(".inspiration").each(function () {
+        $(".inspiration").each(function () 
+        {
 
 			let $inspiration = $("#inspiration");
 			let $inspirationFlag = $("#inspirationFlag");
 
-			$inspiration.click(function () {
+			$inspiration.click(function () 
+			{
 				$inspirationFlag.css({'display':'block'});
 			});
 		});
@@ -388,7 +404,8 @@ jQuery(document).ready(function ($) {
 
 
 		//let browser back/forward buttons work as expected
-		window.onhashchange = function () {
+		window.onhashchange = function () 
+		{
 
 			let index = parseInt(location.hash.substring(1));
 
@@ -402,7 +419,8 @@ jQuery(document).ready(function ($) {
 
 });
 
-function addPinHelper(){
+function addPinHelper()
+{
     var helpInterface = `
     <div class="help-container">
         <div><img src='/images/puzzle.png'><span class='puzzle-row' data-i18n-message='tooltip_puzzle_icon'></span></div>
@@ -422,7 +440,8 @@ function addPinHelper(){
     $("#pointer-tip .done-button span").html( getString("tooltip_done_button"));
 }
 
-function removePinHelper(){
+function removePinHelper()
+{
     var clearSpan = "<span></span>"
     $("#pointer-tip").html(clearSpan);
     $("#pointer-tip").removeClass("help-tip");
@@ -505,7 +524,8 @@ function goToOnboardingStep (index)
 			$overlay.fadeOut(WELCOME_ANIMATION_TIME);
 		}
 
-		$(".panel.current").fadeOut(FADE_TIME, function () {
+		$(".panel.current").fadeOut(FADE_TIME, function () 
+		{
 			$target.fadeIn(FADE_TIME);
 		});		
 
@@ -516,7 +536,8 @@ function goToOnboardingStep (index)
 
 		console.log(index);
 
-		$(".panel[data-index]").each(function () {
+		$(".panel[data-index]").each(function () 
+		{
 
 			let $this = $(this);
 			let i = parseInt($this.attr("data-index"));
@@ -538,7 +559,8 @@ function goToOnboardingStep (index)
 			
 		});
 
-		$progress.find(".step[data-index]").each(function () {
+		$progress.find(".step[data-index]").each(function () 
+		{
 
 			let $this = $(this);
 			let indexList = $this.attr("data-index");
