@@ -362,6 +362,8 @@ function dismissNotification (notificationId)
 	sendMessageToClientScript( { command: 'notification-click' }, function () {} );
 	setTimeout(function () { browser.notifications.clear(notificationId); }, 100);
 }
+
+
 function openNotification (notificationId) 
 {
 	console.log('clicked')
