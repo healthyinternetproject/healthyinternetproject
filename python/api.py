@@ -22,7 +22,6 @@ faulthandler.enable()
 with open("../api-config.json") as json_data_file:
     config = json.load(json_data_file)
                                                              
-# print log in ../api.log instead of the console, and set the log level to DEBUG (by default, it is set to WARNING)
 # logging.basicConfig(filename='../api.log', filemode='w', level=logging.DEBUG)
 logging.basicConfig(filename='../api.log', filemode='w', level=logging.WARNING)
 
