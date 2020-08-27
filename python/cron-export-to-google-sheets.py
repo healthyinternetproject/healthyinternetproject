@@ -65,7 +65,7 @@ print("Cleared old data")
 
 # insert new content
 worksheet.append_rows(new_sheet_rows)
-print("Adding " + str(len(new_sheet_rows)) + " to spreadsheet")
+print("Adding " + str(len(new_sheet_rows)) + " rows to spreadsheet (including column headers")
  
 # worksheet.format('A1:B1', {'textFormat': {'bold': True}})
 
