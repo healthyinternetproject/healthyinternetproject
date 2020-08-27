@@ -406,7 +406,6 @@ jQuery(document).ready(function ($)
 		//let browser back/forward buttons work as expected
 		window.onhashchange = function () 
 		{
-
 			let index = parseInt(location.hash.substring(1));
 
 			if (!index) { index = 0; }
@@ -414,7 +413,12 @@ jQuery(document).ready(function ($)
 			goToOnboardingStep(index);
 		};
 
-		location.hash = "#0";
+        // if hash is "#0" already, force-call function to update UI 
+        if(location.hash === "#0"){
+            goToOnboardingStep(0);
+        }else{
+            location.hash = "#0";
+        }
 	}
 
 });
