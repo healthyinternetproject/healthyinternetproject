@@ -52,7 +52,7 @@
      "every_user_unique_id"                 : { "message": "Todo usuário é identificado por um ID único. Seu IF é <span class='user-id'></span>. Simplesmente abra a extensão para usá-lo -- chega de senhas! Você pode apagar a extensão a qualquer momento: simplesmente clique com o botão direito no ícone e selecione \"deletar\"." },
      "example_site_title"                   : { "message": "Artigo demonstrativo" },
      "experienced_user_gives_feedback"      : { "message": "Se necessário, um usuário com experiência pode fornecer feedback. Essa pessoa também pode <em> bloquear alguém por mau uso. </em>" },
-     "extension_description"                : { "message": "Melhorar a qualidade do discurso online" },
+     "extension_description"                : { "message": "Ajude-nos a melhorar a qualidade do discurso online!" },
      "extension_title"                      : { "message": "Healthy Internet Project" },
      "facebook_flag"                        : { "message": "Marcação para Facebook" },
      "faq_answer"                           : { "message" : "Comece com <a href='http://healthyinternetproject.org/faq' target='_blank'>nossas Perguntas frequentes</a> e entre <a href='mailto:support@healthyinternetproject.org?subject=Support%20Question'>em contato</a>." },
