@@ -1,6 +1,7 @@
 
 var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/"; 
-var NOTIFICATION_CHECK_MIN_TIME = 300000; //5 minutes in milliseconds
+var NOTIFICATION_CHECK_MIN_TIME = 600000; //10 minutes in milliseconds
+var DEV_NOTIFICATION_BUTTON = "dev-button";
 
 var CONFIG = {
 	'userId'           : false,
@@ -188,7 +189,7 @@ function initializeExtension ()
 			}
 			else if (request.command == 'get-notifications')
 			{
-				getNotificationsFromAPI(true);
+				getNotificationsFromAPI(DEV_NOTIFICATION_BUTTON);
 			}
 			else
 			{
@@ -416,7 +417,7 @@ function sendToAPI ( term, data, authenticate, callback )
 
 		postData = params.join("&");
 
-		console.log(postData);
+		//console.log(postData);
 
 		xhr.onreadystatechange = function () {
 
@@ -498,14 +499,13 @@ function sendFlagDataToAPI (url, campaignId, flags, notes)
 
 function getNotificationsFromAPI (force=false)
 {
-	let data = {};
-	let now = Date.now();
+	var now = Date.now();
 
-	if (force === true || lastNotificationCheck == 0 || now > lastNotificationCheck + NOTIFICATION_CHECK_MIN_TIME)
+	if (force === DEV_NOTIFICATION_BUTTON || lastNotificationCheck == 0 || now > (lastNotificationCheck + NOTIFICATION_CHECK_MIN_TIME))
 	{
 		console.log("Getting notifications from API");
 		lastNotificationCheck = now;
-		return sendToAPI( "notifications", data, true, showNotifications );
+		return sendToAPI( "notifications", {}, true, showNotifications );
 	}
 	else
 	{
