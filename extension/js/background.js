@@ -13,7 +13,7 @@ var CONFIG = {
 	'apiUrl'           : false
 };
 
-var lastNotificationCheck = false;
+var lastNotificationCheck = 0;
 
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
