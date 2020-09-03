@@ -21,7 +21,7 @@ with open("../api-config.json") as json_data_file:
 	config = json.load(json_data_file)
 
 # logging.basicConfig(filename='../api.log', filemode='w', level=logging.DEBUG)
-logging.basicConfig(filename='../api.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='../api.log', filemode='w', level=logging.WARNING)
 
 logging.debug('debug')
 logging.info('info')
