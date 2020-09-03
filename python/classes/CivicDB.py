@@ -1,7 +1,6 @@
 
 import mysql.connector
 
-
 class CivicDB:
 
 	def __init__(self, config, logging):
@@ -32,9 +31,13 @@ class CivicDB:
 
 	def execute(self, sql, params=(), commit=True):
 		cursor = self.get_cursor()
+		
+		self.logging.debug("Query: " + " ".join(sql.split()))
+		self.logging.debug("Params: " + str(params))
+
 		result = cursor.execute(sql, params)
 
-		self.logging.debug("Query: " + getattr(cursor,'statement', '[none]'))
+		self.logging.debug("Filled Query: " + str(getattr(cursor,'statement', '[none]')))
 
 		if commit and self.in_transaction is False:
 			self.connection.commit()

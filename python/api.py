@@ -21,7 +21,7 @@ with open("../api-config.json") as json_data_file:
 	config = json.load(json_data_file)
 
 # logging.basicConfig(filename='../api.log', filemode='w', level=logging.DEBUG)
-logging.basicConfig(filename='../api.log', filemode='w', level=logging.WARNING)
+logging.basicConfig(filename='../api.log', filemode='w', level=logging.DEBUG)
 
 logging.debug('debug')
 logging.info('info')
@@ -515,10 +515,10 @@ def api_notifications():
 @app.route('/api/v1/message-test', methods=['GET','POST'])
 def api_message_test():	
 	to_console("message_test")
-	user_id   = request.values.get('user_id')
-	password  = request.values.get('password')
-	timestamp = datetime.now()	
-	user      = authenticate_user(user_id, password)
+	user_id     = request.values.get('user_id')
+	password    = request.values.get('password')
+	timestamp   = datetime.now()	
+	user        = authenticate_user(user_id, password)
 
 	if user is None or user is False:
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
@@ -538,7 +538,8 @@ def api_message_test():
 			"VALUES (%s, %s, %s, %s, %s, %s, %s)"
 		)
 
-		db.execute(notification_query, (818, 1, user_id, 'message_from_a_journalist', 'click_here_to_read', message_id, datetime.now()))
+		# 113 is just an old flag useful for testing
+		db.execute(notification_query, (113, 1, user_id, 'message_from_a_journalist', 'click_here_to_read', message_id, datetime.now()))
 
 		results = {
 			'status': 'success'

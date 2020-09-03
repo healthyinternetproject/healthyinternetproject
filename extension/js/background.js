@@ -375,6 +375,7 @@ function openNotification (notificationId)
 	setTimeout(function () { browser.notifications.clear(notificationId); }, 100);
 }
 
+
 function sendToAPI ( term, data, authenticate, callback )
 {
 
