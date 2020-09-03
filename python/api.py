@@ -168,16 +168,28 @@ def get_localized_string( string_key, locale_id ):
 		return "[Error: string not found]";
 
 
-def get_notification_type_name (flag_type_id):
-	query = "SELECT name FROM flag_type WHERE flag_type_id = %s"
-	row = db.fetchone(query, (flag_type_id,))
-	return row['name']
-
-
-def get_flag_type_name (notification_type_id):
+def get_notification_type_name (notification_type_id):	
 	query = "SELECT name FROM notification_type WHERE notification_type_id = %s"
 	row = db.fetchone(query, (notification_type_id,))
-	return row['name']
+	if (row):
+		return row['name']
+	return "notification"
+
+
+def get_flag_type_name (flag_type_id):
+	query = "SELECT name FROM flag_type WHERE flag_type_id = %s"
+	row = db.fetchone(query, (flag_type_id,))
+	if (row):
+		return row['name']
+	return "flag"
+
+
+def get_campaign_name (campaign_id):
+	query = "SELECT name FROM campaign WHERE campaign_id = %s"
+	row = db.fetchone(query, (campaign_id,))
+	if (row):
+		return row['name']
+	return ""
 
 
 
@@ -586,12 +598,12 @@ def api_message():
 			if message:
 				
 				results = {
-					'status': 'success',
+					'status' : 'success',
 					'message': {
-						'subject': message['subject'],
-						'text': message['text'],
-						'timestamp': message['timestamp'],
-						'reply_to': message['reply_to']
+						'subject'   : message['subject'],
+						'text'      : message['text'],
+						'timestamp' : message['timestamp'],
+						'reply_to'  : message['reply_to']
 					}
 				}
 
@@ -612,9 +624,9 @@ def api_message():
 	except mysql.connector.errors.DatabaseError as err:
 
 		results = {
-			'error': "Error: {}".format(err),
-			'status': 'error',
-			'message': 'Database error'
+			'error'   : "Error: {}".format(err),
+			'status'  : 'error',
+			'message' : 'Database error'
 		}
 
 		return jsonify(results)
@@ -622,7 +634,7 @@ def api_message():
 
 @app.route('/api/v1/flagging-event', methods=['GET','POST'])
 def api_flagging_event():	
-	to_console("flagging_event")
+	to_console("flagging-event")
 	requestJson = request.values.get("json")
 	user_id     = request.values.get('user_id')
 	password    = request.values.get('password')
@@ -646,29 +658,32 @@ def api_flagging_event():
 			if flagging_event:
 
 				results = {
-					'status': 'success',
+					'status'        : 'success',
 					'flagging_event': {
-						'flagging_event_id': flagging_event['flagging_event_id'],
-						'user_id': flagging_event['user_id'],
-						'locale': get_locale_string(flagging_event['locale_id']),
-						'url': flagging_event['url'],
-						'notes': flagging_event['notes'],
-						'campaign': flagging_event['campaign'],
-						'flags': []
+						'flagging_event_id' : flagging_event['flagging_event_id'],
+						'user_id'           : flagging_event['user_id'],
+						'locale'            : get_locale_string(flagging_event['locale_id']),
+						'url'               : flagging_event['url'],
+						'notes'             : flagging_event['notes'],
+						'campaign'          : get_campaign_name(flagging_event['campaign_id']),
+						'flags'             : []
 					}
 				}
 
 				flag_query = "SELECT * FROM flag WHERE flagging_event_id = %s"
 				flag_query_data = (flagging_event_id,)
 
-				flags = db.fetchall(flagging_event_query, flagging_event_query_data)
+				flags = db.fetchall(flag_query, flag_query_data)
 
 				for flag in flags:
+
+					#print(str(flag))
+
 					flag_details = {
-						'type': get_notification_type_name(flag['flag_type_id']),
+						'type'    : get_notification_type_name(flag['flag_type_id']),
 						'severity': flag['severity']
 					}
-					results.flagging_event.flags.append(flag_details)
+					results['flagging_event']['flags'].append(flag_details)
 
 				return jsonify(results)
 
@@ -685,9 +700,9 @@ def api_flagging_event():
 	except mysql.connector.errors.DatabaseError as err:
 
 		results = {
-			'error': "Error: {}".format(err),
-			'status': 'error',
-			'message': 'Database error'
+			'error'   : "Error: {}".format(err),
+			'status'  : 'error',
+			'message' : 'Database error'
 		}
 
 		return jsonify(results)
