@@ -14,8 +14,8 @@
             <div class="panel">
                 <div class="left">
                     <div>
-                        <h3>Message from a journalist</h3>
-                        <span class="caption">A journalist wants you to contact them for a story they’re writing. Your identity has not been shared with the journalist, and you will remain anonymous unless you decide to reply.</span>
+                        <h3><span data-i18n-message="notification_header_journalist"></span></h3>
+                        <span class="caption"><span data-i18n-message="notification_journalist"></span></span>
                     </div>
 
                     <div class="message-container">
@@ -25,29 +25,29 @@
                     </div>
 
                     <div>
-                        <button class="button">Send an email</button>
-                        <span class="caption"><span class="bold">Warning:</span> Replying will share your email address with this journalist</span>
+                        <a class="button" id = "email-button" style= "width: fit-content;"><span data-i18n-message="notification_send_an_email"></span></a>
+                        <span class="caption"><span data-i18n-message="notification_reply_warning"></span>
                     </div>
 
                 </div>
                 <div class="right">
-                    <span class="caption"><span class="bold">Flagged on March 3, 2020</span></span>
+                    <span class="caption"><span data-i18n-message="notification_flag_timestamp"></span>
                     <div class="card">
-                        <h2 class="with-favicon"><img><span class="site-title">Test Title</span></h2>
+                        <h2 class="with-favicon"><img id = favicon><span class="site-title" id = "site-title">Test Title</span></h2>
                         <ul class="selected-flags">
-                            <li data-severity="1">
-                                <div class="icon"><img src="/images/manipulation.svg"></div>
+                            <li data-severity="" id = "data-severity">
+                                <div class="icon"><img id = "flag-img" src=""></div>
                                 <span class="thermometer"></span>
-                                <div class="severity">Mild</div>
-                                <label>Lies or manipulation</label>
+                                <div class="severity"><span id = "severity" data-i18n-message=""></span></div>
+                                <label id = flag_type></label>
                             </li>
                         </ul>
                         <div class="selected-campaign">
-                            <span>#elections</span>
+                            <span id = campaign></span>
                         </div>
-                        <div class="notes" style="display:block"></div>
+                        <div class="notes" id = "notes" style="display:block"></div>
                     </div>
-                    <button class="button">Visit site</button>
+                    <a class="button" id = "visit-site" style= "width: fit-content;">Visit site</a>
 
                 </div>
             </div>
@@ -63,7 +63,9 @@
 
         <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 		<script type="text/javascript" src="/js/common.js"></script>
-		<script type="text/javascript" src="/js/onboarding.js"></script>
+        <script type="text/javascript" src="/js/notification.js"></script>
+        <script type="text/javascript" src="/js/background.js"></script>
+
         
 	</body>
 </html>

@@ -1,7 +1,6 @@
 
 import mysql.connector
 
-
 class CivicDB:
 
 	def __init__(self, config, logging):
@@ -16,7 +15,7 @@ class CivicDB:
 		config = self.config
 		self.connection = mysql.connector.connect(host=config['host'],database=config['database'],user=config['username'],password=config['password'])
 		db_info = self.connection.get_server_info()
-		print("Connected to DB Server ", db_info)
+		# print("Connected to DB Server ", db_info)
 		return self.connection
 
 
@@ -32,9 +31,13 @@ class CivicDB:
 
 	def execute(self, sql, params=(), commit=True):
 		cursor = self.get_cursor()
+		
+		self.logging.debug("Query: " + " ".join(sql.split()))
+		self.logging.debug("Params: " + str(params))
+
 		result = cursor.execute(sql, params)
 
-		self.logging.debug("Query: " + getattr(cursor,'statement', '[none]'))
+		self.logging.debug("Filled Query: " + str(getattr(cursor,'statement', '[none]')))
 
 		if commit and self.in_transaction is False:
 			self.connection.commit()
@@ -97,4 +100,3 @@ class CivicDB:
 		cursor = self.get_cursor()
 		cursor.close()
 		self.connection.close()
-
