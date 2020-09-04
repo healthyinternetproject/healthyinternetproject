@@ -192,6 +192,15 @@ def get_campaign_name (campaign_id):
 	return ""
 
 
+def get_flagging_event_create_date (flagging_event_id):
+	query = ("SELECT timestamp FROM flagging_event_status_link WHERE flagging_event_id = %s"
+		"ORDER BY timestamp ASC LIMIT 1")
+	row = db.fetchone(query, (flagging_event_id,))
+	if (row):
+		return row['timestamp']
+	return ""
+
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -660,12 +669,13 @@ def api_flagging_event():
 				results = {
 					'status'        : 'success',
 					'flagging_event': {
-						'flagging_event_id' : flagging_event['flagging_event_id'],
+						'flagging_event_id' : flagging_event_id,
 						'user_id'           : flagging_event['user_id'],
 						'locale'            : get_locale_string(flagging_event['locale_id']),
 						'url'               : flagging_event['url'],
 						'notes'             : flagging_event['notes'],
 						'campaign'          : get_campaign_name(flagging_event['campaign_id']),
+						'timestamp'         : get_flagging_event_create_date(flagging_event_id),
 						'flags'             : []
 					}
 				}
@@ -680,7 +690,7 @@ def api_flagging_event():
 					#print(str(flag))
 
 					flag_details = {
-						'type'    : get_notification_type_name(flag['flag_type_id']),
+						'type'    : get_flag_type_name(flag['flag_type_id']),
 						'severity': flag['severity']
 					}
 					results['flagging_event']['flags'].append(flag_details)
