@@ -394,7 +394,7 @@ function openNotification (notificationId)
 	console.log('clicked')
 	window.location.href = 'html/notification.html';
 
-
+}
 
 function sendToAPI ( term, data, authenticate, callback )
 {
