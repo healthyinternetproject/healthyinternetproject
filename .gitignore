@@ -4,3 +4,4 @@ api-config.json
 *.zip
 nohup.out
 google-api-credentials*
+google-drive-api-credentials*

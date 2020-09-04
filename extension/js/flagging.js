@@ -263,8 +263,6 @@ jQuery(document).ready(function ($) {
 				}
 				$this.attr("data-severity", newSeverity);
 
-				//debug("Severity is " + newSeverity);
-
 				updateCurrentReport();
 			});
 
@@ -337,8 +335,8 @@ jQuery(document).ready(function ($) {
 				if ( $(this).hasClass('disabled') )
 				{
 					return;
-				}
-
+                }
+                
 				updateCurrentReport();
 
 				sendFlagData(currentReport, currentUrl);
@@ -453,6 +451,19 @@ function debug (data)
 
 function goToThanksPage ()
 {
+    // Dynamically change thank you text for each flag submitted!
+    var numStrings1 = 5;
+    var r1 = (Math.floor(Math.random() * numStrings1) + 1);
+    var a1 = "thank_you_header_" + r1;
+    $("#dynamic-thanks").attr("data-i18n-message",a1);
+    $("#dynamic-thanks").text( getString(a1)).html();
+
+    var numStrings2 = 10;
+    var r2 = (Math.floor(Math.random() * numStrings2) + 1);
+    var a2 = "thank_you_" + r2;
+    $("#dynamic-submitted").attr("data-i18n-message",a2);
+    $("#dynamic-submitted").text( getString(a2)).html();
+    
 	$(".page[data-index]").css({ 'transform':'translateX(-200%)' }).removeClass('active');
 	$(".page[data-index=2]").addClass('active');
 	adjustPopupSize();	
