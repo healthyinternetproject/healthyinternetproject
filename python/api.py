@@ -193,7 +193,7 @@ def get_campaign_name (campaign_id):
 
 
 def get_flagging_event_create_date (flagging_event_id):
-	query = ("SELECT timestamp FROM flagging_event_status_link WHERE flagging_event_id = %s"
+	query = ("SELECT DATE_FORMAT(timestamp, \"%Y-%m-%d %H:%i\") as timestamp FROM flagging_event_status_link WHERE flagging_event_id = %s"
 		"ORDER BY timestamp ASC LIMIT 1")
 	row = db.fetchone(query, (flagging_event_id,))
 	if (row):
