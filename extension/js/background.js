@@ -13,6 +13,8 @@ var CONFIG = {
 	'apiUrl'           : false
 };
 
+var messageID;
+var flagging_event_id;
 var lastNotificationCheck = 0;
 
 
@@ -191,6 +193,28 @@ function initializeExtension ()
 			{
 				getNotificationsFromAPI(DEV_NOTIFICATION_BUTTON);
 			}
+			else if (request.command == 'get-message')
+			{
+				if(messageID){
+					showJournalistMessage(messageID)
+				}
+				else{
+					console.log('message id hasnt updated yet')
+				}
+				
+			}
+			else if (request.command == 'get-flag')
+			{
+				console.log('get-flag')
+				if(flagging_event_id){
+					showJournalistFlag(messageID, flagging_event_id)
+				}
+				else{
+					console.log('notification id hasnt updated yet')
+				}
+				
+			}
+			
 			else
 			{
 				console.log("Unrecognized or missing command");
@@ -370,14 +394,13 @@ function openNotification (notificationId)
 	console.log('clicked')
 	window.location.href = 'html/notification.html';
 
-	sendMessageToClientScript( { command: 'notification-click' }, function () {
-	} );
-	setTimeout(function () { browser.notifications.clear(notificationId); }, 100);
 }
-
 
 function sendToAPI ( term, data, authenticate, callback )
 {
+	if(callback){
+	console.log("this is the callback "+callback.name)
+	}
 
 	getConfigFromStorage(function (result) {
 
@@ -425,20 +448,29 @@ function sendToAPI ( term, data, authenticate, callback )
 			if (xhr.readyState == 4) {
 
 				let data = (xhr.status == 200) ? xhr.response : false;
+
+
 				console.log("Response from API:");
 				console.log(data);
 
 				if (callback)
 				{
+					console.log("callback called "+ callback.name)
 					callback(data);
 				}
+
+			
 			}
+
 		};
 		
 		xhr.responseType = 'json';  	
 		xhr.open('POST', url, true );			
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send(postData);	
+
+
+		
 	});
 	
 }
@@ -531,10 +563,12 @@ function showNotifications ( data )
 		for (let i=0; i < data.notifications.length; i++)
 		{
 			let notification = data.notifications[i];
+	
 
 			console.log(notification);
+			let notificationId = getNotificationId();
 
-			let n = browser.notifications.create(getNotificationId(), {
+			let n = browser.notifications.create(notificationId, {
 				"type"               : "basic",
 				"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
 				"title"              : notification.title,
@@ -545,10 +579,21 @@ function showNotifications ( data )
 
 			if (notification.type == "journalist-contact")
 			{
-				browser.notifications.onClicked.addListener(openNotification);
-				browser.notifications.onButtonClicked.addListener(openNotification);
-				browser.notifications.onClosed.addListener(showJournalistMessage);
-				browser.notifications.onShowSettings.addListener(showJournalistMessage);				
+				
+				messageID = notification.message_id;
+				flagging_event_id = notification.flagging_event_id
+				var tabs = 0;
+				browser.notifications.onClicked.addListener(function(notificationId) {
+					if (tabs==0){
+						browser.tabs.create({
+							'url': "/html/notification.html"+ '?'+ 'message_id='+notification.message_id
+						});
+					}
+					tabs++;
+				});
+				browser.notifications.onButtonClicked.addListener();
+				browser.notifications.onClosed.addListener();
+				browser.notifications.onShowSettings.addListener();				
 			}
 		}
 	}
@@ -558,11 +603,67 @@ function showNotifications ( data )
 	}
 }
 
-
 function showJournalistMessage ( messageId )
 {
 	console.log("Showing journalist message");
+
+	console.log("message-id " + messageId);
+	data = { 
+		'user_id': CONFIG.userId,
+		'message_id' : messageId
+	};
+
+	return sendToAPI( "message", data, true, updateNotificationHTML );
+	
+	sendMessageToClientScript( { command: 'notification-click' }, function () {
+	} );
+
+
 }
+
+function showJournalistFlag ( messageId, flagging_event_id )
+{
+	console.log("Showing journalist flag");
+
+	console.log("flagging_event_id " + flagging_event_id);
+	data = { 
+		'user_id': CONFIG.userId,
+		'flagging_event_id' : flagging_event_id
+	};
+
+	return sendToAPI( "flagging-event", data, true, updateNotificationFlagHTML );
+	
+	sendMessageToClientScript( { command: 'notification-click' }, function () {
+	} );
+
+
+}
+
+
+
+function updateNotificationFlagHTML (data)
+{
+
+	console.log(JSON.stringify(data))
+	sendMessageToClientScript({command: 'populate-flag', 'data': data}, function () {});
+
+	return true;
+		
+	}
+
+
+function updateNotificationHTML (data)
+{
+
+	console.log(JSON.stringify(data))
+	sendMessageToClientScript({command: 'populate-message', 'message': data.message}, function () {});
+
+	return true;
+		
+	}
+
+
+
 
 
 function isDevMode () 
