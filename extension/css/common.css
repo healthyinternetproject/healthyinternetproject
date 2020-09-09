@@ -93,6 +93,10 @@ em.good
 	user-select: none;
 }
 
+.button:hover{
+    cursor: pointer;
+}
+
 .button.disabled
 {
 	opacity: 0.4;
@@ -101,6 +105,15 @@ em.good
 .button.close
 {
 	/* background-color: #E62B1E; */
+}
+
+.button.secondary{
+    background: #FFFFFF;
+    border: 1.5px solid #5762D5;
+    box-sizing: border-box;
+    border-radius: 3px;
+    color:#5762D5;
+    font-weight: bold;
 }
 
 ul.missions li,
@@ -160,6 +173,26 @@ ul.missions li .icon img,
 	width: 22px;
 	max-height: 26px;
 	height: auto;
+}
+
+textarea
+{
+	width: 100%;
+	height: 80px;
+	border: 1px solid #9DA8BC;
+	border-radius: 4px;
+	margin-top: 4px;
+	padding: 4px;
+	resize: none; 
+	font-family: inherit;
+	font-size: 12px;
+	box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
+	color: #000;
+}
+
+textarea:focus {
+    outline: none !important;
+    border:1px solid #5762D5;
 }
 
 /* 

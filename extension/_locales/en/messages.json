@@ -59,7 +59,7 @@
 	"example_site_title"                  : { "message" : "Demo article" },
 	"example_notification"                : { "message" : "Example notification:" },
 	"experienced_user_gives_feedback"     : { "message" : "If needed, an experienced user can provide feedback. They can also <em>block misuse</em>." },
-	"extension_description"               : { "message" : "Improving the quality of online discourse" },
+	"extension_description"               : { "message" : "Help us improve the quality of online discourse!" },
 	"extension_title"                     : { "message" : "Healthy Internet Project" },
     "facebook_flag"                       : { "message" : "Facebook flag" },
     "faq_answer"                          : { "message" : "Please start with <a href='http://healthyinternetproject.org/faq' target='_blank'>our FAQ</a>, then <a href='mailto:support@healthyinternetproject.org?subject=Support%20Question'>contact us</a>." },
