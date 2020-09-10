@@ -7,6 +7,7 @@ var CONFIG = {};
 
 var uiInitialized = false;
 var autofilling = false;
+var notificationType;
 
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
@@ -22,8 +23,6 @@ browser.runtime.sendMessage({command: 'get-flag'}, function () {});
 
 
 
-
-
 jQuery(document).ready(function ($) {
 
     console.log('Document ready!');
@@ -31,21 +30,51 @@ jQuery(document).ready(function ($) {
 
 
 	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {		
+		let $this = $(this);
+
 
 		if (request.command == 'config')
 		{				
 			console.log(request.config);
 			CONFIG = request.config;
 			initializeUI(CONFIG);
-        }
+		}
+		
+		else if (request.command == 'notification-type'){
+			notificationType = request.type;
+
+		}
         else if ( request.command == 'populate-message'){
 
-            console.log('populate-message')
-            console.log(request.message)
-            document.getElementById("message").innerHTML = request.message.text;
-            let replyemail = 'mailto:'+request.message.reply_to
-			document.getElementById("email-button").href =  replyemail;
 
+			if(notificationType == "journalist-contact"){
+				console.log('populate-message')
+				console.log(request.message)
+				// document.getElementById("message").innerHTML = request.message.text;
+				var html = $.parseHTML(request.message.text);
+				$(".message-container").append(html);
+
+				let replyemail = 'mailto:'+request.message.reply_to;
+				document.getElementById("email-button").href =  replyemail;
+
+				$(".notification-header").text( getString( "notification_header_journalist")).html();
+				$(".notification-body").text( getString( "notification_journalist")).html();
+
+				document.getElementById("left-footer").style.display = "block";
+
+
+			}
+			else if (notificationType == "user-impact"){
+
+				var html = $.parseHTML(request.message.text);
+				console.log(html)
+				// $("#message").text( getString( request.message.text )).html();
+				$(".message-container").append(html);
+
+				$(".notification-header").text( getString( "notification_header_impact")).html();
+				$(".notification-body").text( getString( "notification_impact")).html();
+
+			}
 
            
 		}
@@ -68,12 +97,11 @@ jQuery(document).ready(function ($) {
 			$("#data-severity").attr("data-severity", request.data.flagging_event.flags[0].severity);
 
 
-		
-			
 			//should probably internationalize this 
 			document.getElementById("flag_type").innerHTML =  request.data.flagging_event.flags[0].type;
 
 
+			//could clean this up with data-root
 			if(request.data.flagging_event.flags[0].type == "Worthwhile ideas"){
 				document.getElementById("flag-img").src =  "/images/trueIdeas.svg";
 				$("#data-severity").attr("class", "good");
@@ -93,28 +121,9 @@ jQuery(document).ready(function ($) {
 
 			}
 
+			var severity = "severity_"+request.data.flagging_event.flags[0].severity;
+			$(".severity").text( getString( severity)).html();
 
-
-			// not-internationalized but functional
-			if(request.data.flagging_event.flags[0].severity == 1){
-				document.getElementById("severity").innerHTML =  "Mild";
-			}
-			else if(request.data.flagging_event.flags[0].severity == 2){
-				document.getElementById("severity").innerHTML =  "Medium";
-
-			}	
-			else if(request.data.flagging_event.flags[0].severity == 3){
-				document.getElementById("severity").innerHTML =  "Severe";
-
-			}
-
-			//on its way to functionality 
-			// var severity = "severity_"+request.data.flagging_event.flags[0].severity;
-			// $("#severity").attr('data-i18n-message', severity);
-
-
-  
-           
         }
 
         else
