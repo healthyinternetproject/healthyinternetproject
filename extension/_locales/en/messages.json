@@ -155,11 +155,13 @@
 	"notification_header_impact"	  	  : { "message" : "You have made an imapct!"},
 	"notification_body"					  : { "message" : "<span class = \"notification-body\" ></span>"},
 	"notification_journalist"	  		  : { "message" : "A journalist wants you to contact them for a story they’re writing. Your identity has not been shared with the journalist, and you will remain anonymous unless you decide to reply."},
-	"notification_impact"	  		  	  : { "message" : "Your flags have helped created a healthier internet! Here's how:"},
+	"notification_impact"	  		  	  : { "message" : " "},
 
 	"notification_send_an_email"	  	  : { "message" : "Send an email"},
 	"notification_reply_warning"		  : { "message": "<span class=\"bold\">Warning:</span> Replying will share your email address with this journalist"},
 	"notification_flag_timestamp"		  : { "message": "Flagged on <span id=\"timestamp\"></span>"},
+	"notification_sharable_link"		  : { "message": "<b> Like this tool? </b> <br> Please share the web extension with three friends you think will help make the internet a healthier place."},
+	"notification_share"		 		  : { "message": "Copy sharable link"},
 
 	
 	
