@@ -100,4 +100,3 @@ class CivicDB:
 		cursor = self.get_cursor()
 		cursor.close()
 		self.connection.close()
-
