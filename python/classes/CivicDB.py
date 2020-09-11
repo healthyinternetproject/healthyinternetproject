@@ -26,7 +26,8 @@ class CivicDB:
 		#  	# reconnect cursor
 		# 	self.connection = self.connect()
 		self.connection = self.connect()
-		return self.connection.cursor(buffered=True, dictionary=True)	
+		self.cursor = self.connection.cursor(buffered=True, dictionary=True)
+		return self.cursor
 
 
 	def execute(self, sql, params=(), commit=True):
