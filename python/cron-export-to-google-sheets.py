@@ -4,7 +4,7 @@ import logging
 import gspread
 from classes.CivicDB import CivicDB
 
-logging.basicConfig(filename='../api.log', filemode='w', level=logging.WARNING)
+logging.basicConfig(filename='../cron.log', filemode='w', level=logging.WARNING)
 
 with open("../api-config.json") as json_data_file:
     config = json.load(json_data_file)
@@ -14,7 +14,7 @@ sheet_keys = False
 
 # Connect to DB
 db = CivicDB(config.get("mariadb"), logging)
-gc = gspread.service_account(filename='../google-drive-api-credentials.json')
+gc = gspread.service_account(filename='../google-drive-api-credentials-production.json')
 print("Connected to database")
 
 # Connect to google sheet

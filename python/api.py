@@ -14,6 +14,7 @@ import urllib.parse
 import random
 import hashlib
 import faulthandler
+import mysql
 
 faulthandler.enable()
 
@@ -22,7 +23,7 @@ with open("../api-config.json") as json_data_file:
 	config = json.load(json_data_file)
 
 # logging.basicConfig(filename='../api.log', filemode='w', level=logging.DEBUG)
-logging.basicConfig(filename='../api.log', filemode='w', level=logging.WARNING)
+logging.basicConfig(filename='../api.log', filemode='w', level=logging.ERROR)
 
 logging.debug('debug')
 logging.info('info')
@@ -54,9 +55,11 @@ def quit_with_error(title,message,code=500):
 		'message': message,
 		'code': code
 	}
+
+	json = jsonify(results)
 	
-	print(jsonify(results))
-	return False
+	print(json)
+	return json
 
 
 def random_string(string_length=10):
@@ -144,7 +147,7 @@ def generate_user_token (user_id, password):
 	tomorrow = today + timedelta(days=1)
 	tomorrow_string = tomorrow.strftime(date_format)
 
-	string = str(user_id) + "•" + password + "•" + today_string + "•" + tomorrow_string + "•" + config.get("token_secret_key")	
+	string = str(user_id) + "|" + password + "|" + today_string + "|" + tomorrow_string + "|" + config.get("token_secret_key")	
 	token = hashlib.sha256(string.encode('utf-8')).hexdigest()
 	print(token)
 	return token
@@ -526,7 +529,7 @@ def api_notifications():
 			notifications.append(notification)
 
 			# archive sent notifications
-			archive_query = ("INSERT INTO notification_archive"
+			archive_query = ("INSERT IGNORE INTO notification_archive"
 				"(notification_id, flagging_event_id, notification_type_id, user_id, user_id_strict, title_string_key, body_string_key, message_id, timestamp) "
 				"VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 			)
@@ -697,7 +700,6 @@ def api_flagging_event():
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
 	
 	try:
-
 		if (requestJson):
 			params = json.loads(requestJson)
 			flagging_event_id = params.get("flagging_event_id")

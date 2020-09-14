@@ -3,17 +3,19 @@ import mysql.connector
 
 class CivicDB:
 
+
 	def __init__(self, config, logging):
 		self.config = config
+		self.connection = False
+		self.cursor = False
 		self.lastid = False		
 		self.logging = logging
 		self.in_transaction = False
-		self.connect()	
+		# self.connect()	
 
 
 	def connect(self):
-		config = self.config
-		self.connection = mysql.connector.connect(host=config['host'],database=config['database'],user=config['username'],password=config['password'])
+		self.connection = mysql.connector.connect(host=self.config['host'],database=self.config['database'],user=self.config['username'],password=self.config['password'])
 		# db_info = self.connection.get_server_info()
 		# print("Connected to DB Server ", db_info)
 		return self.connection
