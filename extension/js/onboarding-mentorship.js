@@ -147,9 +147,6 @@ jQuery(document).ready(function ($) {
 		return Promise.resolve("Dummy response to keep the console quiet");
 	});
 
-	browser.runtime.sendMessage({command: 'get-config'}, function () {});
-
-
 
 	function initializeUI ()
 	{

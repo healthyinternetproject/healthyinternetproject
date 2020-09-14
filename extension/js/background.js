@@ -101,21 +101,7 @@ function initializeExtension ()
 			
 			console.log(request);
 
-			if (request.command == 'get-config')
-			{
-				//script wants the config settings
-				
-				getConfigFromStorage(function (config) {
-					sendMessageToClientScript({command: 'config', 'config': config});
-					sendMessageToPopup({command: 'config', 'config': config});
-					console.log("Sending config:", config);
-
-					sendResponse("Config sent");					
-				});
-				return true; 
-				
-			}	
-			else if ( request.command == 'console-log' )
+			if ( request.command == 'console-log' )
 			{
 				console.log(request.data);
 			}				
