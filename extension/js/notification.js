@@ -60,7 +60,6 @@ jQuery(document).ready(function ($) {
 				$(".notification-header").text( getString( "notification_header_journalist")).html();
 				$(".notification-body").text( getString( "notification_journalist")).html();
 
-				document.getElementById("left-footer").style.display = "block";
 
 
 			}
@@ -70,9 +69,18 @@ jQuery(document).ready(function ($) {
 				console.log(html)
 				// $("#message").text( getString( request.message.text )).html();
 				$(".message-container").append(html);
+				// .addClass
 
 				$(".notification-header").text( getString( "notification_header_impact")).html();
 				$(".notification-body").text( getString( "notification_impact")).html();
+				$("#left-footer").hide();
+				$("#visit-site").hide();
+				$(".sharable").show();
+				$(".stats").show();
+
+				$(".message-container").css({"font-size":"20px","line-height":"30px"});
+
+
 
 			}
 
@@ -132,8 +140,19 @@ jQuery(document).ready(function ($) {
 			console.log(request);
 		}	
 
+		function copyURL(){
+			var button = document.querySelector("#share-button");
+			button.innerHTML = "Copied!";
+			var copyText = document.getElementById("#chrome");
+			copyText.select();
+			document.execCommand("copy");
+		  
+			addCrumb(recordId, "Link Crumb");
+		}
+		document.querySelector('#share-button').addEventListener('click', copyURL);
+
+
 		return Promise.resolve("Dummy response to keep the console quiet");
     });
 
 });
-
