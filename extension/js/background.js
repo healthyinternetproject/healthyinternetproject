@@ -3,8 +3,15 @@ var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/";
 var NOTIFICATION_CHECK_MIN_TIME = 600000; //10 minutes in milliseconds
 var DEV_NOTIFICATION_BUTTON = "dev-button";
 
+if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
+{
+	browser = chrome;
+}
+
+
 var CONFIG = {
 	'userId'           : false,
+	'token'            : false,
 	'onboardingDone'   : false,
 	'onboardingOptOut' : false,
 	'debug'            : false,
@@ -18,11 +25,6 @@ var flagging_event_id;
 var notificationType;
 var lastNotificationCheck = 0;
 
-
-if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
-{
-	browser = chrome;
-}
 
 if ( isDevMode() )
 {
@@ -39,7 +41,8 @@ function initializeExtension ()
 	CONFIG.apiUrl = API_ROOT_URL;
 
 	
-	browser.runtime.onInstalled.addListener(function() {
+	browser.runtime.onInstalled.addListener(function() 
+	{
 
 		//showNotification("Civic", 'Civic Activated');
 		
@@ -55,7 +58,8 @@ function initializeExtension ()
 	});
 
 
-	browser.tabs.onUpdated.addListener(function ( tabId, changeInfo, tab) {
+	browser.tabs.onUpdated.addListener(function ( tabId, changeInfo, tab) 
+	{
 
 		//testing/dev only
 		//console.log(changeInfo, tab);
@@ -97,7 +101,8 @@ function initializeExtension ()
 
 
 	browser.runtime.onMessage.addListener(
-		function(request, sender, sendResponse) {
+		function(request, sender, sendResponse) 
+		{
 			
 			console.log(request);
 
@@ -262,7 +267,7 @@ function getConfigFromStorage (callback)
 		return;
 	}
 
-	browser.storage.sync.get(['userId','password','onboardingDone','onboardingOptOut'], function(result) 
+	browser.storage.sync.get(['userId','password','token','onboardingDone','onboardingOptOut'], function(result) 
 	{		
 		//console.log(result);
 
@@ -272,6 +277,7 @@ function getConfigFromStorage (callback)
 
 			CONFIG.userId           = result.userId;
 			CONFIG.password         = result.password;
+			CONFIG.token            = result.token;
 			CONFIG.onboardingDone   = result.onboardingDone;
 			CONFIG.onboardingOptOut = result.onboardingOptOut;
 			CONFIG.initialized      = true;
@@ -385,12 +391,12 @@ function openNotification (notificationId)
 
 function sendToAPI ( term, data, authenticate, callback )
 {
-	if(callback)
+	if (callback)
 	{
 		console.log("this is the callback "+callback.name)
 	}
 
-	getConfigFromStorage(function (result) {
+	getConfigFromStorage (function (result) {
 
 		let xhr = new XMLHttpRequest();
 		let url = window.API_ROOT_URL + term;
@@ -421,6 +427,7 @@ function sendToAPI ( term, data, authenticate, callback )
 			{
 				params.push( "user_id=" + encodeURI(result.userId) );
 				params.push( "password=" + encodeURI(result.password) );
+				params.push( "token=" + encodeURI(result.token) );
 			}
 			else
 			{
@@ -432,34 +439,33 @@ function sendToAPI ( term, data, authenticate, callback )
 
 		//console.log(postData);
 
-		xhr.onreadystatechange = function () {
-
-			if (xhr.readyState == 4) {
+		xhr.onreadystatechange = function () 
+		{
+			if (xhr.readyState == 4) 
+			{
 
 				let data = (xhr.status == 200) ? xhr.response : false;
 
-
 				console.log("Response from API:");
 				console.log(data);
+
+				if (data.token)
+				{
+					CONFIG.token = data.token;
+				}
 
 				if (callback)
 				{
 					console.log("callback called "+ callback.name)
 					callback(data);
-				}
-
-			
+				}			
 			}
-
 		};
 		
 		xhr.responseType = 'json';  	
 		xhr.open('POST', url, true );			
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.send(postData);	
-
-
-		
+		xhr.send(postData);			
 	});
 	
 }
@@ -593,6 +599,7 @@ function showNotifications ( data )
 	}
 }
 
+
 function showJournalistMessage ( messageId )
 {
 	console.log("Showing journalist message");
@@ -606,11 +613,9 @@ function showJournalistMessage ( messageId )
 	};
 
 	return sendToAPI( "message", data, true, updateNotificationHTML );
-	
-	
-
 
 }
+
 
 function showJournalistFlag ( messageId, flagging_event_id )
 {
@@ -640,7 +645,7 @@ function updateNotificationFlagHTML (data)
 
 	return true;
 		
-	}
+}
 
 
 function updateNotificationHTML (data)
@@ -651,7 +656,7 @@ function updateNotificationHTML (data)
 
 	return true;
 		
-	}
+}
 
 
 

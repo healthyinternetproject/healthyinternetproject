@@ -8,26 +8,17 @@ var uiInitialized = false;
 var autofilling = false;
 
 
-
-var backgroundPage = browser.extension.getBackgroundPage();
-
-
 debug('Starting...');
 
 
 jQuery(document).ready(function ($) {
 
 	debug('Document ready.');
+	initializeUI(CONFIG);
 
 	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {		
 
-		if (request.command == 'config')
-		{				
-			debug(request.config);
-			CONFIG = request.config;
-			initializeUI(CONFIG);
-		}
-		else if (request.command == 'flag-error')
+		if (request.command == 'flag-error')
 		{				
 			debug(request.data);
 			//$(".page[data-index]").css({ 'transform':'translateX(0)' }).removeClass('active');

@@ -7,32 +7,14 @@ var uiInitialized = false;
 
 jQuery(document).ready(function ($) {
 
+	initializeUI();	
+
 
 	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 		console.log(request);
 
-		if (request.command == 'config')
-		{
-			if (request.config)
-			{				
-				CONFIG = request.config;
-				console.log(CONFIG);		
-				
-				if (CONFIG.userId)
-				{
-					debug("User ID is " + CONFIG.userId);
-				}
-				else
-				{
-					displayError('error_no_connection', 'try_again', function () { location.reload(); });
-					debug("Error, no user ID found");
-				}
-				
-				initializeUI();	
-			}
-		}
-		else if (request.command == 'notification-click')
+		if (request.command == 'notification-click')
 		{
 			console.log("Notification clicked");
 			window.location.href = window.location.pathname + "#3";
