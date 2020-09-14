@@ -14,17 +14,17 @@
             <div class="panel">
                 <div class="left">
                     <div>
-                        <h3><span data-i18n-message="notification_header_journalist"></span></h3>
-                        <span class="caption"><span data-i18n-message="notification_journalist"></span></span>
+                        <h3><span id = "header" data-i18n-message="notification_header"></span></h3>
+                        <span class="caption"><span data-i18n-message="notification_body"></span></span>
                     </div>
 
                     <div class="message-container">
-                        <textarea id="message" readonly>
                         </textarea>
 
                     </div>
+ 
 
-                    <div>
+                    <div id = "left-footer"> 
                         <a class="button" id = "email-button" style= "width: fit-content;"><span data-i18n-message="notification_send_an_email"></span></a>
                         <span class="caption"><span data-i18n-message="notification_reply_warning"></span>
                     </div>
@@ -49,6 +49,12 @@
                     </div>
                     <a class="button" id = "visit-site" style= "width: fit-content;">Visit site</a>
 
+
+                    <div class = "sharable"> 
+                        <span data-i18n-message="notification_sharable_link"></span>
+                        <input id="chrome" type="text" value = "https://chrome.google.com/webstore/detail/healthy-internet-project/hglnokmdgefkhojggkedoefggcmgogca" style = "display:none"/>
+                        <a class = "button" id = "share-button" style= "width: fit-content; margin-top: 10px;"><span data-i18n-message="notification_share"></span></a>
+                    </div>
                 </div>
             </div>
         </div>

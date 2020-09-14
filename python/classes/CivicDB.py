@@ -14,7 +14,7 @@ class CivicDB:
 	def connect(self):
 		config = self.config
 		self.connection = mysql.connector.connect(host=config['host'],database=config['database'],user=config['username'],password=config['password'])
-		db_info = self.connection.get_server_info()
+		# db_info = self.connection.get_server_info()
 		# print("Connected to DB Server ", db_info)
 		return self.connection
 
@@ -26,7 +26,8 @@ class CivicDB:
 		#  	# reconnect cursor
 		# 	self.connection = self.connect()
 		self.connection = self.connect()
-		return self.connection.cursor(buffered=True, dictionary=True)	
+		self.cursor = self.connection.cursor(buffered=True, dictionary=True)
+		return self.cursor
 
 
 	def execute(self, sql, params=(), commit=True):

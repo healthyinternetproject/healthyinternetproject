@@ -4,14 +4,15 @@
 import os
 import json
 import flask
+from datetime import datetime, date, timedelta
 from flask import request, jsonify, abort, send_from_directory
-from datetime import datetime
 import string
 from argon2 import PasswordHasher
 import logging
 from classes.CivicDB import CivicDB
 import urllib.parse
 import random
+import hashlib
 import faulthandler
 
 faulthandler.enable()
@@ -54,7 +55,8 @@ def quit_with_error(title,message,code=500):
 		'code': code
 	}
 	
-	return jsonify(results)
+	print(jsonify(results))
+	return False
 
 
 def random_string(string_length=10):
@@ -92,9 +94,8 @@ def get_user_by_id (user_id):
 	return user
 
 
-def authenticate_user(user_id, password):	
+def authenticate_user(user_id, password, token=False):	
 	# todo: limit login attempts to prevent brute force attacks
-
 	if user_id is None: 
 		return quit_with_error("Incomplete Request","Your request did not include all required parameters (user_id).", 400)
 
@@ -102,6 +103,18 @@ def authenticate_user(user_id, password):
 		return quit_with_error("Incomplete Request","Your request did not include all required parameters (password).", 400)
 
 	to_console("Authenticating user id " + user_id + "...")
+
+	if (token):
+		if (token == generate_user_token(user_id, password)):
+			to_console("Authenticated with token")
+			user = {
+				"user_id": user_id,
+				"token": token
+			}
+			return user
+		else:
+			to_console("Expired/invalid token")
+
 	
 	user = get_user_by_id(user_id)
 
@@ -110,13 +123,31 @@ def authenticate_user(user_id, password):
 		# to_console(user)
 
 		if (ph.verify(user['password_hash'], password)):
+			user['token'] = generate_user_token(user_id, password)
 			return user
 		else:
-			to_console("Incorrect password\n")
+			to_console("Incorrect password")
 			return False
 	else:
-		to_console("User not found\n")
+		to_console("User not found")
 		return False
+
+
+def generate_user_token (user_id, password):
+
+	# generate a token that will grant this user access for up to 48 hours
+	# this helps reduce load on the database
+	# you can invalidate all tokens by changing the token_secret_key in ../api-config.json
+	date_format = '%Y-%m-%dT%H:%M:%S.%f%z'
+	today = date.today()
+	today_string = today.strftime(date_format)
+	tomorrow = today + timedelta(days=1)
+	tomorrow_string = tomorrow.strftime(date_format)
+
+	string = str(user_id) + "•" + password + "•" + today_string + "•" + tomorrow_string + "•" + config.get("token_secret_key")	
+	token = hashlib.sha256(string.encode('utf-8')).hexdigest()
+	print(token)
+	return token
 
 
 def get_locale_id(locale_string):
@@ -193,7 +224,7 @@ def get_campaign_name (campaign_id):
 
 
 def get_flagging_event_create_date (flagging_event_id):
-	query = ("SELECT DATE_FORMAT(timestamp, \"%Y-%m-%d %H:%i:00\") as timestamp FROM flagging_event_status_link WHERE flagging_event_id = %s"
+	query = ("SELECT DATE_FORMAT(timestamp, \"%Y-%m-%d %H:%i:00\") as timestamp FROM flagging_event_status_link WHERE flagging_event_id = %s "
 		"ORDER BY timestamp ASC LIMIT 1")
 	row = db.fetchone(query, (flagging_event_id,))
 	if (row):
@@ -222,7 +253,7 @@ def favicon():
 def api_register():
 	to_console("register")
 	requestJson = request.form.get("json")
-	timestamp   = datetime.now()	
+	timestamp   = datetime.now()
 	password    = random_string(20)
 	ph          = PasswordHasher()
 	hash        = ph.hash(password)	
@@ -273,7 +304,8 @@ def api_register():
 		results = {
 			'status': 'success',
 			'user_id': user_id,
-			'password': password
+			'password': password,
+			'token': generate_user_token(user_id, password)
 		}
 
 		return jsonify(results)
@@ -298,9 +330,10 @@ def api_mission():
 	to_console("mission")
 	params     = json.loads(request.form.get("json"))
 	mission_id = params.get('mission_id')
-	user_id    = request.form.get("user_id")
-	password   = request.form.get("password")
-	user       = authenticate_user(user_id, password)	
+	user_id    = request.values.get("user_id")
+	password   = request.values.get("password")
+	token      = request.values.get("token")
+	user       = authenticate_user(user_id, password, token)	
 
 	if mission_id is None:
 		to_console("missing mission_id\n")
@@ -320,7 +353,8 @@ def api_mission():
 		db.execute(add_mission, mission_data)
 
 		results = {
-			'status': 'success'
+			'status': 'success',
+			'token': user.get("token")
 		}
 
 		return jsonify(results)
@@ -347,10 +381,11 @@ def api_flag():
 	flags             = params.get("flags")
 	campaign_id       = params.get("campaign_id")
 	locale            = params.get("locale")
-	user_id           = request.form.get('user_id')
-	password          = request.form.get('password')
+	user_id           = request.values.get('user_id')
+	password          = request.values.get('password')
+	token             = request.values.get('token')
 	timestamp         = datetime.now()	
-	user              = authenticate_user(user_id, password)
+	user              = authenticate_user(user_id, password, token)
 	flagging_event_id = 0;
 
 	# to_console(jsonify(flags))	
@@ -406,7 +441,8 @@ def api_flag():
 
 		results = {
 			'status': 'success',
-			'flagging_event_id': flagging_event_id
+			'flagging_event_id': flagging_event_id,
+			'token': user.get("token")
 		}
 
 		return jsonify(results)
@@ -459,8 +495,9 @@ def api_notifications():
 	# logging.debug(request.form.get("json"))
 	user_id           = request.values.get('user_id')
 	password          = request.values.get('password')
+	token             = request.values.get('token')
 	timestamp         = datetime.now()	
-	user              = authenticate_user(user_id, password)
+	user              = authenticate_user(user_id, password, token)
 	flagging_event_id = 0;	
 
 	if user is None or user is False:
@@ -472,7 +509,7 @@ def api_notifications():
 		# some will be assigned directly by user id, others will be open but eligible for this user
 		notification_query = "SELECT * FROM notification WHERE user_id = %s OR user_id_strict = %s"
 		notification_query_data = (user_id, user_id)
-		locale_id = user['locale_id']
+		locale_id = user.get('locale_id')
 
 		rows = db.fetchall(notification_query, notification_query_data)
 
@@ -513,7 +550,8 @@ def api_notifications():
 			
 		results = {
 			'status': 'success',
-			'notifications': notifications
+			'notifications': notifications,
+			'token': user.get("token")
 		}
 
 		#db.commit()
@@ -538,8 +576,9 @@ def api_message_test():
 	to_console("message_test")
 	user_id     = request.values.get('user_id')
 	password    = request.values.get('password')
+	token       = request.values.get('token')
 	timestamp   = datetime.now()	
-	user        = authenticate_user(user_id, password)
+	user        = authenticate_user(user_id, password, token)
 
 	if user is None or user is False:
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
@@ -550,7 +589,7 @@ def api_message_test():
 			"VALUES (%s, %s, %s, %s, %s)"
 		)		
 
-		db.execute(message_query, (user_id, "Test Subject", "Test Message", datetime.now(), "alan@alanbellows.com"))
+		db.execute(message_query, (user_id, "Test Subject", "Test Message", timestamp, "alan@alanbellows.com"))
 
 		message_id = db.lastrowid()
 
@@ -560,10 +599,11 @@ def api_message_test():
 		)
 
 		# 113 is just an old flag useful for testing
-		db.execute(notification_query, (113, 1, user_id, 'message_from_a_journalist', 'click_here_to_read', message_id, datetime.now()))
+		db.execute(notification_query, (113, 1, user_id, 'message_from_a_journalist', 'click_here_to_read', message_id, timestamp))
 
 		results = {
-			'status': 'success'
+			'status': 'success',
+			'token': user.get("token")
 		}
 
 		return jsonify(results)
@@ -587,7 +627,8 @@ def api_message():
 	requestJson = request.values.get("json")
 	user_id     = request.values.get('user_id')
 	password    = request.values.get('password')
-	user        = authenticate_user(user_id, password)
+	token       = request.values.get('token')
+	user        = authenticate_user(user_id, password, token)
 	results     = {}
 
 	if user is None or user is False:
@@ -613,7 +654,8 @@ def api_message():
 						'text'      : message['text'],
 						'timestamp' : message['timestamp'],
 						'reply_to'  : message['reply_to']
-					}
+					},
+					'token': user.get("token")
 				}
 
 				db.execute("UPDATE message SET viewed = %s WHERE user_id = %s AND message_id = %s", (datetime.now(),user_id,message_id))
@@ -647,7 +689,8 @@ def api_flagging_event():
 	requestJson = request.values.get("json")
 	user_id     = request.values.get('user_id')
 	password    = request.values.get('password')
-	user        = authenticate_user(user_id, password)
+	token       = request.values.get('token')
+	user        = authenticate_user(user_id, password, token)
 	results     = {}
 
 	if user is None or user is False:
@@ -677,7 +720,8 @@ def api_flagging_event():
 						'campaign'          : get_campaign_name(flagging_event['campaign_id']),
 						'timestamp'         : get_flagging_event_create_date(flagging_event_id),
 						'flags'             : []
-					}
+					},
+					'token': user.get("token")
 				}
 
 				flag_query = "SELECT * FROM flag WHERE flagging_event_id = %s"

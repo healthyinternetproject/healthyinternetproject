@@ -78,6 +78,55 @@ textarea:hover{
     width:100%;
 }
 
+
+
+#left-footer{
+	display: block;
+}
+
+.sharable {
+	display: none;
+    font-size: 16px;
+    line-height: 22px;
+	margin-top: 40px;
+
+}
+b{
+	font-weight: bold;
+}
+
+.youtube{
+	content:url("/images/YoutTube.png");
+	position: absolute;
+	top: 155px;
+	height: 40px;
+}
+.stats{
+    display: none;
+}
+
+.stat{
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    height: 58px;
+    left: 51.08px;
+
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    font-size: 15px;
+    line-height: 13px;
+    top: 450px;
+    text-align: center;
+    padding:10px;
+}
+
+em-1{
+
+    color: #26A65B;
+}
+
 @media only screen and (max-width: 700px) {
 	.panels .panel .left, .panels .panel .right{
 		padding: 5%;

@@ -15,6 +15,7 @@ var CONFIG = {
 
 var messageID;
 var flagging_event_id;
+var notificationType;
 var lastNotificationCheck = 0;
 
 
@@ -577,11 +578,12 @@ function showNotifications ( data )
 				"buttons"            : []
 			});	
 
-			if (notification.type == "journalist-contact")
-			{
+			// if (notification.type == "journalist-contact")
+			// {
 				
 				messageID = notification.message_id;
 				flagging_event_id = notification.flagging_event_id
+				notificationType = notification.type;
 				var tabs = 0;
 				browser.notifications.onClicked.addListener(function(notificationId) {
 					if (tabs==0){
@@ -594,7 +596,7 @@ function showNotifications ( data )
 				browser.notifications.onButtonClicked.addListener();
 				browser.notifications.onClosed.addListener();
 				browser.notifications.onShowSettings.addListener();				
-			}
+			// }
 		}
 	}
 	else
@@ -606,6 +608,8 @@ function showNotifications ( data )
 function showJournalistMessage ( messageId )
 {
 	console.log("Showing journalist message");
+	sendMessageToClientScript( { command: 'notification-type', type: notificationType }, function () {
+	} );
 
 	console.log("message-id " + messageId);
 	data = { 
@@ -615,8 +619,7 @@ function showJournalistMessage ( messageId )
 
 	return sendToAPI( "message", data, true, updateNotificationHTML );
 	
-	sendMessageToClientScript( { command: 'notification-click' }, function () {
-	} );
+	
 
 
 }
@@ -633,8 +636,8 @@ function showJournalistFlag ( messageId, flagging_event_id )
 
 	return sendToAPI( "flagging-event", data, true, updateNotificationFlagHTML );
 	
-	sendMessageToClientScript( { command: 'notification-click' }, function () {
-	} );
+	// sendMessageToClientScript( { command: 'notification-click' }, function () {
+	// } );
 
 
 }
