@@ -4,16 +4,12 @@ var CARD_DISPLAY_URL_LENGTH = 60;
 
 var currentReport = {};	
 var currentUrl = "";
-var CONFIG = {};
-
 var uiInitialized = false;
 var autofilling = false;
 
 
-if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
-{
-	browser = chrome;
-}
+
+var backgroundPage = browser.extension.getBackgroundPage();
 
 
 debug('Starting...');

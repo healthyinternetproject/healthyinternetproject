@@ -1,19 +1,12 @@
+
 var CARD_DISPLAY_TITLE_LENGTH = 48;
 var CARD_DISPLAY_URL_LENGTH = 60;
 
 var currentReport = {};	
 var currentUrl = "";
-var CONFIG = {};
-
 var uiInitialized = false;
 var autofilling = false;
 var notificationType;
-
-
-if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
-{
-	browser = chrome;
-}
 
 
 console.log('Starting...');
@@ -33,21 +26,17 @@ jQuery(document).ready(function ($) {
 		let $this = $(this);
 
 
-		if (request.command == 'config')
-		{				
-			console.log(request.config);
-			CONFIG = request.config;
-			initializeUI(CONFIG);
-		}
-		
-		else if (request.command == 'notification-type'){
+		if (request.command == 'notification-type')
+		{
 			notificationType = request.type;
 
 		}
-        else if ( request.command == 'populate-message'){
+        else if ( request.command == 'populate-message')
+        {
 
 
-			if(notificationType == "journalist-contact"){
+			if(notificationType == "journalist-contact")
+			{
 				console.log('populate-message')
 				console.log(request.message)
 				// document.getElementById("message").innerHTML = request.message.text;
@@ -60,6 +49,7 @@ jQuery(document).ready(function ($) {
 				$(".notification-header").text( getString( "notification_header_journalist")).html();
 				$(".notification-body").text( getString( "notification_journalist")).html();
 
+				document.getElementById("left-footer").style.display = "block";
 
 
 			}
@@ -69,25 +59,17 @@ jQuery(document).ready(function ($) {
 				console.log(html)
 				// $("#message").text( getString( request.message.text )).html();
 				$(".message-container").append(html);
-				// .addClass
 
 				$(".notification-header").text( getString( "notification_header_impact")).html();
 				$(".notification-body").text( getString( "notification_impact")).html();
-				$("#left-footer").hide();
-				$("#visit-site").hide();
-				$(".sharable").show();
-				$(".stats").show();
-
-				$(".message-container").css({"font-size":"20px","line-height":"30px"});
-
-
 
 			}
 
            
 		}
 		
-		else if ( request.command == 'populate-flag'){
+		else if ( request.command == 'populate-flag')
+		{
 
             console.log('populate-flag')
 			console.log(request.data)
@@ -140,19 +122,8 @@ jQuery(document).ready(function ($) {
 			console.log(request);
 		}	
 
-		function copyURL(){
-			var button = document.querySelector("#share-button");
-			button.innerHTML = "Copied!";
-			var copyText = document.getElementById("#chrome");
-			copyText.select();
-			document.execCommand("copy");
-		  
-			addCrumb(recordId, "Link Crumb");
-		}
-		document.querySelector('#share-button').addEventListener('click', copyURL);
-
-
 		return Promise.resolve("Dummy response to keep the console quiet");
     });
 
 });
+

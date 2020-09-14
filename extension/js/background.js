@@ -399,8 +399,9 @@ function openNotification (notificationId)
 
 function sendToAPI ( term, data, authenticate, callback )
 {
-	if(callback){
-	console.log("this is the callback "+callback.name)
+	if(callback)
+	{
+		console.log("this is the callback "+callback.name)
 	}
 
 	getConfigFromStorage(function (result) {
@@ -410,7 +411,8 @@ function sendToAPI ( term, data, authenticate, callback )
 		let params = [];
 		let postData = "";
 
-		console.log("Sending to API...");
+		console.log("Sending to " + url + "...");
+		console.log(data);
 
 		if (result.skipAPI)
 		{

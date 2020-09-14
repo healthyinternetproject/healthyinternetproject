@@ -1,5 +1,4 @@
 
-var CONFIG = {}; //this is auto-fetched from background.js
 var FADE_TIME = 400;
 var WELCOME_ANIMATION_TIME = 900; //matches transition time for .onboarding .welcome in onboarding.css
 
