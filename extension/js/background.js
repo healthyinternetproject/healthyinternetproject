@@ -3,10 +3,13 @@ var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/";
 var NOTIFICATION_CHECK_MIN_TIME = 600000; //10 minutes in milliseconds
 var DEV_NOTIFICATION_BUTTON = "dev-button";
 
+
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 {
 	browser = chrome;
 }
+
+
 
 
 var CONFIG = {

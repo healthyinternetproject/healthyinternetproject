@@ -152,7 +152,7 @@
 	"notification_header"	 			  : { "message" : "<span class = \"notification-header\" ></span>"},
 
 	"notification_header_journalist"	  : { "message" : "Message from a journalist"},
-	"notification_header_impact"	  	  : { "message" : "You have made an imapct!"},
+	"notification_header_impact"	  	  : { "message" : "You have made an impact!"},
 	"notification_body"					  : { "message" : "<span class = \"notification-body\" ></span>"},
 	"notification_journalist"	  		  : { "message" : "A journalist wants you to contact them for a story they’re writing. Your identity has not been shared with the journalist, and you will remain anonymous unless you decide to reply."},
 	"notification_impact"	  		  	  : { "message" : " "},
