@@ -40,11 +40,12 @@ data_query = ("SELECT LEFT(flagging_event_status_link.timestamp, 16) as `timesta
 	"INNER JOIN locale  "
 	"ON flagging_event.locale_id = locale.locale_id "
 	"WHERE flagging_event.url NOT LIKE 'chrome%%'  "
+	"AND flagging_event.url NOT LIKE 'moz-extension%%'  "
+	"AND flagging_event.url NOT LIKE '%%www.damninteresting.com%%' "
 	"AND flagging_event.notes NOT LIKE 'test%%'  "
 	"AND flagging_event.notes NOT LIKE 'justin%%' "
 	"AND flagging_event.notes NOT LIKE 'Alan%%' "
-	"AND flagging_event.notes NOT LIKE '%%anand%%' "
-	"AND flagging_event.url NOT LIKE '%%www.damninteresting.com%%' "
+	"AND flagging_event.notes NOT LIKE '%%anand%%' "	
 	"ORDER BY flagging_event_status_link.timestamp DESC;")
 
 rows = db.fetchall(data_query)
