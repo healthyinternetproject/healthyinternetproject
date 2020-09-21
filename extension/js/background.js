@@ -134,28 +134,40 @@ function initializeExtension ()
 			}
 			else if (request.command == 'sample-notification')
 			{		
-				let notification = browser.notifications.create({
-					"type"               : "basic",
-					"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
-					"title"              : browser.i18n.getMessage("click_here"),
-					"message"            : browser.i18n.getMessage("via_these_alerts"),
-					"requireInteraction" : true,
-					"buttons"            : []
-				});
 
-				if (browser.runtime.lastError)
-				{
-					console.log(browser.runtime.lastError);
+				if(window.location.protocol=='moz-extension:'){
+					firefoxNotifyMe();
 				}
+				else{
+
+					let notification = browser.notifications.create({
+						"type"               : "basic",
+						"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
+						"title"              : browser.i18n.getMessage("click_here"),
+						"message"            : browser.i18n.getMessage("via_these_alerts"),
+						"requireInteraction" : true,
+						"buttons"            : []
+					});
+
+					if (browser.runtime.lastError)
+					{
+						console.log(browser.runtime.lastError);
+					}
+
+					browser.notifications.onClicked.addListener(dismissNotification);
+					browser.notifications.onButtonClicked.addListener(dismissNotification);
+					browser.notifications.onClosed.addListener(dismissNotification);
+					browser.notifications.onShowSettings.addListener(dismissNotification);
+
+
+				}
+			
+
 
 				//add .onclick etc
 				//https://developer.chrome.com/extensions/notifications
 
-				browser.notifications.onClicked.addListener(dismissNotification);
-				browser.notifications.onButtonClicked.addListener(dismissNotification);
-				browser.notifications.onClosed.addListener(dismissNotification);
-				browser.notifications.onShowSettings.addListener(dismissNotification);
-
+				
 				//np.then(onNotificationSuccess);
 			
 				sendResponse("Notification shown");
@@ -575,8 +587,8 @@ function showNotifications ( data )
 				"buttons"            : []
 			});	
 
-			// if (notification.type == "journalist-contact")
-			// {
+			if (notification.type != "other")
+			{
 				
 				messageID = notification.message_id;
 				flagging_event_id = notification.flagging_event_id
@@ -593,7 +605,23 @@ function showNotifications ( data )
 				browser.notifications.onButtonClicked.addListener();
 				browser.notifications.onClosed.addListener();
 				browser.notifications.onShowSettings.addListener();				
-			// }
+			}
+
+			else{
+				messageID = notification.message_id;
+				flagging_event_id = notification.flagging_event_id
+				notificationType = notification.type;
+				var tabs = 0;
+				browser.notifications.onClicked.addListener(function(notificationId) {
+					if (tabs==0){
+						browser.tabs.create({
+							'url': "healthyinternetproject.org"+ '?'+ 'message_id='+notification.message_id
+						});
+					}
+					tabs++;
+				});
+
+			}
 		}
 	}
 	else
@@ -676,3 +704,49 @@ function getNotificationId ()
     var id = Math.floor(Math.random() * 9007199254740992) + 1;
     return id.toString();
 }
+
+function firefoxNotifyMe() {
+	// Let's check if the browser supports notifications
+	console.log("firefox")
+	if (!("Notification" in window)) {
+	  alert("This browser does not support desktop notification");
+	}
+  
+	// Let's check whether notification permissions have already been granted
+	else if (Notification.permission === "granted") {
+	  // If it's okay let's create a notification
+	  var notification = new Notification({
+			"type"               : "basic",
+			"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
+			"title"              : browser.i18n.getMessage("click_here"),
+			"message"            : browser.i18n.getMessage("via_these_alerts"),
+			"requireInteraction" : true,
+			"buttons"            : []
+		});
+	  notification.onclick = function(event) {
+		dismissNotification();
+	  }
+	  console.log("Notification shown");
+	}
+  
+	// Otherwise, we need to ask the user for permission
+	else if (Notification.permission !== "denied") {
+	  Notification.requestPermission().then(function (permission) {
+		// If the user accepts, let's create a notification
+		if (permission === "granted") {
+			var notification = new Notification({
+				"type"               : "basic",
+				"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
+				"title"              : browser.i18n.getMessage("click_here"),
+				"message"            : browser.i18n.getMessage("via_these_alerts"),
+				"requireInteraction" : true,
+				"buttons"            : []
+			});
+		  notification.onclick = function(event) {
+			dismissNotification();
+		  }
+		  console.log("Notification shown");
+		}
+	  });
+	}
+} 
