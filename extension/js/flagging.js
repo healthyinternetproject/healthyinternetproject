@@ -334,6 +334,9 @@ jQuery(document).ready(function ($) {
 
 					let url = tabs[0].url;
 					let onboarding = (url.indexOf("chrome-extension://") === 0);
+					if(window.location.protocol=='moz-extension:'){
+						onboarding = (url.indexOf("moz-extension://") === 0);
+					}
 
 					if (onboarding)
 					{
