@@ -15,15 +15,8 @@ jQuery(document).ready(function ($)
 
 		if (request.command == 'notification-click')
 		{
-			console.log("Notification clicked");
-			var segment_array = window.location.href.split( '/' );
-			var last_segment = segment_array.pop();
-			console.log(last_segment)
-			if (last_segment == 'onboarding.html#4'){
-				window.location.href = window.location.pathname + "#5";
-				sendResponse({result: "success"});
-			}
-			sendResponse({result: "success"});
+			notificationClick();
+			
 
 
         }
@@ -260,6 +253,9 @@ jQuery(document).ready(function ($)
 			}
 			else
 			{
+				if(window.location.protocol=='moz-extension:'){
+					firefoxNotifyMe();
+				}
 				browser.runtime.sendMessage({command: 'sample-notification'}, function (response) { console.log(response); });
 			}
 		});
@@ -600,4 +596,64 @@ function displayError (message, buttonMessage, buttonFunc)
 	$message.html(html);
 	$message.append($button);
 	$overlay.fadeIn(300);
+}
+
+function firefoxNotifyMe() {
+	// Let's check if the browser supports notifications
+	console.log("firefox!")
+	if (!("Notification" in window)) {
+	  alert("This browser does not support desktop notification");
+	}
+  
+	// Let's check whether notification permissions have already been granted
+	else if (Notification.permission === "granted") {
+	  // If it's okay let's create a notification
+	  var notification = new Notification({
+			"type"               : "basic",
+			"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
+			"title"              : browser.i18n.getMessage("click_here"),
+			"message"            : browser.i18n.getMessage("via_these_alerts"),
+			"requireInteraction" : true,
+			"buttons"            : []
+		});
+		notification.onclick = function(event) {
+			notificationClick();
+
+	  }
+	  console.log("Notification shown");
+	}
+  
+	// Otherwise, we need to ask the user for permission
+	else if (Notification.permission !== "denied") {
+	  Notification.requestPermission().then(function (permission) {
+		// If the user accepts, let's create a notification
+		if (permission === "granted") {
+			var notification = new Notification({
+				"type"               : "basic",
+				"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
+				"title"              : browser.i18n.getMessage("click_here"),
+				"message"            : browser.i18n.getMessage("via_these_alerts"),
+				"requireInteraction" : true,
+				"buttons"            : []
+			});
+			notification.onclick = function(event) {
+				notificationClick();
+	
+		  }
+		  console.log("Notification shown");
+		}
+	  });
+	}
+} 
+
+function notificationClick(){
+	console.log("Notification clicked");
+			var segment_array = window.location.href.split( '/' );
+			var last_segment = segment_array.pop();
+			console.log(last_segment)
+			if (last_segment == 'onboarding.html#4'){
+				window.location.href = window.location.pathname + "#5";
+				sendResponse({result: "success"});
+			}
+			sendResponse({result: "success"});
 }
