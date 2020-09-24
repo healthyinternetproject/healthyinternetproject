@@ -8,22 +8,26 @@ jQuery(document).ready(function ($)
 {
 	initializeUI();	
 
+	if(window.location.protocol=="moz-extension:"){
+		$(".help-button").css({'display':'none'});
+	}
+
 	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) 
 	{
 
 		console.log(request);
 
+
 		if (request.command == 'notification-click')
 		{
 			notificationClick();
-			
-
-
+		
         }
 		else if (request.command == 'move-hand-flag')
 		{
             // in case user clicks on extension before closing pin helper
-            removePinHelper();
+			removePinHelper();
+			
 
 			$("#pointer-hand").removeClass();
 			$("#pointer-tip").removeClass();
@@ -426,7 +430,10 @@ function removePinHelper()
 
     $("#pointer-tip span").attr("data-i18n-message","tooltip_find_the_hip_button");
     //change content of tip!
-    $("#pointer-tip span").html( getString("tooltip_find_the_hip_button"));
+	$("#pointer-tip span").html( getString("tooltip_find_the_hip_button"));
+
+	
+	
 }
 
 
@@ -600,7 +607,6 @@ function displayError (message, buttonMessage, buttonFunc)
 
 function firefoxNotifyMe() {
 	// Let's check if the browser supports notifications
-	console.log(getString("click_here"))
 	if (!("Notification" in window)) {
 	  alert("This browser does not support desktop notification");
 	}
