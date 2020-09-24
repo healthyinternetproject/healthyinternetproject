@@ -600,7 +600,7 @@ function displayError (message, buttonMessage, buttonFunc)
 
 function firefoxNotifyMe() {
 	// Let's check if the browser supports notifications
-	console.log("firefox!")
+	console.log(getString("click_here"))
 	if (!("Notification" in window)) {
 	  alert("This browser does not support desktop notification");
 	}
@@ -608,14 +608,15 @@ function firefoxNotifyMe() {
 	// Let's check whether notification permissions have already been granted
 	else if (Notification.permission === "granted") {
 	  // If it's okay let's create a notification
-	  var notification = new Notification({
-			"type"               : "basic",
-			"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
-			"title"              : browser.i18n.getMessage("click_here"),
-			"message"            : browser.i18n.getMessage("via_these_alerts"),
-			"requireInteraction" : true,
-			"buttons"            : []
-		});
+	  var options = {
+		body: browser.i18n.getMessage("via_these_alerts"),
+		icon: browser.runtime.getURL("/images/icon-128.png")
+	}
+  
+		var notification = new Notification(browser.i18n.getMessage("click_here"),options);
+
+	// firefox specific : https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification
+
 		notification.onclick = function(event) {
 			notificationClick();
 
@@ -628,20 +629,19 @@ function firefoxNotifyMe() {
 	  Notification.requestPermission().then(function (permission) {
 		// If the user accepts, let's create a notification
 		if (permission === "granted") {
-			var notification = new Notification({
-				"type"               : "basic",
-				"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
-				"title"              : browser.i18n.getMessage("click_here"),
-				"message"            : browser.i18n.getMessage("via_these_alerts"),
-				"requireInteraction" : true,
-				"buttons"            : []
-			});
-			notification.onclick = function(event) {
-				notificationClick();
-	
-		  }
-		  console.log("Notification shown");
-		}
+			var options = {
+				body: browser.i18n.getMessage("via_these_alerts"),
+				icon: browser.runtime.getURL("/images/icon-128.png")
+			}
+
+				var notification = new Notification(browser.i18n.getMessage("click_here"),options);
+			
+				notification.onclick = function(event) {
+					notificationClick();
+		
+			  }
+			  console.log("Notification shown");
+			}
 	  });
 	}
 } 
