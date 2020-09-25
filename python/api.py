@@ -9,12 +9,11 @@ from flask import request, jsonify, abort, send_from_directory
 import string
 from argon2 import PasswordHasher
 import logging
-from classes.CivicDB import CivicDB
+from classes.HIPDatabase import HIPDatabase
 import urllib.parse
 import random
 import hashlib
 import faulthandler
-import mysql
 
 faulthandler.enable()
 
@@ -33,7 +32,7 @@ logging.critical('critical')
 
 verbose_mode = True
 app = flask.Flask(__name__)
-db = CivicDB(config.get("mariadb"), logging)
+db = HIPDatabase(config.get("mariadb"), logging)
 # app.config["DEBUG"] = True
 
 
@@ -227,11 +226,15 @@ def get_campaign_name (campaign_id):
 
 
 def get_flagging_event_create_date (flagging_event_id):
-	query = ("SELECT DATE_FORMAT(timestamp, \"%Y-%m-%d %H:%i:00\") as timestamp FROM flagging_event_status_link WHERE flagging_event_id = %s "
-		"ORDER BY timestamp ASC LIMIT 1")
-	row = db.fetchone(query, (flagging_event_id,))
-	if (row):
-		return row['timestamp']
+	try:
+		query = ("SELECT DATE_FORMAT(timestamp, \"%%Y-%%m-%%d %%H:%%i:00\") as timestamp FROM flagging_event_status_link WHERE flagging_event_id = %s "
+			"ORDER BY timestamp ASC LIMIT 1")
+		row = db.fetchone(query, (flagging_event_id,))
+		if (row):
+			return row['timestamp']
+	except Exception as err:
+		return "0000-00-00 00:00:00"
+
 	return ""
 
 
@@ -313,7 +316,7 @@ def api_register():
 
 		return jsonify(results)
 	
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		logging.debug("Database error")
 		#logging.debug(err)
@@ -362,7 +365,7 @@ def api_mission():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -450,7 +453,7 @@ def api_flag():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -481,7 +484,7 @@ def api_listcampaigns():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -561,7 +564,7 @@ def api_notifications():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -611,7 +614,7 @@ def api_message_test():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -675,7 +678,7 @@ def api_message():
 				'message': "Error: Missing json parameter",				
 			}			
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error'   : "Error: {}".format(err),
@@ -753,7 +756,7 @@ def api_flagging_event():
 				'message': "Error: Missing json parameter",				
 			}			
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error'   : "Error: {}".format(err),
@@ -766,5 +769,5 @@ def api_flagging_event():
 
 if __name__ == '__main__':
 	from waitress import serve
-	serve(app, host="0.0.0.0", port=8080, url_scheme='https')
+	serve(app, host="0.0.0.0", port=8080, url_scheme='https', threads=1)
 
