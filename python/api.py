@@ -1,5 +1,5 @@
 
-#import sys
+import sys
 
 import os
 import json
@@ -9,14 +9,13 @@ from flask import request, jsonify, abort, send_from_directory
 import string
 from argon2 import PasswordHasher
 import logging
-from classes.CivicDB import CivicDB
+from classes.HIPDatabase import HIPDatabase
 import urllib.parse
 import random
 import hashlib
-import faulthandler
-import mysql
+# import faulthandler
 
-faulthandler.enable()
+# faulthandler.enable()
 
 
 with open("../api-config.json") as json_data_file:
@@ -33,7 +32,7 @@ logging.critical('critical')
 
 verbose_mode = True
 app = flask.Flask(__name__)
-db = CivicDB(config.get("mariadb"), logging)
+db = HIPDatabase(config.get("mariadb"), logging)
 # app.config["DEBUG"] = True
 
 
@@ -227,13 +226,41 @@ def get_campaign_name (campaign_id):
 
 
 def get_flagging_event_create_date (flagging_event_id):
-	query = ("SELECT DATE_FORMAT(timestamp, \"%Y-%m-%d %H:%i:00\") as timestamp FROM flagging_event_status_link WHERE flagging_event_id = %s "
-		"ORDER BY timestamp ASC LIMIT 1")
-	row = db.fetchone(query, (flagging_event_id,))
-	if (row):
-		return row['timestamp']
+	try:
+		query = ("SELECT DATE_FORMAT(timestamp, \"%%Y-%%m-%%d %%H:%%i:00\") as timestamp FROM flagging_event_status_link WHERE flagging_event_id = %s "
+			"ORDER BY timestamp ASC LIMIT 1")
+		row = db.fetchone(query, (flagging_event_id,))
+		if (row):
+			return row['timestamp']
+	except Exception as err:
+		return "0000-00-00 00:00:00"
+
 	return ""
 
+
+def get_flags(flagging_event_id):
+	
+	if (flagging_event_id):
+		flags = []
+		flag_query = "SELECT * FROM flag WHERE flagging_event_id = %s"
+		flag_query_data = (flagging_event_id,)
+
+		results = db.fetchall(flag_query, flag_query_data)
+
+		for row in results:
+
+			#print(str(flag))
+
+			flag_details = {
+				'type'    : get_flag_type_name(row['flag_type_id']),
+				'severity': row['severity']
+			}
+			flags.append(flag_details)
+
+		return flags
+
+	else:
+		return False
 
 
 @app.errorhandler(404)
@@ -313,7 +340,7 @@ def api_register():
 
 		return jsonify(results)
 	
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		logging.debug("Database error")
 		#logging.debug(err)
@@ -362,7 +389,7 @@ def api_mission():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -450,7 +477,7 @@ def api_flag():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -481,7 +508,7 @@ def api_listcampaigns():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -561,7 +588,7 @@ def api_notifications():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -577,22 +604,25 @@ def api_notifications():
 @app.route('/api/v1/message-test', methods=['GET','POST'])
 def api_message_test():	
 	to_console("message_test")
-	user_id     = request.values.get('user_id')
-	password    = request.values.get('password')
-	token       = request.values.get('token')
-	timestamp   = datetime.now()	
-	user        = authenticate_user(user_id, password, token)
+	user_id        = request.values.get('user_id')
+	password       = request.values.get('password')
+	token          = request.values.get('token')
+	timestamp      = datetime.now()	
+	user           = authenticate_user(user_id, password, token)
+
+	# 113 is just an old flag useful for testing
+	sample_flag_id = 113
 
 	if user is None or user is False:
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
 	
 	try:
 		message_query = ("INSERT INTO message" 
-			"(user_id, subject, text, timestamp, reply_to)"
-			"VALUES (%s, %s, %s, %s, %s)"
+			"(user_id, flagging_event_id, subject, text, timestamp, reply_to)"
+			"VALUES (%s, %s, %s, %s, %s, %s)"
 		)		
 
-		db.execute(message_query, (user_id, "Test Subject", "Test Message", timestamp, "alan@alanbellows.com"))
+		db.execute(message_query, (user_id, sample_flag_id, "Test Subject", "Test Message", timestamp, "alan@alanbellows.com"))
 
 		message_id = db.lastrowid()
 
@@ -600,9 +630,8 @@ def api_message_test():
 			"(flagging_event_id, notification_type_id, user_id_strict, title_string_key, body_string_key, message_id, timestamp) "
 			"VALUES (%s, %s, %s, %s, %s, %s, %s)"
 		)
-
-		# 113 is just an old flag useful for testing
-		db.execute(notification_query, (113, 1, user_id, 'message_from_a_journalist', 'click_here_to_read', message_id, timestamp))
+		
+		db.execute(notification_query, (sample_flag_id, 1, user_id, 'message_from_a_journalist', 'click_here_to_read', message_id, timestamp))
 
 		results = {
 			'status': 'success',
@@ -611,7 +640,7 @@ def api_message_test():
 
 		return jsonify(results)
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error': "Error: {}".format(err),
@@ -658,6 +687,7 @@ def api_message():
 						'timestamp' : message['timestamp'],
 						'reply_to'  : message['reply_to']
 					},
+					'flags': get_flags(message['flagging_event_id']),
 					'token': user.get("token")
 				}
 
@@ -675,7 +705,7 @@ def api_message():
 				'message': "Error: Missing json parameter",				
 			}			
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error'   : "Error: {}".format(err),
@@ -721,25 +751,10 @@ def api_flagging_event():
 						'notes'             : flagging_event['notes'],
 						'campaign'          : get_campaign_name(flagging_event['campaign_id']),
 						'timestamp'         : get_flagging_event_create_date(flagging_event_id),
-						'flags'             : []
+						'flags'             : get_flags(flagging_event_id)
 					},
 					'token': user.get("token")
 				}
-
-				flag_query = "SELECT * FROM flag WHERE flagging_event_id = %s"
-				flag_query_data = (flagging_event_id,)
-
-				flags = db.fetchall(flag_query, flag_query_data)
-
-				for flag in flags:
-
-					#print(str(flag))
-
-					flag_details = {
-						'type'    : get_flag_type_name(flag['flag_type_id']),
-						'severity': flag['severity']
-					}
-					results['flagging_event']['flags'].append(flag_details)
 
 				return jsonify(results)
 
@@ -753,7 +768,7 @@ def api_flagging_event():
 				'message': "Error: Missing json parameter",				
 			}			
 
-	except mysql.connector.errors.DatabaseError as err:
+	except Exception as err:
 
 		results = {
 			'error'   : "Error: {}".format(err),
@@ -766,5 +781,5 @@ def api_flagging_event():
 
 if __name__ == '__main__':
 	from waitress import serve
-	serve(app, host="0.0.0.0", port=8080, url_scheme='https')
+	serve(app, host="0.0.0.0", port=8080, url_scheme='https', threads=1)
 

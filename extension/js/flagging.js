@@ -61,8 +61,7 @@ jQuery(document).ready(function ($) {
 
 		let manifestData = browser.runtime.getManifest();
 
-		debug("API is " + CONFIG.apiUrl);
-
+		debug(CONFIG);
 
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
