@@ -59,6 +59,10 @@ jQuery(document).ready(function ($) {
 				console.log(html)
 				// $("#message").text( getString( request.message.text )).html();
 				$(".message-container").append(html);
+				document.getElementById("sharable").style.display = "block";
+				document.getElementById("visit-site").style.display = "none";
+
+
 
 				$(".notification-header").text( getString( "notification_header_impact")).html();
 				$(".notification-body").text( getString( "notification_impact")).html();

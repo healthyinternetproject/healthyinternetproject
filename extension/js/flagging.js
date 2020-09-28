@@ -579,6 +579,8 @@ function adjustPopupSize (messageToggle)
 	if (messageToggle)
 	{
 		$flagging.height("auto");	//set height to auto for messages with no "page"
+		$flagging.overflow( "hidden" );
+
 	}
 	else if ($button.length > 0)
 	{
