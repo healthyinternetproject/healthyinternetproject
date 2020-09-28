@@ -21,6 +21,7 @@ class HIPDatabase:
 			charset='utf8',
 			cursorclass=pymysql.cursors.DictCursor)
 
+		self.logging.debug("Connected to " + self.config['database'] + " on " + self.config['host'])
 		self.connection.autocommit( 1 )
 
 		return self.connection
