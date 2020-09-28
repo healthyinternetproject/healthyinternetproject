@@ -8,6 +8,8 @@
 	width: 384px;
 	min-height: 200px;
 	height: 500px;
+	overflow: hidden;
+
 }
 
 .flagging #debugger

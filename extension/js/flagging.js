@@ -13,6 +13,12 @@ debug('Starting...');
 
 jQuery(document).ready(function ($) {
 
+	if(typeof InstallTrigger !== 'undefined'){
+		console.log("firefox");
+		$(".page[data-index=2]").css('padding-left','50px');
+		$(".page[data-index=2]").css('overflow','hidden');
+
+	}
 	debug('Document ready.');
 	initializeUI(CONFIG);
 
