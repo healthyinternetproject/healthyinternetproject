@@ -24,6 +24,9 @@ jQuery(document).ready(function ($) {
 
 	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {		
 		let $this = $(this);
+		// $("#share-button").onclick = copyText();
+		document.getElementById("share-button").addEventListener("click", copyFunction);
+
 
 
 		if (request.command == 'notification-type')
@@ -55,17 +58,38 @@ jQuery(document).ready(function ($) {
 			}
 			else if (notificationType == "user-impact"){
 
-				var html = $.parseHTML(request.message.text);
+				var html = $.parseHTML(getString("notification_user_impact")); 
 				console.log(html)
-				// $("#message").text( getString( request.message.text )).html();
 				$(".message-container").append(html);
-				document.getElementById("sharable").style.display = "block";
+				$(".message").css({"margin-top":"55px"})
+				$(".sharable").css({"display":"block", "position":"absolute",    "position": "absolute", "left": "50px", "bottom": "20px", "width": "50%"});
 				document.getElementById("visit-site").style.display = "none";
+				
 
 
 
 				$(".notification-header").text( getString( "notification_header_impact")).html();
 				$(".notification-body").text( getString( "notification_impact")).html();
+				
+				// $(".message-container").text( getString("notification_user_impact")).html();
+
+
+			}
+
+			else if (notificationType == "community-update"){
+
+				var html = $.parseHTML(request.message.text);
+				console.log(html)
+				$(".message-container").append(html);
+				document.getElementById("visit-site").style.display = "none";
+				$(".sharable").css({"display":"block", "position":"absolute",    "position": "absolute", "left": "50px", "bottom": "20px", "width": "50%"});
+
+				$(".right").css({"content": "url(/images/rightSide.png)", "padding":"0px","width": "40%","height": "100%"});
+
+				$(".notification-header").text( getString( "notification_header_impact")).html();
+				$(".message-container").text( getString("notification_community_update_1")).html();
+				$(".notification-header").text( getString( "notification_header_community_update")).html();
+
 
 			}
 
@@ -130,4 +154,15 @@ jQuery(document).ready(function ($) {
     });
 
 });
+
+
+function copyFunction(){
+  var copyText = document.getElementById("myInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+  document.getElementById("share-button").innerHTML = "Copied!"
+//   alert("Copied the text: " + copyText.value);
+	  
+}
 

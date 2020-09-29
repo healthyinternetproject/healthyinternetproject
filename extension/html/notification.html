@@ -50,11 +50,13 @@
                     <a class="button" id = "visit-site" style= "width: fit-content;">Visit site</a>
 
 
-                    <div class = "sharable" id = "sharable"> 
-                        <span data-i18n-message="notification_sharable_link"></span>
-                        <input id="chrome" type="text" value = "https://chrome.google.com/webstore/detail/healthy-internet-project/hglnokmdgefkhojggkedoefggcmgogca" style = "display:none"/>
-                        <a class = "button" id = "share-button" style= "width: fit-content; margin-top: 10px;"><span data-i18n-message="notification_share"></span></a>
-                    </div>
+
+                </div>
+                <div class = "sharable" id = "sharable"> 
+                    <span data-i18n-message="notification_sharable_link"></span>
+                    <input type="text" value = "https://chrome.google.com/webstore/detail/healthy-internet-project/hglnokmdgefkhojggkedoefggcmgogca" id="myInput" style="margin-left: -9999px;"></input>
+                    <button class = "button" id = share-button onclick="copyFunction()" style= "width: fit-content; margin-top: 10px;"><span data-i18n-message="notification_share"></span></button>
+                
                 </div>
             </div>
         </div>
