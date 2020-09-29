@@ -108,6 +108,9 @@
      "more_info_available_here"             : { "message": "Estamos animados que você vai ajudar a tornar a internet um lugar mais seguro e mais produtivo. Caso tenha mais perguntas, por favor consulte nosso <a href='http://healthyinternetproject.org/faq' target='_blank'>FAQ</a> (em inglês)." },
      "no_more_forgotten_logins"             : { "message": "Chega de logins esquecidos" },
      "no"                                   : { "message": "Não" },
+
+     "notification_community_update_1"	    : { "message": "Marcações que nos alertaram sobre três vídeos do YouTube em dois canais diferentes revelaram um esforço combinado de amplificar pontos de vistas controversos do grupo Médicos pela Verdade, o qual faz perigosas afirmações sobre o tratamento e prevenção da COVID-19. Uma pesquisa mais aprofundada sobre essas marcações levaram o YouTube a remover diversos vídeos por violarem suas políticas de comunidade."},
+
      "stay_updated"                         : { "message": "Matenha-se atualizado" },
      "off_to_the_races"                     : { "message": "Dada a largada!" },
      "optional"                             : { "message": "(opcional)" },

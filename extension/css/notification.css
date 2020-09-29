@@ -36,8 +36,10 @@
 .panel .message-container{
     flex:auto;
     display:flex;
-    align-items: center;
     width: 100%;
+    font-size: 20px;
+    line-height: 30px;
+    padding-top: 10px;
 }
 
 .panel #message{
@@ -81,14 +83,16 @@ textarea:hover{
 
 
 #left-footer{
-	display: block;
+	display: none;
 }
 
 .sharable {
 	display: none;
     font-size: 16px;
     line-height: 22px;
-	margin-top: 40px;
+    margin-top: 40px;
+    z-index: 2;
+
 
 }
 b{
@@ -97,8 +101,6 @@ b{
 
 .youtube{
 	content:url("/images/YoutTube.png");
-	position: absolute;
-	top: 155px;
 	height: 40px;
 }
 .stats{

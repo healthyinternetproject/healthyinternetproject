@@ -1,57 +1,33 @@
 
-var CONFIG = {}; //this is auto-fetched from background.js
 var FADE_TIME = 400;
 var WELCOME_ANIMATION_TIME = 900; //matches transition time for .onboarding .welcome in onboarding.css
-
 var uiInitialized = false;
 
 
 jQuery(document).ready(function ($) 
 {
+	initializeUI();	
+
+	if(window.location.protocol=="moz-extension:"){
+		$(".help-button").css({'display':'none'});
+	}
 
 	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) 
 	{
 
 		console.log(request);
 
-		if (request.command == 'config')
-		{
-			if (request.config)
-			{				
-				CONFIG = request.config;
-				console.log(CONFIG);		
-				
-				if (CONFIG.userId)
-				{
-					debug("User ID is " + CONFIG.userId);
-				}
-				else
-				{
-					displayError('error_no_connection', 'try_again', function () { location.reload(); });
-					debug("Error, no user ID found");
-				}
-				
-				initializeUI();	
-			}
-		}
-		else if (request.command == 'notification-click')
-		{
-			console.log("Notification clicked");
-			var segment_array = window.location.href.split( '/' );
-			var last_segment = segment_array.pop();
-			console.log(last_segment)
-			if (last_segment == 'onboarding.html#4'){
-				window.location.href = window.location.pathname + "#5";
-				sendResponse({result: "success"});
-			}
-			sendResponse({result: "success"});
 
-
+		if (request.command == 'notification-click')
+		{
+			notificationClick();
+		
         }
 		else if (request.command == 'move-hand-flag')
 		{
             // in case user clicks on extension before closing pin helper
-            removePinHelper();
+			removePinHelper();
+			
 
 			$("#pointer-hand").removeClass();
 			$("#pointer-tip").removeClass();
@@ -162,7 +138,6 @@ jQuery(document).ready(function ($)
 		return Promise.resolve("Dummy response to keep the console quiet");
 	});
 
-	browser.runtime.sendMessage({command: 'get-config'}, function () {});
 
 	function initializeUI ()
 	{
@@ -282,6 +257,9 @@ jQuery(document).ready(function ($)
 			}
 			else
 			{
+				if(window.location.protocol=='moz-extension:'){
+					firefoxNotifyMe();
+				}
 				browser.runtime.sendMessage({command: 'sample-notification'}, function (response) { console.log(response); });
 			}
 		});
@@ -452,7 +430,10 @@ function removePinHelper()
 
     $("#pointer-tip span").attr("data-i18n-message","tooltip_find_the_hip_button");
     //change content of tip!
-    $("#pointer-tip span").html( getString("tooltip_find_the_hip_button"));
+	$("#pointer-tip span").html( getString("tooltip_find_the_hip_button"));
+
+	
+	
 }
 
 
@@ -622,4 +603,63 @@ function displayError (message, buttonMessage, buttonFunc)
 	$message.html(html);
 	$message.append($button);
 	$overlay.fadeIn(300);
+}
+
+function firefoxNotifyMe() {
+	// Let's check if the browser supports notifications
+	if (!("Notification" in window)) {
+	  alert("This browser does not support desktop notification");
+	}
+  
+	// Let's check whether notification permissions have already been granted
+	else if (Notification.permission === "granted") {
+	  // If it's okay let's create a notification
+	  var options = {
+		body: browser.i18n.getMessage("via_these_alerts"),
+		icon: browser.runtime.getURL("/images/icon-128.png")
+	}
+  
+		var notification = new Notification(browser.i18n.getMessage("click_here"),options);
+
+	// firefox specific : https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification
+
+		notification.onclick = function(event) {
+			notificationClick();
+
+	  }
+	  console.log("Notification shown");
+	}
+  
+	// Otherwise, we need to ask the user for permission
+	else if (Notification.permission !== "denied") {
+	  Notification.requestPermission().then(function (permission) {
+		// If the user accepts, let's create a notification
+		if (permission === "granted") {
+			var options = {
+				body: browser.i18n.getMessage("via_these_alerts"),
+				icon: browser.runtime.getURL("/images/icon-128.png")
+			}
+
+				var notification = new Notification(browser.i18n.getMessage("click_here"),options);
+			
+				notification.onclick = function(event) {
+					notificationClick();
+		
+			  }
+			  console.log("Notification shown");
+			}
+	  });
+	}
+} 
+
+function notificationClick(){
+	console.log("Notification clicked");
+			var segment_array = window.location.href.split( '/' );
+			var last_segment = segment_array.pop();
+			console.log(last_segment)
+			if (last_segment == 'onboarding.html#4'){
+				window.location.href = window.location.pathname + "#5";
+				sendResponse({result: "success"});
+			}
+			sendResponse({result: "success"});
 }

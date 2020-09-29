@@ -5,6 +5,9 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 	browser = chrome;
 }
 
+var backgroundPage = browser.extension.getBackgroundPage();
+var CONFIG = backgroundPage.CONFIG;
+
 
 jQuery(document).ready(function ($) {
 

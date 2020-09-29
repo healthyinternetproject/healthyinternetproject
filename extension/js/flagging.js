@@ -4,16 +4,8 @@ var CARD_DISPLAY_URL_LENGTH = 60;
 
 var currentReport = {};	
 var currentUrl = "";
-var CONFIG = {};
-
 var uiInitialized = false;
 var autofilling = false;
-
-
-if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
-{
-	browser = chrome;
-}
 
 
 debug('Starting...');
@@ -21,17 +13,18 @@ debug('Starting...');
 
 jQuery(document).ready(function ($) {
 
+	if(typeof InstallTrigger !== 'undefined'){
+		console.log("firefox");
+		$(".page[data-index=2]").css('padding-left','50px');
+		$(".page[data-index=2]").css('overflow','hidden');
+
+	}
 	debug('Document ready.');
+	initializeUI(CONFIG);
 
 	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {		
 
-		if (request.command == 'config')
-		{				
-			debug(request.config);
-			CONFIG = request.config;
-			initializeUI(CONFIG);
-		}
-		else if (request.command == 'flag-error')
+		if (request.command == 'flag-error')
 		{				
 			debug(request.data);
 			//$(".page[data-index]").css({ 'transform':'translateX(0)' }).removeClass('active');
@@ -64,9 +57,6 @@ jQuery(document).ready(function ($) {
 
 		return Promise.resolve("Dummy response to keep the console quiet");
 	});
-
-	browser.runtime.sendMessage({command: 'get-config'}, function () {});
-
 	
 
 	function initializeUI (config)
@@ -77,8 +67,7 @@ jQuery(document).ready(function ($) {
 
 		let manifestData = browser.runtime.getManifest();
 
-		debug("API is " + CONFIG.apiUrl);
-
+		debug(CONFIG);
 
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
@@ -350,6 +339,9 @@ jQuery(document).ready(function ($) {
 
 					let url = tabs[0].url;
 					let onboarding = (url.indexOf("chrome-extension://") === 0);
+					if(window.location.protocol=='moz-extension:'){
+						onboarding = (url.indexOf("moz-extension://") === 0);
+					}
 
 					if (onboarding)
 					{
@@ -592,6 +584,8 @@ function adjustPopupSize (messageToggle)
 	if (messageToggle)
 	{
 		$flagging.height("auto");	//set height to auto for messages with no "page"
+		$flagging.overflow( "hidden" );
+
 	}
 	else if ($button.length > 0)
 	{

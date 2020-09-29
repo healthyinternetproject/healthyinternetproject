@@ -152,7 +152,7 @@
 	"notification_header"	 			  : { "message" : "<span class = \"notification-header\" ></span>"},
 
 	"notification_header_journalist"	  : { "message" : "Message from a journalist"},
-	"notification_header_impact"	  	  : { "message" : "You have made an imapct!"},
+	"notification_header_impact"	  	  : { "message" : "You have made an impact!"},
 	"notification_body"					  : { "message" : "<span class = \"notification-body\" ></span>"},
 	"notification_journalist"	  		  : { "message" : "A journalist wants you to contact them for a story they’re writing. Your identity has not been shared with the journalist, and you will remain anonymous unless you decide to reply."},
 	"notification_impact"	  		  	  : { "message" : " "},
@@ -162,6 +162,10 @@
 	"notification_flag_timestamp"		  : { "message": "Flagged on <span id=\"timestamp\"></span>"},
 	"notification_sharable_link"		  : { "message": "<b> Like this tool? </b> <br> Please share the web extension with three friends you think will help make the internet a healthier place."},
 	"notification_share"		 		  : { "message": "Copy sharable link"},
+	"notification_header_community_update": { "message": "Community Update!"},
+	"notification_community_update_1"	  : { "message": "Flags alerting us to three YouTube videos across two different channels revealed a concerted effort to amplify the viewpoints of the controversial group Médicos pela Verdade, which touts dangerous falsities about the treatment and prevention of COVID-19. Further research prompted by these flags led YouTube to remove just over half a dozen videos for violating their community policies."},
+	"notification_user_impact"			  : { "message": "<img class = \"youtube\"></img> <br> <br> <div class = \"message\"> Your work flagging content just paid off in a major way! Youtube saw your flag and just removed the related harmful content on their site! Thanks for making the internet a healthier place.</div> <div class = stat><em-1>8 </em-1><br> videos removed</div> <div class = stat style = \"left:200px\"><em>16k </em><br> max view count</div>"},
+
 
 	
 	

@@ -1,5 +1,4 @@
 
-var CONFIG = {}; //this is auto-fetched from background.js
 var FADE_TIME = 400;
 var WELCOME_ANIMATION_TIME = 900; //matches transition time for .onboarding .welcome in onboarding.css
 
@@ -8,32 +7,14 @@ var uiInitialized = false;
 
 jQuery(document).ready(function ($) {
 
+	initializeUI();	
+
 
 	browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 		console.log(request);
 
-		if (request.command == 'config')
-		{
-			if (request.config)
-			{				
-				CONFIG = request.config;
-				console.log(CONFIG);		
-				
-				if (CONFIG.userId)
-				{
-					debug("User ID is " + CONFIG.userId);
-				}
-				else
-				{
-					displayError('error_no_connection', 'try_again', function () { location.reload(); });
-					debug("Error, no user ID found");
-				}
-				
-				initializeUI();	
-			}
-		}
-		else if (request.command == 'notification-click')
+		if (request.command == 'notification-click')
 		{
 			console.log("Notification clicked");
 			window.location.href = window.location.pathname + "#3";
@@ -147,9 +128,6 @@ jQuery(document).ready(function ($) {
 
 		return Promise.resolve("Dummy response to keep the console quiet");
 	});
-
-	browser.runtime.sendMessage({command: 'get-config'}, function () {});
-
 
 
 	function initializeUI ()

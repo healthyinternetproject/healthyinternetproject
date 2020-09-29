@@ -4,9 +4,9 @@ import logging
 import gspread
 from classes.CivicDB import CivicDB
 
-logging.basicConfig(filename='../api.log', filemode='w', level=logging.WARNING)
+logging.basicConfig(filename='/home/ubuntu/cron-warnings.log', filemode='w', level=logging.WARNING)
 
-with open("../api-config.json") as json_data_file:
+with open("/home/ubuntu/api-config.json") as json_data_file:
     config = json.load(json_data_file)
 
 new_sheet_rows = []
@@ -14,16 +14,21 @@ sheet_keys = False
 
 # Connect to DB
 db = CivicDB(config.get("mariadb"), logging)
-gc = gspread.service_account(filename='../google-drive-api-credentials.json')
+gc = gspread.service_account(filename='/home/ubuntu/google-drive-api-credentials-production.json')
 print("Connected to database")
 
 # Connect to google sheet
-sheet = gc.open("Copy of Healthy Internet Project Flags")
+# sheet = gc.open("Healthy Internet Project Flags")
+
+# https://docs.google.com/spreadsheets/d/11Qkl28RYeLg306IvrCCrYyBSxaHvICVyfIYsEOYKi5k/edit#gid=0
+sheet = gc.open_by_key('11Qkl28RYeLg306IvrCCrYyBSxaHvICVyfIYsEOYKi5k')
+
 worksheet = sheet.get_worksheet(0)
 print("Connected to Google Sheet")
 
 # query for all relevant flags
-data_query = ("SELECT LEFT(flagging_event_status_link.timestamp, 16) as timestamp, flag_type.name as `flag type`, flag.severity, campaign.name as `campaign`,  locale.code as locale, flagging_event.url, flagging_event.notes FROM flag "
+data_query = ("SELECT LEFT(flagging_event_status_link.timestamp, 16) as `timestamp`, flagging_event.flagging_event_id as `flagging event id`, flag_type.name as `flag type`, flag.severity, campaign.name as `campaign`, flagging_event.user_id as `user id`, locale.code as `locale`, flagging_event.url as `url`, flagging_event.notes as `notes`"
+	"FROM flag "
 	"INNER JOIN flagging_event "
 	"ON flag.flagging_event_id=flagging_event.flagging_event_id "
 	"INNER JOIN flagging_event_status_link "
@@ -35,10 +40,12 @@ data_query = ("SELECT LEFT(flagging_event_status_link.timestamp, 16) as timestam
 	"INNER JOIN locale  "
 	"ON flagging_event.locale_id = locale.locale_id "
 	"WHERE flagging_event.url NOT LIKE 'chrome%%'  "
+	"AND flagging_event.url NOT LIKE 'moz-extension%%'  "
+	"AND flagging_event.url NOT LIKE '%%www.damninteresting.com%%' "
 	"AND flagging_event.notes NOT LIKE 'test%%'  "
 	"AND flagging_event.notes NOT LIKE 'justin%%' "
 	"AND flagging_event.notes NOT LIKE 'Alan%%' "
-	"AND flagging_event.notes NOT LIKE '%%anand%%' "
+	"AND flagging_event.notes NOT LIKE '%%anand%%' "	
 	"ORDER BY flagging_event_status_link.timestamp DESC;")
 
 rows = db.fetchall(data_query)
@@ -62,16 +69,10 @@ for row in rows:
 worksheet.clear()
 print("Cleared old data")
 
-
 # insert new content
 worksheet.append_rows(new_sheet_rows)
 print("Adding " + str(len(new_sheet_rows)) + " rows to spreadsheet (including column headers")
  
-# worksheet.format('A1:B1', {'textFormat': {'bold': True}})
-
+# worksheet.format('A1:B1', {'textFormat': {'bold': False}})
 
 print("Done.");
-
-# print(sheet.sheet1.get('A1'))
-# list_of_hashes = worksheet.get_all_records()
-# print(list_of_hashes)
