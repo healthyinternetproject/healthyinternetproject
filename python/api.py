@@ -551,7 +551,8 @@ def api_notifications():
 				'body': get_localized_string( row['body_string_key'], locale_id ),
 				'message_id': row['message_id'],
 				'flagging_event_id': row['flagging_event_id'],
-				'type': get_notification_type_name(row['notification_type_id'])
+				'type': get_notification_type_name(row['notification_type_id']),
+				'url': row['url']
 			}
 			notifications.append(notification)
 
