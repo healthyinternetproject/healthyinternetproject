@@ -583,8 +583,15 @@ function showNotifications ( data )
 				"buttons"            : []
 			});	
 
-			if (notification.type != "other")
-			{
+			var url = ""
+			if(notification.url){
+				url = notification.url;
+			}
+			else{
+				url = "/html/notification.html"+ '?'+ 'message_id='+notification.message_id
+			}
+			// if (notification.type != "other")
+			// {
 				
 				messageID = notification.message_id;
 				flagging_event_id = notification.flagging_event_id
@@ -593,7 +600,7 @@ function showNotifications ( data )
 				browser.notifications.onClicked.addListener(function(notificationId) {
 					if (tabs==0){
 						browser.tabs.create({
-							'url': "/html/notification.html"+ '?'+ 'message_id='+notification.message_id
+							'url': url
 						});
 					}
 					tabs++;
@@ -601,23 +608,23 @@ function showNotifications ( data )
 				browser.notifications.onButtonClicked.addListener();
 				browser.notifications.onClosed.addListener();
 				browser.notifications.onShowSettings.addListener();				
-			}
+			// }
 
-			else{
-				messageID = notification.message_id;
-				flagging_event_id = notification.flagging_event_id
-				notificationType = notification.type;
-				var tabs = 0;
-				browser.notifications.onClicked.addListener(function(notificationId) {
-					if (tabs==0){
-						browser.tabs.create({
-							'url': "healthyinternetproject.org"+ '?'+ 'message_id='+notification.message_id
-						});
-					}
-					tabs++;
-				});
+			// else{
+			// 	messageID = notification.message_id;
+			// 	flagging_event_id = notification.flagging_event_id
+			// 	notificationType = notification.type;
+			// 	var tabs = 0;
+			// 	browser.notifications.onClicked.addListener(function(notificationId) {
+			// 		if (tabs==0){
+			// 			browser.tabs.create({
+			// 				'url': "healthyinternetproject.org"+ '?'+ 'message_id='+notification.message_id
+			// 			});
+			// 		}
+			// 		tabs++;
+			// 	});
 
-			}
+			// }
 		}
 	}
 	else
