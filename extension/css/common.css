@@ -227,7 +227,8 @@ CONSOLIDATED "PANELS" STYLING
 .panels .panel .caption{
     font-weight: normal;
     font-size: 12px;
-    line-height: 1.2em;
+	line-height: 1.2em;
+	margin-bottom: 50px;
 }
 
 .panels .panel .details {
