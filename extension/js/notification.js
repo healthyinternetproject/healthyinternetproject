@@ -61,8 +61,8 @@ jQuery(document).ready(function ($) {
 				var html = $.parseHTML(getString("notification_user_impact")); 
 				console.log(html)
 				$(".message-container").append(html);
-				$(".message").css({"margin-top":"55px"})
-				$(".sharable").css({"display":"block", "position":"absolute",    "position": "absolute", "left": "50px", "bottom": "20px", "width": "50%"});
+				$(".message").css({"margin-top":"15px"})
+				$(".sharable").css({"display":"block","position": "absolute", "right": "110px", "bottom": "20px", "width": "300px"});
 				document.getElementById("visit-site").style.display = "none";
 				
 

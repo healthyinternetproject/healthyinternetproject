@@ -39,7 +39,7 @@
     width: 100%;
     font-size: 20px;
     line-height: 30px;
-    padding-top: 10px;
+    padding-top: 20px;
 }
 
 .panel #message{
@@ -79,7 +79,10 @@ textarea:hover{
 .caption{
     width:100%;
 }
-
+.break {
+    flex-basis: 100%;
+    height: 0;
+  }
 
 
 #left-footer{
@@ -101,7 +104,8 @@ b{
 
 .youtube{
 	content:url("/images/YoutTube.png");
-	height: 40px;
+    height: 40px;
+    width: 158px;
 }
 .stats{
     display: none;
