@@ -5,11 +5,30 @@ jQuery(document).ready(function ($) {
     //     $(data).appendTo('body');
     // });	
 
+    //TODO: activate blur
+    $('.content-warning button#begin_review').click(() => startReview());
+    $('.content-warning #uncomfortable-link').click(() => uncomfortable());
+    $(".submit_feedback").click(function () {
+        window.close();
+
+    });
+
     // TIP -> SEE FLAG -> PROVIDE FEEDBACK -> THANK YOU
     $('.overlay-container button#main').click(() => changeScreen("FLAG"));
     $('#feedback').on('input', () => activateButton());
 
 });
+
+function startReview(){
+    $('.overlay-container').css("display","flex"); 
+    $('.content-warning').css("display","none"); 
+    //TODO: remove blur
+}
+
+function uncomfortable(){
+    $(".first").css({'display':'none'})
+    $(".no-review").css({'display': 'flex'})
+}
 
 function changeScreen(state){
     if(state === "FLAG"){

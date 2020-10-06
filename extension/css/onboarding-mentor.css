@@ -73,68 +73,6 @@
 	z-index: 3;
 }
 
-.onboarding .content-warning {
-	display: none;
-    position: absolute;
-    z-index: 4;
-    width: 600px;
-    height: 400px;
-    top: 25%;
-    left: 30%;
-    background: #fff;
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-}
-
-.onboarding .content-warning h1{
-	font-weight: bold;
-    font-size: 40px;
-	letter-spacing: -1.97px;
-	text-align: center;
-}
-
-.onboarding .content-warning h2{
-	font-size: 20px;
-	letter-spacing: -0.75px;	
-	line-height: 1.4em;
-	text-align: center;
-}
-.onboarding .content-warning .first .button-container{
-	font-size: 18px;
-	position:absolute;
-	left: 39%;
-}
-
-.onboarding .content-warning .no-review .button-container{
-
-
-	position: absolute;
-	bottom: 20%;
-	right: 20%;
-}
-.onboarding .content-warning .first .uncomfortable {
-	position: absolute;
-    bottom: 110px;
-    left: 30%;
-}
-
-.onboarding .content-warning .no-review{
-	display: none;
-}
-
-
-.onboarding .content-warning .no-review .reasoning {
-	position: absolute;
-    left: 22%;
-    width: 350px;
-    height: 100px;
-    top: 40%;
-    border-radius: 10px;
-}
-
-
-
-
 .onboarding #pointer-hand img{
 	width:60px;
 }

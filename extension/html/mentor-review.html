@@ -5,6 +5,26 @@
 <script src="/js/common.js"></script>
 <script src="/js/mentor-review.js"></script>
 
+<div class="content-warning" style="display:block">
+    <div class = "first">
+        <h1><span data-i18n-message="flag_review" class="headline"></span></h1><br>
+        <h2><span data-i18n-message="mentorship_content_warning" class="content"></span></h2>
+        <div class="button-container" id = "button-container-review">
+            <button id="begin_review" class="action begin_review button"><span data-i18n-message="begin_review"></span></button>
+        </div>
+        <a href = "javascript:void(0)" id = "uncomfortable-link"><span data-i18n-message="mentorship_i_feel_uncomfortable" class="uncomfortable"></span></a>
+    </div>
+    <div class = "no-review"> 
+        <h1><span data-i18n-message="mentorship_sorry" class="sorry"></span></h1><br>
+        <h2><span data-i18n-message="mentorship_tell_us_why" class="tell_us_why"></span></h2>
+        <textarea class = "reasoning" name="reasoning" id="reasoning"></textarea>
+        <div class="button-container">
+            <button class="submit_feedback button"><span data-i18n-message="submit"></span></button>
+        </div>
+
+    </div>
+</div>
+
 <div class="overlay-container">
     <div class="title">
         <span data-i18n-message="review_title_1"></span>
