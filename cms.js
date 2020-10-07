@@ -6,6 +6,7 @@
 // node     -->  brew install node
 // fs       -->  npm install fs
 // airtable -->  npm install airtable
+// set api key environment variable (get from Anand)
 
 // HOW TO RUN
 // in the root directory of our github, run node cms.js to update the language json files
@@ -14,7 +15,7 @@ var fs = require('fs');
 var Airtable = require('airtable');
 Airtable.configure({
     endpointUrl: 'https://api.airtable.com',
-    apiKey: 'key5WXJ8Qk1PrTQJK'                 //Please keep private, janky for now
+    apiKey: process.env.AIRTABLE_API_KEY              
 });
 var base = Airtable.base('appsGDOWZSAPscKAl');
 
@@ -25,7 +26,7 @@ var portuguese = {};
 
 // MAIN API CALL
 base('Main CMS').select({
-    view: "Grid view"
+    view: "Main View"
 }).eachPage(function page(records, fetchNextPage) {
 
     records.forEach(function(record) {
