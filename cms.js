@@ -31,7 +31,13 @@ base('Main CMS').select({
 
     records.forEach(function(record) {
         english[record.get('key')] = {"message":record.get('en')};
+        if(record.get('en') === undefined || record.get('en') === ""){
+            english[record.get('key')] = {"message":""};
+        }
         portuguese[record.get('key')] = {"message":record.get('pt_BR')};
+        if(record.get('pt_BR') === undefined || record.get('pt_BR') === ""){
+            portuguese[record.get('key')] = {"message":""};
+        }
     });
     fetchNextPage();
 
