@@ -65,7 +65,16 @@ function initializeExtension ()
 	{
 
 		//testing/dev only
-		//console.log(changeInfo, tab);
+        // console.log(changeInfo, tab);
+
+        // test insert mentorship review overlay
+        // browser.tabs.insertCSS({
+        //     file: '/css/mentor-review.css'
+        // });
+        // browser.tabs.executeScript({
+        //     file: '/js/mentor-review.js'
+        // });
+        
 
 		getConfigFromStorage();
 
@@ -178,15 +187,6 @@ function initializeExtension ()
 				browser.storage.sync.set({ 'onboardingOptOut': 1 });	
 				CONFIG.onboardingOptOut = 1;
 				//console.log("Trying to opt out");
-			}
-			else if (request.command == 'inject-mentor-code')
-			{
-				browser.tabs.insertCSS({
-					file: '/css/mentor-review.css'
-				});
-				browser.tabs.executeScript({
-					file: '/js/mentor-review.js'
-				});
 			}
 			else if (request.command == 'test-message')
 			{

@@ -33,26 +33,34 @@ class HIPDatabase:
 		return self.connection.cursor()
 
 
-	def execute(self, sql, params=()):
-		cursor = self.get_cursor()
+	def execute(self, sql, params=(), cursor=False):
+
+		close_cursor = True
+
+		if (cursor == False):
+			cursor = self.get_cursor()
+			close_cursor = False
 		
-		self.logging.debug("Query: " + " ".join(sql.split()))
+		# self.logging.debug("Query: " + " ".join(sql.split()))
+		self.logging.debug("Query: " + sql)
 		self.logging.debug("Params: " + str(params))
 
 		result = cursor.execute(sql, params)
 
-		self.logging.debug("Filled Query: " + str(getattr(cursor,'statement', '[none]')))
+		# self.logging.debug("Filled Query: " + str(getattr(cursor,'statement', '[none]')))
 
-		self.lastid = getattr(cursor,'lastrowid', None)
-		cursor.close()
+		if (cursor.lastrowid):
+			self.lastid = cursor.lastrowid
+
+		if (close_cursor):
+			cursor.close()
+
 		return result
 
 
 	def fetchone(self, sql, params=()):
 		cursor = self.get_cursor()
-		cursor.execute(sql, params)
-
-		self.logging.debug("Query: " + getattr(cursor,'statement', '[none]'))
+		self.execute(sql, params, cursor)
 
 		row = cursor.fetchone()
 
@@ -62,9 +70,7 @@ class HIPDatabase:
 
 	def fetchall(self, sql, params=()):
 		cursor = self.get_cursor()
-		cursor.execute(sql, params)
-
-		self.logging.debug("Query: " + getattr(cursor,'statement', '[none]'))
+		self.execute(sql, params, cursor)
 
 		rows = cursor.fetchall()
 

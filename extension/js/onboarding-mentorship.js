@@ -252,10 +252,8 @@ jQuery(document).ready(function ($) {
             let nextIndex = parseInt(currentIndex) + 1;
             let $panels = $(".panels");
 
-
 			//console.log(nextIndex);
-
-						
+	
             window.location.href = window.location.pathname + "#" + nextIndex;
             $contentwarning.css({'display':'none'})
             $panels.css({ 'filter': 'blur(0px)'});
@@ -312,13 +310,9 @@ jQuery(document).ready(function ($) {
 			let $noreview = $(".no-review");
 
 			$first.css({'display':'none'})
-			$noreview.css({'display': 'block'})
+			$noreview.css({'display': 'flex'})
 
 		});
-
-
-		
-
 
 		$(".timed-appearance").each(function () {
 
