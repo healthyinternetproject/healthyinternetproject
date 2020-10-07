@@ -79,7 +79,11 @@ jQuery(document).ready(function ($) {
 
 			let url          = tabs[0].url;
 			let displayUrl   = url ? url : "";
-			let onboarding   = (displayUrl.indexOf("chrome-extension://") === 0);			
+			let onboarding   = (displayUrl.indexOf("chrome-extension://") === 0);		
+			if(window.location.protocol=='moz-extension:'){
+				onboarding = (url.indexOf("moz-extension://") === 0);
+			}
+
 
 			currentUrl = url;
 
@@ -131,6 +135,12 @@ jQuery(document).ready(function ($) {
 
 				let title          = getPageTitle( tabs[0].title );				
 				let favicon        = "chrome://favicon/" + displayUrl;					
+				if(window.location.protocol=='moz-extension:' && !onboarding){
+					let domain = (new URL(url)).hostname;
+					console.log(domain)
+					favicon = 'https://'+ domain + '/favicon.ico';
+					console.log(favicon)
+				}
 				let messageDetails = isPermalink( displayUrl );
 
 				if ( messageDetails )
@@ -210,7 +220,7 @@ jQuery(document).ready(function ($) {
 				let firstTimeOnboarding = true;
 
 				// for onboarding demo, when we loop back to original state, move tool tip to next location
-				if (firstTimeOnboarding && currentUrl.indexOf("chrome-extension://") === 0 && severity == 2)
+				if (firstTimeOnboarding && (currentUrl.indexOf("chrome-extension://") === 0 || (window.location.protocol=='moz-extension:')) && severity == 2)
 				{
 					browser.runtime.sendMessage({command: 'move-hand-text'}, function (response) { console.log(response); });
 					firstTimeOnboarding = false;
@@ -263,7 +273,7 @@ jQuery(document).ready(function ($) {
 
 			$("#reasoning").click(function (ev) {
 				// for onboarding demo, move tool tip to next location
-				if (currentUrl.indexOf("chrome-extension://") === 0)
+				if ((currentUrl.indexOf("chrome-extension://") === 0) || (window.location.protocol=='moz-extension:'))
 				{
 					browser.runtime.sendMessage({command: 'move-hand-dropdown'}, function (response) { console.log(response); });
 				}
@@ -273,7 +283,7 @@ jQuery(document).ready(function ($) {
 
 			$(".options").click(function (ev) {
 				// for onboarding demo, move tool tip to next location
-				if (currentUrl.indexOf("chrome-extension://") === 0)
+				if ((currentUrl.indexOf("chrome-extension://") === 0) || (window.location.protocol=='moz-extension:'))
 				{
 					browser.runtime.sendMessage({command: 'move-hand-submit'}, function (response) { console.log(response); });
 				}
@@ -396,7 +406,7 @@ function sendFlagData (currentReport, currentUrl)
 	browser.runtime.sendMessage( data, function () {} ); 
 
 	// for onboarding demo, move tool tip to next location
-	if (currentUrl.indexOf("chrome-extension://") === 0)
+	if ((currentUrl.indexOf("chrome-extension://") === 0) || (window.location.protocol=='moz-extension:'))
 	{
 		browser.runtime.sendMessage({command: 'move-hand-done'}, function (response) { console.log(response); });
 	}

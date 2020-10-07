@@ -624,6 +624,7 @@ function firefoxNotifyMe() {
 	// firefox specific : https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification
 
 		notification.onclick = function(event) {
+			notification.close();
 			notificationClick();
 
 	  }
@@ -643,8 +644,9 @@ function firefoxNotifyMe() {
 				var notification = new Notification(browser.i18n.getMessage("click_here"),options);
 			
 				notification.onclick = function(event) {
+					notification.close();
 					notificationClick();
-		
+
 			  }
 			  console.log("Notification shown");
 			}
