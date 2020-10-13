@@ -129,6 +129,12 @@ function initializeExtension ()
 				sendResponse("Initiating XHR...");
 				return true; 
 			}
+			else if ( request.command == 'save-country')
+			{
+				sendCountryToAPI(request.country_id);
+				sendResponse("Initiating XHR...");
+				return true; 
+			}
 			else if ( request.command == 'save-flag' )
 			{
 				//console.log
@@ -493,6 +499,16 @@ function sendMissionToAPI (mission_id)
 	};
 	return sendToAPI( "mission", data, true );
 }
+
+function sendCountryToAPI (country_id)
+{
+	let data = {
+		'user_id': CONFIG.userId,
+		'country_id': country_id
+	};
+	return sendToAPI( "country", data, true );
+}
+
 
 
 function sendFlagDataToAPI (url, campaignId, flags, notes)
