@@ -58,6 +58,10 @@ em
 	color: var(--red);
 }
 
+b{
+	font-weight: bold;
+}
+
 em.good
 {
 	color: var(--green);
