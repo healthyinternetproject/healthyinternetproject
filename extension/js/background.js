@@ -94,9 +94,8 @@ function initializeExtension ()
 				"type"               : "basic",
 				"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
 				"title"              : browser.i18n.getMessage("congratulations_mentor_notification"),
-				"message"            : browser.i18n.getMessage("check_out_your_new_role"),
-				"requireInteraction" : true,
-				"buttons"            : []
+				"message"            : browser.i18n.getMessage("check_out_your_new_role")
+				//"requireInteraction" : true
 			});
 
 			if (browser.runtime.lastError)
@@ -107,6 +106,8 @@ function initializeExtension ()
 			browser.notifications.onClicked.addListener(startMentorOnboarding);
 			browser.notifications.onButtonClicked.addListener(startMentorOnboarding);
 		}
+
+		injectMentorReviewUI(tabId);
 
 		return Promise.resolve("Dummy response to keep the console quiet");
 	});
@@ -144,34 +145,26 @@ function initializeExtension ()
 			else if (request.command == 'sample-notification')
 			{		
 
+				let notification = browser.notifications.create({
+					"type"               : "basic",
+					"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
+					"title"              : browser.i18n.getMessage("click_here"),
+					"message"            : browser.i18n.getMessage("via_these_alerts")
+					//"requireInteraction" : true
+				});
 
-					let notification = browser.notifications.create({
-						"type"               : "basic",
-						"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
-						"title"              : browser.i18n.getMessage("click_here"),
-						"message"            : browser.i18n.getMessage("via_these_alerts"),
-						"requireInteraction" : true,
-						"buttons"            : []
-					});
+				if (browser.runtime.lastError)
+				{
+					console.log(browser.runtime.lastError);
+				}
 
-					if (browser.runtime.lastError)
-					{
-						console.log(browser.runtime.lastError);
-					}
-
-					browser.notifications.onClicked.addListener(dismissNotification);
-					browser.notifications.onButtonClicked.addListener(dismissNotification);
-					browser.notifications.onClosed.addListener(dismissNotification);
-					browser.notifications.onShowSettings.addListener(dismissNotification);
-
-
-				
-			
-
+				browser.notifications.onClicked.addListener(dismissNotification);
+				browser.notifications.onButtonClicked.addListener(dismissNotification);
+				browser.notifications.onClosed.addListener(dismissNotification);
+				browser.notifications.onShowSettings.addListener(dismissNotification);
 
 				//add .onclick etc
 				//https://developer.chrome.com/extensions/notifications
-
 				
 				//np.then(onNotificationSuccess);
 			
@@ -578,9 +571,8 @@ function showNotifications ( data )
 				"type"               : "basic",
 				"iconUrl"            : browser.extension.getURL("images/icon-128.png"),
 				"title"              : notification.title,
-				"message"            : notification.body,
-				"requireInteraction" : true,
-				"buttons"            : []
+				"message"            : notification.body
+				//"requireInteraction" : true
 			});	
 
 			var url = ""
@@ -594,14 +586,17 @@ function showNotifications ( data )
 			// {
 				
 				messageID = notification.message_id;
-				flagging_event_id = notification.flagging_event_id
+				flagging_event_id = notification.flagging_event_id;
 				notificationType = notification.type;
 				var tabs = 0;
 				browser.notifications.onClicked.addListener(function(notificationId) {
 					if (tabs==0){
+						/*
 						browser.tabs.create({
 							'url': url
 						});
+						*/
+						window.open(url);
 					}
 					tabs++;
 				});
@@ -678,7 +673,6 @@ function updateNotificationFlagHTML (data)
 	sendMessageToClientScript({command: 'populate-flag', 'data': data}, function () {});
 
 	return true;
-		
 }
 
 
@@ -689,9 +683,28 @@ function updateNotificationHTML (data)
 	sendMessageToClientScript({command: 'populate-message', 'message': data.message}, function () {});
 
 	return true;
-		
 }
 
+
+function injectMentorReviewUI (tabId)
+{
+	/*
+	fetch(browser.runtime.getURL('/html/mentor-review.html'))
+		.then(response => response.text())
+		.then(data => {
+			document.body.innerHTML+= data;
+			// todo: add event listeners, etc.
+		}).catch(err => {
+			// handle error
+		});	
+	*/
+	browser.tabs.insertCSS(tabId, {
+		file: '/css/mentor-review.css'
+	});
+	browser.tabs.executeScript(tabId, {
+		file: '/js/mentor-review.js'
+	});	
+}
 
 
 
