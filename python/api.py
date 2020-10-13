@@ -400,6 +400,51 @@ def api_mission():
 		return jsonify(results)
 
 
+@app.route('/api/v1/country', methods=['POST'])
+def api_country():
+	to_console("country")
+	params     = json.loads(request.form.get("json"))
+	country_id = params.get('country_id')
+	user_id    = request.values.get("user_id")
+	password   = request.values.get("password")
+	token      = request.values.get("token")
+	user       = authenticate_user(user_id, password, token)	
+
+	if country_id is None:
+		to_console("missing country_id\n")
+		return quit_with_error("Incomplete Request","Your request did not include all required parameters.", 400)
+
+	if user is None or user is False:
+		to_console("auth failed\n")
+		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
+	
+	try:
+		add_country = ("INSERT INTO user_country_link "
+			"(user_id, country_id) "
+			"VALUES (%s, %s)")
+
+		country_data = (user['user_id'], country_id)
+
+		db.execute(add_country, country_data)
+
+		results = {
+			'status': 'success',
+			'token': user.get("token")
+		}
+
+		return jsonify(results)
+
+	except Exception as err:
+
+		results = {
+			'error': "Error: {}".format(err),
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		return jsonify(results)
+
+
 
 @app.route('/api/v1/flag', methods=['POST'])
 def api_flag():	

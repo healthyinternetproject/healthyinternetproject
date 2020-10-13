@@ -33,6 +33,7 @@ jQuery(document).ready(function ($) {
 		{
 			notificationType = request.type;
 
+			console.log(notificationType)
 		}
         else if ( request.command == 'populate-message')
         {
@@ -58,6 +59,7 @@ jQuery(document).ready(function ($) {
 			}
 			else if (notificationType == "user-impact"){
 
+				console.log('user impact')
 				var html = $.parseHTML(getString("notification_user_impact")); 
 				console.log(html)
 				$(".message-container").append(html);

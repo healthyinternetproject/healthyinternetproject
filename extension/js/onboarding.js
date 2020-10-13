@@ -231,6 +231,23 @@ jQuery(document).ready(function ($)
 		});
 
 
+
+		$(".onboarding .panel.countrypicker .next").click(function () 
+		{
+
+			let id = parseInt( $("#countrypicker").val() );
+
+			console.log("Saving country id " + id);
+
+			//save mission to API
+			browser.runtime.sendMessage(
+				{command: 'save-country', 'country_id': id}, 
+				function () {}
+			);
+
+		});
+
+
 		//activate 'next' buttons in onboarding
 		$(".onboarding .panel .next").click(function () 
 		{
@@ -360,6 +377,9 @@ jQuery(document).ready(function ($)
 				$inspirationFlag.css({'display':'block'});
 			});
 		});
+
+
+		$(".country-picker").load("countrylist.html");
 
 
 		$("#button-container-notif").each(function () 
