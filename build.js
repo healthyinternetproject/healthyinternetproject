@@ -6,12 +6,15 @@
 // node     -->  brew install node
 // fs       -->  npm install fs
 // airtable -->  npm install airtable
+// bestzip  -->  npm install bestzip
 // set api key environment variable (get from Anand)
 
 // HOW TO RUN
 // in the root directory of our github, run node cms.js to update the language json files
 
 var fs = require('fs');
+var zip = require('bestzip');
+
 var Airtable = require('airtable');
 Airtable.configure({
     endpointUrl: 'https://api.airtable.com',
@@ -51,11 +54,18 @@ base('Main CMS').select({
     fs.writeFile("./extension/_locales/en/messages.json", stringifyEn, function(err){
         if (err) throw err;
         console.log('File is created successfully.');
+        fs.writeFile("./extension/_locales/pt_BR/messages.json", stringifyPt, function(err){
+            if (err) throw err;
+            console.log('File is created successfully.');
+            zip({
+                source: 'extension/*',
+                destination: './extension.zip'
+              }).then(function() {
+                console.log('Zip created successfully');
+              }).catch(function(err) {
+                console.error(err.stack);
+                process.exit(1);
+              });
+        });
     });
-
-    fs.writeFile("./extension/_locales/pt_BR/messages.json", stringifyPt, function(err){
-        if (err) throw err;
-        console.log('File is created successfully.');
-    });
-
 });
