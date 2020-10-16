@@ -7,3 +7,5 @@ google-drive-api-credentials*
 *__pycache__*
 api-yael.py
 node_modules
+package-lock.json
+*.pickle
