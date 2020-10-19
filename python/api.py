@@ -535,6 +535,52 @@ def api_expertise():
 		return jsonify(results)
 
 
+@app.route('/api/v1/reasoning', methods=['POST'])
+def api_reasoning():
+	to_console("reasoning")
+	params     = json.loads(request.form.get("json"))
+	reasoning = params.get('reasoning')
+	user_id    = request.values.get("user_id")
+	password   = request.values.get("password")
+	token      = request.values.get("token")
+	user       = authenticate_user(user_id, password, token)	
+
+	if reasoning is None:
+		to_console("missing reasoning\n")
+		return quit_with_error("Incomplete Request","Your request did not include all required parameters.", 400)
+
+	if user is None or user is False:
+		to_console("auth failed\n")
+		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
+	
+	try:
+		add_reasoning = ("INSERT INTO reasoning "
+			"(user_id, reasoning) "
+			"VALUES (%s, %s)")
+
+		reasoning_data = (user['user_id'], reasoning)
+
+		db.execute(add_reasoning, reasoning_data)
+
+		results = {
+			'status': 'success',
+			'token': user.get("token")
+		}
+
+		return jsonify(results)
+
+	except Exception as err:
+
+		results = {
+			'error': "Error: {}".format(err),
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		return jsonify(results)
+
+
+
 
 
 @app.route('/api/v1/flag', methods=['POST'])

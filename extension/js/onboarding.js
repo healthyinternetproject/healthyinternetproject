@@ -230,6 +230,20 @@ jQuery(document).ready(function ($)
 
 		});
 
+		$(".submit_feedback").click(function () 
+		{
+			let text =  $(".content-warning .no-review .reasoning").val() ;
+
+			console.log("Saving reasoning " + text);
+
+			//save mission to API
+			browser.runtime.sendMessage(
+				{command: 'save-reasoning', 'reasoning': text}, 
+				function () {}
+			);
+
+		});
+
 
 
 		$(".onboarding .panel.countrypicker .next").click(function () 

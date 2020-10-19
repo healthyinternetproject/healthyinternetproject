@@ -141,12 +141,23 @@ function initializeExtension ()
 				sendResponse("Initiating XHR...");
 				return true; 
 			}
+			
 			else if ( request.command == 'save-expertise')
 			{
 				sendExpertiseToAPI(request.opt_in_preferences_id);
 				sendResponse("Initiating XHR...");
 				return true; 
 			}
+
+			else if ( request.command == 'save-reasoning')
+			{
+				sendReasoningToAPI(request.reasoning);
+				sendResponse("Initiating XHR...");
+				return true; 
+			}
+
+
+			
 			else if ( request.command == 'save-flag' )
 			{
 				//console.log
@@ -538,6 +549,16 @@ function sendExpertiseToAPI (expertise_id)
 	};
 	return sendToAPI( "opt_in_preference", data, true );
 }
+
+function sendReasoningToAPI (reasoning)
+{
+	let data = {
+		'user_id': CONFIG.userId,
+		'reasoning': reasoning
+	};
+	return sendToAPI( "reasoning", data, true );
+}
+
 
 
 

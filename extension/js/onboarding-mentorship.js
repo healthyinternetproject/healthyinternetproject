@@ -215,6 +215,20 @@ jQuery(document).ready(function ($) {
 
 		});
 
+		$(".submit_feedback").click(function () 
+		{
+			let reasoning =  $(".content-warning .no-review .reasoning").val() ;
+
+			console.log("Saving reasoning " + reasoning);
+
+			//save mission to API
+			browser.runtime.sendMessage(
+				{command: 'save-reasoning', 'reasoning': reasoning}, 
+				function () {}
+			);
+
+		});
+
 		$(".onboarding .panel.preferences .next").click(function () 
 		{
 			$.each($("input[type='checkbox']:checked"), function(){
@@ -256,6 +270,10 @@ jQuery(document).ready(function ($) {
 			console.log( $(this).val());
 
 		});
+
+
+	
+
 
 
 
