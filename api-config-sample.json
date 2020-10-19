@@ -1,7 +1,9 @@
 //rename this file to api-config.json and remove this comment
 
 {
-	"version" : "2020-04-10.1",
+	"version" : "2020.10.16.1",
+	"token_secret_key" : "UZNdqfKgQ8FWdqhax8bzmRHMERxEP59FfmSqEDPEWYFAJ77bgchspzcVcARTwMKg",
+	"default_locale_id" : 1,	
 	"mariadb" : {
 		"host"     : "localhost",
 		"username" : "civic",
