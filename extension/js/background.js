@@ -134,6 +134,18 @@ function initializeExtension ()
 				sendResponse("Initiating XHR...");
 				return true; 
 			}
+			else if ( request.command == 'save-preference')
+			{
+				sendPreferencesToAPI(request.opt_out_preferences_id);
+				sendResponse("Initiating XHR...");
+				return true; 
+			}
+			else if ( request.command == 'save-expertise')
+			{
+				sendExpertiseToAPI(request.opt_in_preferences_id);
+				sendResponse("Initiating XHR...");
+				return true; 
+			}
 			else if ( request.command == 'save-flag' )
 			{
 				//console.log
@@ -514,6 +526,24 @@ function sendCountryToAPI (country_id)
 		'country_id': country_id
 	};
 	return sendToAPI( "country", data, true );
+}
+
+function sendPreferencesToAPI (preference_id)
+{
+	let data = {
+		'user_id': CONFIG.userId,
+		'opt_out_preference_id': preference_id
+	};
+	return sendToAPI( "opt_out_preference", data, true );
+}
+
+function sendExpertiseToAPI (expertise_id)
+{
+	let data = {
+		'user_id': CONFIG.userId,
+		'opt_in_preference_id': expertise_id
+	};
+	return sendToAPI( "opt_in_preference", data, true );
 }
 
 

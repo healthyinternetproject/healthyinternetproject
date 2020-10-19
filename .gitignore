@@ -6,3 +6,4 @@ nohup.out
 google-api-credentials*
 google-drive-api-credentials*
 *__pycache__*
+node_modules*

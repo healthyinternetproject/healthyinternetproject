@@ -445,6 +445,97 @@ def api_country():
 		return jsonify(results)
 
 
+@app.route('/api/v1/opt_out_preference', methods=['POST'])
+def api_preference():
+	to_console("preference")
+	params     = json.loads(request.form.get("json"))
+	preference_type_id = params.get('opt_out_preference_id')
+	user_id    = request.values.get("user_id")
+	password   = request.values.get("password")
+	token      = request.values.get("token")
+	user       = authenticate_user(user_id, password, token)	
+
+	if preference_type_id is None:
+		to_console("missing preference_id\n")
+		return quit_with_error("Incomplete Request","Your request did not include all required parameters.", 400)
+
+	if user is None or user is False:
+		to_console("auth failed\n")
+		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
+	
+	try:
+		add_preference = ("INSERT INTO opt_out_preferences_link "
+			"(user_id, preference_type_id) "
+			"VALUES (%s, %s)")
+
+		preference_data = (user['user_id'], preference_type_id)
+
+		db.execute(add_preference, preference_data)
+
+		results = {
+			'status': 'success',
+			'token': user.get("token")
+		}
+
+		return jsonify(results)
+
+	except Exception as err:
+
+		results = {
+			'error': "Error: {}".format(err),
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		return jsonify(results)
+
+
+@app.route('/api/v1/opt_in_preference', methods=['POST'])
+def api_expertise():
+	to_console("expertise")
+	params     = json.loads(request.form.get("json"))
+	campaign_id = params.get('opt_in_preference_id')
+	user_id    = request.values.get("user_id")
+	password   = request.values.get("password")
+	token      = request.values.get("token")
+	user       = authenticate_user(user_id, password, token)	
+
+	if campaign_id is None:
+		to_console("missing expertise\n")
+		return quit_with_error("Incomplete Request","Your request did not include all required parameters.", 400)
+
+	if user is None or user is False:
+		to_console("auth failed\n")
+		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
+	
+	try:
+		add_expertise = ("INSERT INTO opt_in_preferences_link "
+			"(user_id, campaign_id) "
+			"VALUES (%s, %s)")
+
+		expertise_data = (user['user_id'], campaign_id)
+
+		db.execute(add_expertise, expertise_data)
+
+		results = {
+			'status': 'success',
+			'token': user.get("token")
+		}
+
+		return jsonify(results)
+
+	except Exception as err:
+
+		results = {
+			'error': "Error: {}".format(err),
+			'status': 'error',
+			'message': 'Database error'
+		}
+
+		return jsonify(results)
+
+
+
 
 @app.route('/api/v1/flag', methods=['POST'])
 def api_flag():	

@@ -215,6 +215,49 @@ jQuery(document).ready(function ($) {
 
 		});
 
+		$(".onboarding .panel.preferences .next").click(function () 
+		{
+			$.each($("input[type='checkbox']:checked"), function(){
+				
+				let id = parseInt( $(this).val() );
+				console.log("Saving prefernce id " + id);
+				browser.runtime.sendMessage(
+					{command: 'save-preference', 'opt_out_preferences_id': id}, 
+					function () {}
+				);
+
+			})
+
+			// let $selectedCampaign = $(".campaign .option.selected");
+			// campaignId = $( $selectedCampaign.get(0) ).attr("data-campaign-id");
+
+			// let expertiseid = parseInt( $(".hashtags").val());
+
+
+			$.each($(".hashtag.clicked"), function(){
+				
+				let expertiseid = parseInt( $(this).val() );
+				console.log("Saving expertise id " + expertiseid);
+
+				// //save mission to API
+				browser.runtime.sendMessage(
+					{command: 'save-expertise', 'opt_in_preferences_id': expertiseid}, 
+					function () {}
+				);
+			})
+			
+		
+
+		});
+
+		$(".hashtag").click(function() {
+			let $this = $(this);
+			$this.addClass('clicked');
+			console.log( $(this).val());
+
+		});
+
+
 
 		//activate 'next' buttons in onboarding
 		$(".onboarding .panel .next").click(function () {
