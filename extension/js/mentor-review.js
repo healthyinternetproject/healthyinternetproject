@@ -1,37 +1,61 @@
 var verdict;
+var originalBodyFilter = '';
 
-jQuery(document).ready(function ($) {
-    // $.get(chrome.runtime.getURL('/html/mentor-review.html'), function(data) {
-    //     $(data).appendTo('body');
-    // });	
+browser.runtime.onMessage.addListener(function(request, sender, sendResponse) 
+{
+	console.log(request);
 
-    //TODO: activate blur
-    $('.content-warning button#begin_review').click(() => startReview());
-    $('.content-warning #uncomfortable-link').click(() => uncomfortable());
-    $(".submit_feedback").click(function () {
-        window.close();
+	if (request.command == 'mentor-review' && request.url == location.href)
+	{
+		originalBodyFilter = $("body").css("filter");
+		$("body").css("filter","blur(15px)");
 
-    });
+		$(request.html).appendTo('html');
 
-    // TIP -> SEE FLAG -> PROVIDE FEEDBACK -> THANK YOU
-    $('.overlay-container button#main').click(() => changeScreen("FLAG"));
-    $('#feedback').on('input', () => activateButton());
+		$('.content-warning button#begin_review').click(() => startReview());
+		$('.content-warning #uncomfortable-link').click(() => uncomfortable());
+		$(".submit_feedback").click(function () { window.close(); });
 
+		// TIP -> SEE FLAG -> PROVIDE FEEDBACK -> THANK YOU
+		$('.overlay-container button#main').click(() => changeScreen("FLAG"));
+		$('#feedback').on('input', () => activateButton());		
+    }
 });
 
-function startReview(){
+browser.runtime.sendMessage({command: 'check-for-mentor-review','url': location.href}, function (response) { console.log(response); });
+
+
+
+/*
+useful for switching to vanilla js
+
+function addEventListeners (selector, elements, func)
+{
+	[].forEach.call(document.querySelectorAll(selector), function(el) 
+	{
+		el.addEventListener(eventName, func);
+	})	
+}
+*/
+
+function startReview()
+{
     $('.overlay-container').css("display","flex"); 
-    $('.content-warning').css("display","none"); 
-    //TODO: remove blur
+    $('.content-warning').fadeOut(300); 
+    $('body').css('filter',originalBodyFilter);
+    changeScreen("FEEDBACK");
 }
 
-function uncomfortable(){
+function uncomfortable()
+{
     $(".first").css({'display':'none'})
     $(".no-review").css({'display': 'flex'})
 }
 
-function changeScreen(state){
-    if(state === "FLAG"){
+function changeScreen(state)
+{
+    if(state === "FLAG")
+    {
         $(".overlay-container .title").attr("data-i18n-message","review_title_2");
         $(".overlay-container .title").html( getString("review_title_2"));
 
@@ -56,7 +80,8 @@ function changeScreen(state){
         $('.overlay-container .button#main').click(() => {changeScreen("FEEDBACK");verdict = true;});
         
     }
-    else if(state === "FEEDBACK"){
+    else if(state === "FEEDBACK")
+    {
         $(".overlay-container .title").attr("data-i18n-message","review_title_3");
         $(".overlay-container .title").html( getString("review_title_3"));
 
@@ -109,12 +134,14 @@ function changeScreen(state){
     }
 }
 
-function activateButton(){
+function activateButton()
+{
     $('.overlay-container .button#main').click(() => changeScreen("SUBMIT"));
     $('.overlay-container .button#main').css("opacity","1");
 }
 
-function closeOverlay(){
+function closeOverlay()
+{
     $('.overlay-container').css("display","none");
 }
 

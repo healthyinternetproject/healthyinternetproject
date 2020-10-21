@@ -1,12 +1,17 @@
 
+var backgroundPage = null;
+var CONFIG = {};
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 {
 	browser = chrome;
 }
 
-var backgroundPage = browser.extension.getBackgroundPage();
-var CONFIG = backgroundPage.CONFIG;
+if (browser && browser.extension && browser.extension.getBackgroundPage)
+{
+	backgroundPage = browser.extension.getBackgroundPage();
+	CONFIG = backgroundPage.CONFIG;
+}
 
 
 jQuery(document).ready(function ($) {
@@ -15,27 +20,39 @@ jQuery(document).ready(function ($) {
 
 
 	//insert localized strings
+	localizeStrings($(document));
 
-	$("span[data-i18n-message]").each(function () {
+});
+
+
+function localizeStrings ($el)
+{
+	$el.find("span[data-i18n-message]").each(function () {
 		let $this = $(this);
 		let message = getString($this.attr("data-i18n-message"));
 		$this.html( message );
 		//consoleLog(messageId + " = " + message);
 	});
 
-	$("[data-i18n-placeholder]").each(function () {
+	$el.find("[data-i18n-placeholder]").each(function () {
 		let $this = $(this);
 		let message = getString($this.attr("data-i18n-placeholder"));
 		$this.attr("placeholder", message );
 		//consoleLog(messageId + " = " + message);
-	});
-});
-
+	});	
+}
 
 
 function consoleLog (data)
 {
-	browser.extension.getBackgroundPage().console.log(data);
+	if (backgroundPage)
+	{
+		backgroundPage.console.log(data);
+	}
+	else
+	{
+		console.log(data);
+	}
 }
 
 

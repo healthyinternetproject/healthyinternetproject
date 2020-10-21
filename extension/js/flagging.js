@@ -73,7 +73,9 @@ jQuery(document).ready(function ($) {
 		$(".flagging .extension-version").html( manifestData.version );
 		$(".test-journalism-request").click( generateTestMessage );
 		$(".test-notification-ping").click( getNotifications );
-
+		$(".test-mentor-review").click( testMentorReview );
+		$(".test-onboarding").click( testOnboarding );	
+		$(".test-mentor-onboarding").click( testMentorOnboarding );		
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
 
@@ -440,6 +442,25 @@ function getNotifications ()
 	debug("Pinging for notifications...");
 }
 
+
+function testMentorReview ()
+{
+	debug("Testing mentor review...");
+	backgroundPage.testMentorReviewNotification(currentUrl);	
+}
+
+
+function testOnboarding ()
+{
+	debug("Testing onboarding...");
+	backgroundPage.testOnboarding();	
+}
+
+function testMentorOnboarding ()
+{
+	debug("Testing onboarding...");
+	backgroundPage.testMentorOnboarding();	
+}
 
 function debug (data)
 {

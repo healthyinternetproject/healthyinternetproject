@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
     "name": "__MSG_extension_title__",
-    "version": "2020.10.13.1",
+    "version": "2020.10.21.1",
     "default_locale" : "en",
     "description": "__MSG_extension_description__",
     
@@ -16,7 +16,7 @@
    	"content_security_policy": "script-src 'self'; object-src 'self'; img-src chrome://favicon;",
 
 	"background": {
-		"scripts": ["/js/background.js"],
+		"scripts": ["/js/jquery-3.4.1.min.js","/js/common.js","/js/background.js"],
 		"persistent": false
 	},
 
@@ -47,9 +47,10 @@
 
 	"content_scripts": [
 		{
-		  "matches": ["*://*.mozilla.org/*"],
-		  "js": ["/js/background.js", "/js/onboarding.js"]
+			"matches": ["<all_urls>"],
+			"css": ["/css/common.css","/css/flagging.css","/css/mentor-review.css"],
+			"js": ["/js/jquery-3.4.1.min.js","/js/common.js","/js/mentor-review.js"]
 		}
-	  ]
+	]
   }
 

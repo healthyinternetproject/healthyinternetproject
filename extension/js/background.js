@@ -9,9 +9,6 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 	browser = chrome;
 }
 
-
-
-
 var CONFIG = {
 	'userId'           : false,
 	'token'            : false,
@@ -22,6 +19,8 @@ var CONFIG = {
 	'initialized'      : false,
 	'apiUrl'           : false
 };
+
+var isMentorReview = {};
 
 var messageID;
 var flagging_event_id;
@@ -107,7 +106,7 @@ function initializeExtension ()
 			browser.notifications.onButtonClicked.addListener(startMentorOnboarding);
 		}
 
-		injectMentorReviewUI(tabId);
+		//injectMentorReviewUI(tabId);
 
 		return Promise.resolve("Dummy response to keep the console quiet");
 	});
@@ -238,6 +237,29 @@ function initializeExtension ()
 					console.log('notification id hasnt updated yet')
 				}
 				
+			}
+			else if (request.command == 'check-for-mentor-review')
+			{
+				if (request.url && isMentorReview[request.url])
+				{
+					//send message back to client confirming that this is a mentor review request
+					//include html so it canbe localized
+
+					fetchHTML(
+						browser.runtime.getURL('/html/mentor-review.html'), 
+						function (data) 
+						{
+							var $el = jQuery(data);
+							localizeStrings($el);
+
+							sendMessageToClientScript({
+								'command': 'mentor-review',
+								'url': request.url,
+								'html': $el[0].outerHTML
+							}, function () {});	
+						}
+					);
+				}
 			}
 			
 			else
@@ -765,15 +787,50 @@ function injectMentorReviewUI (tabId)
 			// handle error
 		});	
 	*/
+	/*
 	browser.tabs.insertCSS(tabId, {
 		file: '/css/mentor-review.css'
 	});
 	browser.tabs.executeScript(tabId, {
 		file: '/js/mentor-review.js'
-	});	
+	});
+	*/	
 }
 
 
+function testOnboarding ()
+{
+	window.open("/html/onboarding.html");
+}
+
+function testMentorOnboarding ()
+{
+	window.open("/html/onboarding-mentor.html");
+}
+
+
+function testMentorReviewNotification (url)
+{
+	
+	console.log("Testing mentor review for " + url);
+
+	let n = browser.notifications.create({
+		"type"    : "basic",
+		"iconUrl" : browser.extension.getURL("images/icon-128.png"),
+		"title"   : getString('mentorship_need_review'),
+		"message" : getString('mentorship_possible_flag')
+	});	
+
+	let clickFunc = function(notificationId) 
+	{
+		console.log("Mentor review notification click");
+		isMentorReview[url] = true; //todo: remember to delete this key after review
+		window.open(url);
+	};
+
+	browser.notifications.onClicked.addListener(clickFunc);
+	browser.notifications.onButtonClicked.addListener(clickFunc);
+}
 
 
 function isDevMode () 
@@ -787,3 +844,31 @@ function getNotificationId ()
     var id = Math.floor(Math.random() * 9007199254740992) + 1;
     return id.toString();
 }
+
+
+function fetchHTML (url, callback)
+{
+	var xmlhttp = new XMLHttpRequest();
+
+	xmlhttp.onreadystatechange = function() 
+	{
+		if (xmlhttp.readyState == XMLHttpRequest.DONE) 
+		{   // XMLHttpRequest.DONE == 4
+			if (xmlhttp.status == 200) 
+			{
+				callback(xmlhttp.responseText);
+			}
+			else if (xmlhttp.status == 400) 
+			{
+				throw new Exception('There was an error 400');
+			}
+			else 
+			{
+				throw new Exception('something other than 200 was returned');
+			}
+		}
+	};
+
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+}	
