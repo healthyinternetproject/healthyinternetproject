@@ -3,7 +3,7 @@ body
 	transition: filter 300ms linear;
 }
 
-.overlay-container{
+.healthy-internet-project.overlay-container{
     position: fixed;
     top: 10px;
     right:10px;
@@ -16,12 +16,12 @@ body
     width:270px;    
 }
 
-.overlay-container div{
+.healthy-internet-project.overlay-container div{
     margin-top:8px;
     margin-bottom:8px;
 }
 
-.overlay-container .title{
+.healthy-internet-project.overlay-container .title{
     font-weight: bold;
     font-size: 20px;
     line-height: 26px;
@@ -29,7 +29,7 @@ body
     margin-bottom: 0;
 }
 
-.overlay-container .subtitle{
+.healthy-internet-project.overlay-container .subtitle{
     font-weight: normal;
     font-size: 12px;
     line-height: 12px;
@@ -37,41 +37,43 @@ body
     margin: 0px;
 }
 
-.overlay-container #tip{
+.healthy-internet-project.overlay-container #tip{
     margin-left:7px;
     padding-left: 7px;
     border-left:1px solid black;
 
 }
-.overlay-container #tip::before{
+.healthy-internet-project.overlay-container #tip::before{
     content:"Tip: ";
     font-weight: bold;
 }
 
-.overlay-container .card{
+.healthy-internet-project.overlay-container .card{
     border: 1px solid #000000;
     box-shadow: none;
     padding:10px;
 }
 
-.overlay-container .card .selected-flags{
+.healthy-internet-project.overlay-container .card .selected-flags{
     padding:0;
 }
 
-ul.flags li.on, ul.selected-flags li{
+.healthy-internet-project ul.flags li.on, 
+.healthy-internet-project ul.selected-flags li
+{
     padding-left: 58px;
     padding-top: 14px;
 }
 
-.overlay-container .card .selected-campaign{
+.healthy-internet-project.overlay-container .card .selected-campaign{
     margin-top: 24px;
 }
 
-.overlay-container .card .severity{
+.healthy-internet-project.overlay-container .card .severity{
     margin:0px;
 }
 
-.overlay-container .buttons{
+.healthy-internet-project.overlay-container .buttons{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -79,7 +81,8 @@ ul.flags li.on, ul.selected-flags li{
     margin-top: 0;
 }
 
-button.back{
+.healthy-internet-project button.back
+{
     background-color: #5762D5;
     background-image: url("/images/Arrow.svg");
     background-size: 22px 22px;
