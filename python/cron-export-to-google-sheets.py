@@ -11,6 +11,28 @@ with open("/home/ubuntu/api-config.json") as json_data_file:
 
 new_sheet_rows = []
 sheet_keys = False
+country_names = {}
+
+
+def get_country_name (country_id):
+
+	if country_id: 
+		if (country_id in country_names):
+			return country_names[country_id]
+
+		country_query = "SELECT name FROM country WHERE country_id = %s LIMIT 1"
+		row           = db.fetchone(country_query, (country_id,))
+
+		if (row and row['name']):
+			logging.debug("Country name is " + str(row['name']))
+			country_names[country_id] = row['name']
+			return row['name']
+		else:
+			logging.debug("Country not found")
+
+	return "Not Specified"
+
+
 
 # Connect to DB
 db = CivicDB(config.get("mariadb"), logging)
@@ -25,16 +47,15 @@ worksheet = sheet.get_worksheet(0)
 print("Connected to Google Sheet")
 
 # query for all relevant flags
-data_query = (
-	"SELECT "
+data_query = ("SELECT "
 	"LEFT(flagging_event_status_link.timestamp, 16) as `timestamp`, "
 	"flagging_event.flagging_event_id as `flagging event id`, "
 	"flag_type.name as `flag type`, "
 	"flag.severity, "
 	"campaign.name as `campaign`, "
 	"flagging_event.user_id as `user id`, "
-	"locale.code as `locale`, "
-	"country.name as `country`, "
+	"locale.code as `language`, "
+	"flagging_event.country_id as `country`, "
 	"flagging_event.url as `url`, "
 	"flagging_event.notes as `notes`"
 	"FROM flag "
@@ -43,7 +64,6 @@ data_query = (
 	"INNER JOIN flag_type ON flag.flag_type_id = flag_type.flag_type_id "
 	"INNER JOIN campaign ON flagging_event.campaign_id = campaign.campaign_id "
 	"INNER JOIN locale ON flagging_event.locale_id = locale.locale_id "
-	"INNER JOIN country ON flagging_event.country_id = country.country_id "
 	"WHERE flagging_event.url NOT LIKE 'chrome%%'  "
 	"AND flagging_event.url NOT LIKE 'moz-extension%%'  "
 	"AND flagging_event.url NOT LIKE '%%www.damninteresting.com%%' "
@@ -67,6 +87,8 @@ for row in rows:
 	for key in sheet_keys:
 		new_sheet_row.append(row[key])
 
+	new_sheet_row[7] = get_country_name(row['country'])
+
 	new_sheet_rows.append(new_sheet_row)
 	
 
@@ -76,7 +98,7 @@ print("Cleared old data")
 
 # insert new content
 worksheet.append_rows(new_sheet_rows)
-print("Adding " + str(len(new_sheet_rows)) + " rows to spreadsheet (including column headers")
+print("Adding " + str(len(new_sheet_rows)) + " rows to spreadsheet (including column headers)")
  
 # worksheet.format('A1:B1', {'textFormat': {'bold': False}})
 
