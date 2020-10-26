@@ -14,11 +14,9 @@ sheet_keys = False
 
 # Connect to DB
 db = CivicDB(config.get("mariadb"), logging)
-gc = gspread.service_account(filename='/home/ubuntu/google-drive-api-credentials-production.json')
 print("Connected to database")
 
-# Connect to google sheet
-# sheet = gc.open("Healthy Internet Project Flags")
+gc = gspread.service_account(filename='/home/ubuntu/google-drive-api-credentials-production.json')
 
 # https://docs.google.com/spreadsheets/d/11Qkl28RYeLg306IvrCCrYyBSxaHvICVyfIYsEOYKi5k/edit#gid=0
 sheet = gc.open_by_key('11Qkl28RYeLg306IvrCCrYyBSxaHvICVyfIYsEOYKi5k')
@@ -27,18 +25,25 @@ worksheet = sheet.get_worksheet(0)
 print("Connected to Google Sheet")
 
 # query for all relevant flags
-data_query = ("SELECT LEFT(flagging_event_status_link.timestamp, 16) as `timestamp`, flagging_event.flagging_event_id as `flagging event id`, flag_type.name as `flag type`, flag.severity, campaign.name as `campaign`, flagging_event.user_id as `user id`, locale.code as `locale`, flagging_event.url as `url`, flagging_event.notes as `notes`"
+data_query = (
+	"SELECT "
+	"LEFT(flagging_event_status_link.timestamp, 16) as `timestamp`, "
+	"flagging_event.flagging_event_id as `flagging event id`, "
+	"flag_type.name as `flag type`, "
+	"flag.severity, "
+	"campaign.name as `campaign`, "
+	"flagging_event.user_id as `user id`, "
+	"locale.code as `locale`, "
+	"country.name as `country`, "
+	"flagging_event.url as `url`, "
+	"flagging_event.notes as `notes`"
 	"FROM flag "
-	"INNER JOIN flagging_event "
-	"ON flag.flagging_event_id=flagging_event.flagging_event_id "
-	"INNER JOIN flagging_event_status_link "
-	"ON flag.flagging_event_id=flagging_event_status_link.flagging_event_id "
-	"INNER JOIN flag_type "
-	"ON flag.flag_type_id = flag_type.flag_type_id "
-	"INNER JOIN campaign "
-	"ON flagging_event.campaign_id = campaign.campaign_id "
-	"INNER JOIN locale  "
-	"ON flagging_event.locale_id = locale.locale_id "
+	"INNER JOIN flagging_event ON flag.flagging_event_id=flagging_event.flagging_event_id "
+	"INNER JOIN flagging_event_status_link ON flag.flagging_event_id=flagging_event_status_link.flagging_event_id "
+	"INNER JOIN flag_type ON flag.flag_type_id = flag_type.flag_type_id "
+	"INNER JOIN campaign ON flagging_event.campaign_id = campaign.campaign_id "
+	"INNER JOIN locale ON flagging_event.locale_id = locale.locale_id "
+	"INNER JOIN country ON flagging_event.country_id = country.country_id "
 	"WHERE flagging_event.url NOT LIKE 'chrome%%'  "
 	"AND flagging_event.url NOT LIKE 'moz-extension%%'  "
 	"AND flagging_event.url NOT LIKE '%%www.damninteresting.com%%' "

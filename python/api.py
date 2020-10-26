@@ -13,8 +13,9 @@ from classes.HIPDatabase import HIPDatabase
 import urllib.parse
 import random
 import hashlib
-# import faulthandler
 
+# Useful to troubleshoot Segmentation Faults
+# import faulthandler
 # faulthandler.enable()
 
 
@@ -404,7 +405,7 @@ def api_mission():
 def api_country():
 	to_console("country")
 	params     = json.loads(request.form.get("json"))
-	country_id = params.get('country_id')
+	country_id = request.values.get('country_id')
 	user_id    = request.values.get("user_id")
 	password   = request.values.get("password")
 	token      = request.values.get("token")
@@ -448,12 +449,12 @@ def api_country():
 @app.route('/api/v1/opt_out_preference', methods=['POST'])
 def api_preference():
 	to_console("preference")
-	params     = json.loads(request.form.get("json"))
+	params             = json.loads(request.form.get("json"))
 	preference_type_id = params.get('opt_out_preference_id')
-	user_id    = request.values.get("user_id")
-	password   = request.values.get("password")
-	token      = request.values.get("token")
-	user       = authenticate_user(user_id, password, token)	
+	user_id            = request.values.get("user_id")
+	password           = request.values.get("password")
+	token              = request.values.get("token")
+	user               = authenticate_user(user_id, password, token)	
 
 	if preference_type_id is None:
 		to_console("missing preference_id\n")
@@ -493,14 +494,14 @@ def api_preference():
 @app.route('/api/v1/opt_in_preference', methods=['POST'])
 def api_expertise():
 	to_console("expertise")
-	params     = json.loads(request.form.get("json"))
-	campaign_id = params.get('opt_in_preference_id')
-	user_id    = request.values.get("user_id")
-	password   = request.values.get("password")
-	token      = request.values.get("token")
-	user       = authenticate_user(user_id, password, token)	
+	params      = json.loads(request.form.get("json"))
+	preference_type_id = params.get('opt_in_preference_id')
+	user_id     = request.values.get("user_id")
+	password    = request.values.get("password")
+	token       = request.values.get("token")
+	user        = authenticate_user(user_id, password, token)	
 
-	if campaign_id is None:
+	if preference_type_id is None:
 		to_console("missing expertise\n")
 		return quit_with_error("Incomplete Request","Your request did not include all required parameters.", 400)
 
@@ -510,10 +511,10 @@ def api_expertise():
 	
 	try:
 		add_expertise = ("INSERT INTO opt_in_preferences_link "
-			"(user_id, campaign_id) "
+			"(user_id, preference_type_id) "
 			"VALUES (%s, %s)")
 
-		expertise_data = (user['user_id'], campaign_id)
+		expertise_data = (user['user_id'], preference_type_id)
 
 		db.execute(add_expertise, expertise_data)
 
@@ -538,12 +539,12 @@ def api_expertise():
 @app.route('/api/v1/reasoning', methods=['POST'])
 def api_reasoning():
 	to_console("reasoning")
-	params     = json.loads(request.form.get("json"))
+	params    = json.loads(request.form.get("json"))
 	reasoning = params.get('reasoning')
-	user_id    = request.values.get("user_id")
-	password   = request.values.get("password")
-	token      = request.values.get("token")
-	user       = authenticate_user(user_id, password, token)	
+	user_id   = request.values.get("user_id")
+	password  = request.values.get("password")
+	token     = request.values.get("token")
+	user      = authenticate_user(user_id, password, token)	
 
 	if reasoning is None:
 		to_console("missing reasoning\n")
@@ -597,7 +598,7 @@ def api_flag():
 	password          = request.values.get('password')
 	token             = request.values.get('token')
 	timestamp         = datetime.now()	
-	user              = authenticate_user(user_id, password, token)
+	user              = authenticate_user(user_id, password) # we do not auth with token here because we want the user object to be complete
 	flagging_event_id = 0;
 
 	# to_console(jsonify(flags))	
@@ -611,6 +612,9 @@ def api_flag():
 	try:
 		locale_id = get_locale_id(locale)
 
+		# we store country with the flag data since it can later change for users
+		country_id = user['country_id']
+
 		# url is encoded on arrival, decode it before storing
 		url = urllib.parse.unquote(url)
 
@@ -618,10 +622,10 @@ def api_flag():
 		notes = urllib.parse.unquote(notes)
 
 		add_event = ("INSERT INTO flagging_event "
-			"(user_id, locale_id, url, notes, campaign_id) "
-			"VALUES (%s, %s, %s, %s, %s)")
+			"(user_id, locale_id, country_id, url, notes, campaign_id) "
+			"VALUES (%s, %s, %s, %s, %s, %s)")
 
-		event_data = (user['user_id'], locale_id, url, notes, campaign_id)
+		event_data = (user['user_id'], locale_id, country_id, url, notes, campaign_id)
 
 		# Insert new event
 		db.execute(add_event, event_data)
