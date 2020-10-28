@@ -3,8 +3,6 @@ var originalBodyFilter = '';
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) 
 {
-	console.log(request);
-
 	if (request.command == 'mentor-review' && request.url == location.href)
 	{
 		originalBodyFilter = $("body").css("filter");
@@ -14,11 +12,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse)
 
 		$('.healthy-internet-project.content-warning button#begin_review').click(() => startReview());
 		$('.healthy-internet-project.content-warning #uncomfortable-link').click(() => uncomfortable());
-		$(".healthy-internet-project .submit_feedback").click(function () { window.close(); });
-
-		// TIP -> SEE FLAG -> PROVIDE FEEDBACK -> THANK YOU
-		$('.healthy-internet-project.overlay-container button#main').click(() => changeScreen("FLAG"));
-		$('.healthy-internet-project #feedback').on('input', () => activateButton());		
+		$(".healthy-internet-project .submit_feedback").click(function () { window.close(); });	
     }
 });
 
@@ -43,7 +37,10 @@ function startReview()
     $('.healthy-internet-project.overlay-container').css("display","flex"); 
     $('.healthy-internet-project.content-warning').fadeOut(300); 
     $('body').css('filter',originalBodyFilter);
-    changeScreen("FEEDBACK");
+    
+    // TIP -> SEE FLAG -> PROVIDE FEEDBACK -> THANK YOU
+    $('.healthy-internet-project.overlay-container button#main').click(() => changeScreen("FLAG"));
+    $('.healthy-internet-project #feedback').on('input', () => activateButton());	
 }
 
 function uncomfortable()

@@ -1,70 +1,72 @@
 
 
-<div class="healthy-internet-project content-warning" style="display:block">
-    <div class = "first">
-        <h1><span data-i18n-message="flag_review" class="headline"></span></h1><br>
-        <h2><span data-i18n-message="mentorship_content_warning" class="content"></span></h2>
-        <div class="button-container" id = "button-container-review">
-            <button id="begin_review" class="action begin_review button"><span data-i18n-message="begin_review"></span></button>
-        </div>
-        <a href = "javascript:void(0)" id = "uncomfortable-link"><span data-i18n-message="mentorship_i_feel_uncomfortable" class="uncomfortable"></span></a>
-    </div>
-    <div class = "no-review"> 
-        <h1><span data-i18n-message="mentorship_sorry" class="sorry"></span></h1><br>
-        <h2><span data-i18n-message="mentorship_tell_us_why" class="tell_us_why"></span></h2>
-        <textarea class = "reasoning" name="reasoning" id="reasoning"></textarea>
-        <div class="button-container">
-            <button class="submit_feedback button"><span data-i18n-message="submit"></span></button>
-        </div>
-
-    </div>
-</div>
-
-<div class="healthy-internet-project overlay-container">
-    <div class="title">
-        <span data-i18n-message="review_title_1"></span>
-    </div>
-    <div class="subtitle">
-        <span data-i18n-message="review_subtitle"></span>
-    </div>
-    <div class="content">
-
-        <!-- TIP CONTAINER -->
-        <div id="tip"><span data-i18n-message="review_tip_1"></span></div>
-
-        <!-- CARD CONTAINER -->
-        <div class="card" style="display:none">
-            <ul class="selected-flags">
-                <li data-severity="1">
-                    <div class="icon"><img src="/images/manipulation.svg"></div>
-                    <div class="severity">Mild</div>
-                    <label>Lies or manipulation</label>
-                </li>
-            </ul>
-            <div class="selected-campaign">
-                <span>#elections</span>
+<div>
+    <div class="healthy-internet-project content-warning" style="display:block">
+        <div class = "first">
+            <h1><span data-i18n-message="flag_review" class="headline"></span></h1><br>
+            <h2><span data-i18n-message="mentorship_content_warning" class="content"></span></h2>
+            <div class="button-container" id = "button-container-review">
+                <button id="begin_review" class="action begin_review button"><span data-i18n-message="begin_review"></span></button>
             </div>
-            <div class="notes" style="display:block">asdfasdf asdfasd fasd asdf s</div>
+            <a href = "javascript:void(0)" id = "uncomfortable-link"><span data-i18n-message="mentorship_i_feel_uncomfortable" class="uncomfortable"></span></a>
         </div>
-
-        <!-- INPUT CONTAINER -->
-        <textarea name="reasoning" id="feedback" placeholder="Any helpful tips or support for the original flagger?" style="display:none"></textarea>
-
-        <!-- THANK YOU CONTAINER -->
-        <span id="thank-you" data-i18n-message="review_thanks_1" style="display:none"></span>
-
+        <div class = "no-review"> 
+            <h1><span data-i18n-message="mentorship_sorry" class="sorry"></span></h1><br>
+            <h2><span data-i18n-message="mentorship_tell_us_why" class="tell_us_why"></span></h2>
+            <textarea class = "reasoning" name="reasoning" id="reasoning"></textarea>
+            <div class="button-container">
+                <button class="submit_feedback button"><span data-i18n-message="submit"></span></button>
+            </div>
+        </div>
     </div>
-    <div class="buttons">
-        <!-- TIP BUTTON -->
-        <a href="https://healthyinternetproject.org/resources" target="_blank" class="tip-button"><span data-i18n-message="review_more_tips"></span></a>
-
-        <!-- BACK BUTTON -->
-        <button class="button back" style="display:none"></button>
-
-        <!-- SECONDARY BUTTON -->
-        <button class="button secondary" style="display:none"><span data-i18n-message="review_disagree_button"></span></button>
-
-        <button class="button" id="main"><span data-i18n-message="review_ready_button"></span></button>
-
+    
+    <div class="healthy-internet-project overlay-container">
+        <div class="title">
+            <span data-i18n-message="review_title_1"></span>
+        </div>
+        <div class="subtitle">
+            <span data-i18n-message="review_subtitle"></span>
+        </div>
+        <div class="content">
+    
+            <!-- TIP CONTAINER -->
+            <div id="tip"><span data-i18n-message="review_tip_1"></span></div>
+    
+            <!-- CARD CONTAINER -->
+            <div class="card" style="display:none">
+                <ul class="selected-flags">
+                    <li data-severity="1">
+                        <div class="icon"><img src="/images/manipulation.svg"></div>
+                        <div class="severity">Mild</div>
+                        <label>Lies or manipulation</label>
+                    </li>
+                </ul>
+                <div class="selected-campaign">
+                    <span>#elections</span>
+                </div>
+                <div class="notes" style="display:block">asdfasdf asdfasd fasd asdf s</div>
+            </div>
+    
+            <!-- INPUT CONTAINER -->
+            <textarea name="reasoning" id="feedback" placeholder="Any helpful tips or support for the original flagger?" style="display:none"></textarea>
+    
+            <!-- THANK YOU CONTAINER -->
+            <span id="thank-you" data-i18n-message="review_thanks_1" style="display:none"></span>
+    
+        </div>
+        <div class="buttons">
+            <!-- TIP BUTTON -->
+            <a href="https://healthyinternetproject.org/resources" target="_blank" class="tip-button"><span data-i18n-message="review_more_tips"></span></a>
+    
+            <!-- BACK BUTTON -->
+            <button class="button back" style="display:none"></button>
+    
+            <!-- SECONDARY BUTTON -->
+            <button class="button secondary" style="display:none"><span data-i18n-message="review_disagree_button"></span></button>
+    
+            <button class="button" id="main"><span data-i18n-message="review_ready_button"></span></button>
+    
+        </div>
     </div>
+
 </div>

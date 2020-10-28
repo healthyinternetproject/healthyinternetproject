@@ -250,7 +250,8 @@ function initializeExtension ()
 						function (data) 
 						{
 							var $el = jQuery(data);
-							localizeStrings($el);
+                            localizeStrings($el);
+                            console.log("anand");
 
 							sendMessageToClientScript({
 								'command': 'mentor-review',
