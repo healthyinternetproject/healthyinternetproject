@@ -34,6 +34,13 @@ function addEventListeners (selector, elements, func)
 
 function startReview()
 {
+    var numStrings1 = 14;
+    var r1 = (Math.floor(Math.random() * numStrings1) + 1);
+    var a1 = "tips_header_" + r1;
+    $("#dynamic-tip").attr("data-i18n-message",a1);
+    $("#dynamic-tip").html( getString(a1))
+
+   
     $('.healthy-internet-project.overlay-container').css("display","flex"); 
     $('.healthy-internet-project.content-warning').fadeOut(300); 
     $('body').css('filter',originalBodyFilter);
@@ -53,6 +60,7 @@ function changeScreen(state)
 {
     if(state === "FLAG")
     {
+
         $(".healthy-internet-project.overlay-container .title").attr("data-i18n-message","review_title_2");
         $(".healthy-internet-project.overlay-container .title").html( getString("review_title_2"));
 
@@ -136,6 +144,8 @@ function activateButton()
     $('.healthy-internet-project.overlay-container .button#main').click(() => changeScreen("SUBMIT"));
     $('.healthy-internet-project.overlay-container .button#main').css("opacity","1");
 }
+
+
 
 function closeOverlay()
 {
