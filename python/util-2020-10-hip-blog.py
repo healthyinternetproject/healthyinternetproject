@@ -39,8 +39,8 @@ def get_localized_string( string_key, locale_id ):
 ############## Custom code here ##############
 
 
-#user_query = "SELECT * FROM user"
-user_query = "SELECT * FROM user WHERE user_id IN (561316168)"
+user_query = "SELECT * FROM user"
+#user_query = "SELECT * FROM user WHERE user_id IN (537698584)"
 
 insert_notification = ("INSERT INTO notification " 
 	"(notification_type_id, user_id_strict, title_string_key, body_string_key, message_id, url, timestamp) "
