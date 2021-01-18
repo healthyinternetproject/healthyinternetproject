@@ -1,23 +1,23 @@
 
 
-.flagging 
+.healthy-internet-project.flagging 
 {
 	background-color: rgba(0,0,0,0);
 	border: 2px solid #252B36;
 	box-shadow: 0px 2px 10px rgba(0, 0, 0, 1);
 	width: 384px;
-	min-height: 200px;
+	min-height: 500px;
 	height: 500px;
 	overflow: hidden;
 
 }
 
-.flagging #debugger
+.healthy-internet-project.flagging #debugger
 {
 	display: none;
 }
 
-.flagging.debug #debugger
+.healthy-internet-project.flagging.debug #debugger
 {	
 	color: #fff;
 	display: block;
@@ -28,19 +28,19 @@
 	right: 0;
 	width: 416px;
 	height: 100%;
-	padding: 10px 10px 40px 10px;
+	padding: 10px 10px 120px 10px;
 	z-index: 10;
 	overflow: hidden;
 }
 
-.flagging.debug #debugger .messages
+.healthy-internet-project.flagging.debug #debugger .messages
 {
 	width: 100%;
 	height: 100%;
 	overflow: auto;
 }
 
-.flagging.debug #debugger .controls
+.healthy-internet-project.flagging.debug #debugger .controls
 {
 	position: absolute;
 	bottom: 0;
@@ -51,39 +51,40 @@
 	padding: 8px;
 }
 
-.flagging.debug
+.healthy-internet-project.flagging.debug
 {
 	width: 800px;
 	padding-right: 416px;
 }
 
 
-.flagging .error
+.healthy-internet-project.flagging .error
 {
 	display: none; 
 	padding: 20px 30px 20px 30px;
 	line-height: 1.5em;
 }
 
-.flagging-ui
+.healthy-internet-project .flagging-ui
 {
 	height: 100%;
+	min-height: 512px;
 }
 
 
-.flagging .message 
+.healthy-internet-project.flagging .message 
 {
 	display: none;
 	padding: 20px 30px 20px 30px;
 }
 
-.flagging .message .text
+.healthy-internet-project.flagging .message .text
 {
 	font-size: 18px;
 	line-height: 1.3em;
 }
 
-.flagging .message img.example
+.healthy-internet-project.flagging .message img.example
 {
 	display: none;
 	margin-top: 20px;
@@ -93,7 +94,7 @@
 }
 
 
-.flagging .pane
+.healthy-internet-project.flagging .pane
 {
 	background-color: #1b1f28;
 	color: #9da8bc;	
@@ -110,36 +111,36 @@
 	transition: transform 400ms ease-out;
 }
 
-.flagging .pane h1
+.healthy-internet-project.flagging .pane h1
 {
 	color: #fff;
 	margin-bottom: 1em;
 	font-size: 30px;
 }
 
-.flagging .pane ul
+.healthy-internet-project.flagging .pane ul
 {
 
 }
 
-.flagging .pane ul li
+.healthy-internet-project.flagging .pane ul li
 {
 	display: block;
 	margin-bottom: 0.4em;
 }
 
-.flagging .pane ul li a
+.healthy-internet-project.flagging .pane ul li a
 {
 	text-decoration: none;
 	color: inherit;
 }
 
-.flagging .pane ul li a:hover
+.healthy-internet-project.flagging .pane ul li a:hover
 {
 	color: #eee;
 }
 
-.flagging .pane .menu-footer
+.healthy-internet-project.flagging .pane .menu-footer
 {
 	position: absolute;
 	left: 0;
@@ -154,18 +155,18 @@
 	white-space: nowrap;
 }
 
-.flagging .pane .menu-footer .copyright
+.healthy-internet-project.flagging .pane .menu-footer .copyright
 {
 	font-weight: 700;
 }
 
-.flagging .pane.open
+.healthy-internet-project.flagging .pane.open
 {
 	transform: translateX(0);
 }
 
-.flagging .pane .menu-close,
-.flagging .menu-open
+.healthy-internet-project.flagging .pane .menu-close,
+.healthy-internet-project.flagging .menu-open
 {
 	cursor: pointer;
 	width: 30px;
@@ -176,7 +177,7 @@
 	z-index: 3;
 }
 
-.flagging .pane .menu-close
+.healthy-internet-project.flagging .pane .menu-close
 {
 	transform-origin: center center;
 	transform: scale(0.75);
@@ -184,9 +185,9 @@
 
 
 
-.flagging .pages
+.healthy-internet-project.flagging .pages
 {	
-	display: none;
+	/*display: none;*/
 	position: relative;
 	width: 380px;
 	height: inherit;
@@ -196,7 +197,7 @@
 	padding-bottom: 30px;
 }
 
-.flagging .pages .footer
+.healthy-internet-project.flagging .pages .footer
 {
 	position: absolute;
 	bottom: 0;
@@ -211,17 +212,17 @@
 	white-space: nowrap;
 }
 
-.flagging .pages .footer [href]
+.healthy-internet-project.flagging .pages .footer [href]
 {
 	color: #A6ADE7;
 }
 
-.flagging .content
+.healthy-internet-project.flagging .content
 {
 	height: 100%;
 }
 
-.flagging .page
+.healthy-internet-project.flagging .page
 {
 	top: 0;
 	bottom: 0;
@@ -232,15 +233,15 @@
 	transition: transform 300ms ease-in-out;
 }
 
-.flagging .page.initial
+.healthy-internet-project.flagging .page.initial
 {
 	/* background-image: url(/images/flag.svg);
 	background-position: 340px 24px;
 	background-repeat: no-repeat;	*/
 }
 
-.flagging .page.initial h1,
-.flagging .message h1
+.healthy-internet-project.flagging .page.initial h1,
+.healthy-internet-project.flagging .message h1
 {
 	font-weight: bold;
 	font-size: 16px;
@@ -251,13 +252,13 @@
 	user-select: none;
 }
 
-.site-title,
-.message h1
+.healthy-internet-project .site-title,
+.healthy-internet-project .message h1
 {
 	color: #5762D5;
 }
 
-.site-title
+.healthy-internet-project .site-title
 {
 	display: inline-block;
 	position: relative;
@@ -270,14 +271,14 @@
 	
 }
 
-.with-favicon
+.healthy-internet-project .with-favicon
 {
 	position: relative;
 	min-height: 16px;
 
 }
 
-.with-favicon img
+.healthy-internet-project .with-favicon img
 {
 	position: absolute;
 	top: 2px;
@@ -289,35 +290,35 @@
 }
 
 
-.flagging .page[data-index="1"]
+.healthy-internet-project.flagging .page[data-index="1"]
 {
 	left: 100%;	
 }
 
-.flagging .page[data-index="2"]
+.healthy-internet-project.flagging .page[data-index="2"]
 {
 	left: 200%;
 }
 
-.flagging .page.active
+.healthy-internet-project.flagging .page.active
 {
 	
 }
 
 
-.flagging .page p
+.healthy-internet-project.flagging .page p
 {
 	line-height: 1.5em;
 	margin-bottom: 1em;
 	user-select: none;
 }
 
-.flagging .page h2
+.healthy-internet-project.flagging .page h2
 {
 	user-select: none;
 }
 
-ul.flags
+.healthy-internet-project ul.flags
 {
 	display: block;
 	margin-top: 20px;
@@ -325,8 +326,8 @@ ul.flags
 }
 
 
-ul.flags li,
-.selected-flags li
+.healthy-internet-project ul.flags li,
+.healthy-internet-project .selected-flags li
 {
 	display: block;
 	position: relative;
@@ -337,7 +338,7 @@ ul.flags li,
 	transition: all 300ms ease-in-out;
 }
 
-ul.flags hr
+.healthy-internet-project ul.flags hr
 {
 	display: block;
 	top: 0;
@@ -348,19 +349,19 @@ ul.flags hr
 	margin: 10px 0 10px 0;
 }
 
-ul.flags li a
+.healthy-internet-project ul.flags li a
 {
 	display: block;	
 }
 
-.page[data-index="0"] li,
-.selected-flags li
+.healthy-internet-project .page[data-index="0"] li,
+.healthy-internet-project .selected-flags li
 {
 	margin-bottom: 8px;
 }
 
-ul.flags li .severity,
-ul.selected-flags li .severity
+.healthy-internet-project ul.flags li .severity,
+.healthy-internet-project ul.selected-flags li .severity
 {
 	font-size: 12px;
 	font-weight: normal;
@@ -368,8 +369,8 @@ ul.selected-flags li .severity
 	transition: max-height 300ms ease-in-out;	
 }
 
-ul.flags li .thermometer,
-ul.selected-flags li .thermometer
+.healthy-internet-project ul.flags li .thermometer,
+.healthy-internet-project ul.selected-flags li .thermometer
 {
 	position: absolute;
 	left: 56px;
@@ -382,8 +383,8 @@ ul.selected-flags li .thermometer
 }
 
 /* this is the red in the thermometer */
-ul.flags li .thermometer:before, 
-ul.selected-flags li .thermometer:before
+.healthy-internet-project ul.flags li .thermometer:before, 
+.healthy-internet-project ul.selected-flags li .thermometer:before
 {
 	content: "";
 	position: absolute;
@@ -397,21 +398,21 @@ ul.selected-flags li .thermometer:before
 }
 
 /* this is the green in the thermometer */
-ul.flags li.good .thermometer:before, 
-ul.selected-flags li.good .thermometer:before
+.healthy-internet-project ul.flags li.good .thermometer:before, 
+.healthy-internet-project ul.selected-flags li.good .thermometer:before
 {
 	background-color: #26A65B;
 }
 
 /* this is so the animation delay only applies to first click */
-ul.flags li.first-click .thermometer:before
+.healthy-internet-project ul.flags li.first-click .thermometer:before
 {
 	transition-delay: 250ms;
 }
 
 /* this is the thermometer foreground */
-ul.flags li .thermometer:after,
-ul.selected-flags li .thermometer:after 
+.healthy-internet-project ul.flags li .thermometer:after,
+.healthy-internet-project ul.selected-flags li .thermometer:after 
 {
 	content: "";
 	position: absolute;
@@ -426,28 +427,28 @@ ul.selected-flags li .thermometer:after
 	z-index: 1;
 }
 
-ul.flags li.on,
-ul.selected-flags li
+.healthy-internet-project ul.flags li.on,
+.healthy-internet-project ul.selected-flags li
 {
 	color: #E62B1E;
 	padding-top: 8px;
 	padding-left: 78px;
 }
 
-ul.flags li.on.good,
-ul.selected-flags li.good
+.healthy-internet-project ul.flags li.on.good,
+.healthy-internet-project ul.selected-flags li.good
 {
 	color: #26A65B;
 }
 
-ul.flags li.on .severity,
-ul.selected-flags li .severity
+.healthy-internet-project ul.flags li.on .severity,
+.healthy-internet-project ul.selected-flags li .severity
 {
 	max-height: 12px;
 }
 
-ul.flags li.on .thermometer,
-ul.selected-flags li .thermometer
+.healthy-internet-project ul.flags li.on .thermometer,
+.healthy-internet-project ul.selected-flags li .thermometer
 {
 	width: 12px;
 	opacity: 1;
@@ -455,25 +456,25 @@ ul.selected-flags li .thermometer
 	/*animation: wiggle 750ms 200ms;*/
 }
 
-ul.flags li[data-severity="1"] .thermometer:before,
-ul.selected-flags li[data-severity="1"] .thermometer:before
+.healthy-internet-project ul.flags li[data-severity="1"] .thermometer:before,
+.healthy-internet-project ul.selected-flags li[data-severity="1"] .thermometer:before
 {
 	height: 22px;
 }
 
-ul.flags li[data-severity="2"] .thermometer:before,
-ul.selected-flags li[data-severity="2"] .thermometer:before
+.healthy-internet-project ul.flags li[data-severity="2"] .thermometer:before,
+.healthy-internet-project ul.selected-flags li[data-severity="2"] .thermometer:before
 {
 	height: 33px;
 }
 
-ul.flags li[data-severity="3"] .thermometer:before,
-ul.selected-flags li[data-severity="3"] .thermometer:before
+.healthy-internet-project ul.flags li[data-severity="3"] .thermometer:before,
+.healthy-internet-project ul.selected-flags li[data-severity="3"] .thermometer:before
 {
 	height: 100%;
 }
 
-.flagging .buttons
+.healthy-internet-project.flagging .buttons
 {
 	margin-top: 12px;
 	display: grid;
@@ -482,7 +483,7 @@ ul.selected-flags li[data-severity="3"] .thermometer:before
 	align-content: space-around;
 }
 
-.flagging .error .buttons
+.healthy-internet-project.flagging .error .buttons
 {
 	margin-top: 32px;
 	grid-template-columns: 1fr 1fr 1fr;
@@ -490,14 +491,12 @@ ul.selected-flags li[data-severity="3"] .thermometer:before
 }
 
 
-.flagging .buttons .select
-{
+.healthy-internet-project.flagging .buttons .healthy-internet-project .select {
 	margin-top: 4px;
 	
 }
 
-.select
-{	
+.healthy-internet-project .select {	
 	position: relative;
 	background: #FFFFFF;
 	border: 1px solid #9DA8BC;
@@ -515,14 +514,14 @@ ul.selected-flags li[data-severity="3"] .thermometer:before
 	z-index: 1;
 }
 
-.select .preview,
-.select .options .option
+.healthy-internet-project .select .preview,
+.healthy-internet-project .select .options .option
 {
 	padding: 0 4px 0 4px;
 	line-height: 24px;
 }
 
-.select .preview
+.healthy-internet-project .select .preview
 {
 	color: #7F8DA7;
 }
@@ -532,12 +531,12 @@ ul.selected-flags li[data-severity="3"] .thermometer:before
 	border: 1px solid #5762D5;
 }
 
-.select .preview.selected
+.healthy-internet-project .select .preview.selected
 {
 	color: black;
 }
 
-.select .options
+.healthy-internet-project .select .options
 {
 	height: 0;
 	display: none;
@@ -558,17 +557,17 @@ ul.selected-flags li[data-severity="3"] .thermometer:before
 	height: auto;
 }
 
-.select .options .option
+.healthy-internet-project .select .options .option
 {
 	border-top: 0.5px solid #D9DDE5;
 }
 
-.select .options .option:first-child
+.healthy-internet-project .select .options .option:first-child
 {
 	border-top: none;
 }
 
-.select .options .option:hover
+.healthy-internet-project .select .options .option:hover
 {
 	background-color: rgba(87,98,213,0.2);
 }
@@ -582,42 +581,42 @@ ul.selected-flags li[data-severity="3"] .thermometer:before
 	color: black;
 }
 
-.flagging .page.thanks
+.healthy-internet-project.flagging .page.thanks
 {
 
 }
 
-.flagging .page.thanks h1
+.healthy-internet-project.flagging .page.thanks h1
 {
 	color: #5762D5;
 	font-weight: bold;
 	font-size: 30px;
 }
 
-.flagging .page.thanks p
+.healthy-internet-project.flagging .page.thanks p
 {
 	font-size: 16px;
 	margin-top: 4px;
 }
 
 
-.flagging .page.thanks li
+.healthy-internet-project.flagging .page.thanks li
 {
 	cursor: default;
 }
 
-.selected-flags
+.healthy-internet-project .selected-flags
 {
 	margin-top: 10px;
 }
 
-.selected-flags li .icon
+.healthy-internet-project .selected-flags li .icon
 {
 	box-shadow: none;
 	border: 1.5px solid #E62B1E;
 }
 
-.selected-flags li.good .icon
+.healthy-internet-project .selected-flags li.good .icon
 {
 	border-color: #26A65B;
 }

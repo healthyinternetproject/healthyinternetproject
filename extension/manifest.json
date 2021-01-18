@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
     "name": "__MSG_extension_title__",
-    "version": "2020.10.26.1",
+    "version": "2021.01.12.1",
     "default_locale" : "en",
     "description": "__MSG_extension_description__",
     
@@ -40,6 +40,8 @@
 
 	"web_accessible_resources": [
 		"/images/icon-48.png",
+		"/fonts/Inter-Regular.otf",
+		"/fonts/Inter-Bold.otf",
 		"/html/mentor-review.html"
 	],    
 

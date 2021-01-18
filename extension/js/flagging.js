@@ -72,10 +72,13 @@ jQuery(document).ready(function ($) {
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
 		$(".test-journalism-request").click( generateTestMessage );
-		$(".test-notification-ping").click( getNotifications );
+		$(".test-notification-ping").click( function () { getNotifications(true); } );
 		$(".test-mentor-review").click( testMentorReview );
 		$(".test-onboarding").click( testOnboarding );	
 		$(".test-mentor-onboarding").click( testMentorOnboarding );		
+		$(".test-local-api").click( testLocalAPI );		
+		$(".test-remote-api").click( testRemoteAPI );		
+		$(".test-flagging-in-tab").click( testLoadFlaggingInTab );
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
 
@@ -432,14 +435,16 @@ function generateTestMessage ()
 }
 
 
-function getNotifications ()
+function getNotifications (force)
 {
 	let data = {
 		'command' : 'get-notifications'
 	};
 
 	browser.runtime.sendMessage( data ); 
-	debug("Pinging for notifications...");
+	
+	debug("Pinging for notifications (" + backgroundPage.CONFIG.apiUrl + ")");
+	//backgroundPage.getNotificationsFromAPI(force);
 }
 
 
@@ -456,11 +461,35 @@ function testOnboarding ()
 	backgroundPage.testOnboarding();	
 }
 
+
 function testMentorOnboarding ()
 {
 	debug("Testing onboarding...");
 	backgroundPage.testMentorOnboarding();	
 }
+
+
+function testLocalAPI ()
+{
+	debug("Switching to local API...");
+	backgroundPage.testLocalAPI();	
+	debug(backgroundPage.CONFIG.apiUrl);
+}
+
+
+function testRemoteAPI ()
+{
+	debug("Switching to remote API...");
+	backgroundPage.testRemoteAPI();	
+	debug(backgroundPage.CONFIG.apiUrl);
+}
+
+
+function testLoadFlaggingInTab ()
+{
+	backgroundPage.testLoadFlaggingInTab();
+}
+
 
 function debug (data)
 {
@@ -469,6 +498,10 @@ function debug (data)
 	let json = JSON.stringify(data);
 
 	$debug.html( existing + "<hr>" + json );
+	$debug.animate(
+		{ 'scrollTop' : $debug[0].scrollHeight }, 
+		300
+	);
 }
 
 
@@ -615,7 +648,7 @@ function adjustPopupSize (messageToggle)
 	if (messageToggle)
 	{
 		$flagging.height("auto");	//set height to auto for messages with no "page"
-		$flagging.overflow( "hidden" );
+		$flagging.css( "overflow","hidden" );
 
 	}
 	else if ($button.length > 0)

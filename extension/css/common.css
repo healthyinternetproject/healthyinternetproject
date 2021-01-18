@@ -33,13 +33,13 @@
   src: url('../fonts/Inter-Bold.otf') format('opentype');
 }
 
-* 
+.healthy-internet-project * 
 {
 	box-sizing: border-box;
 	background-repeat: no-repeat;
 }
 
-body
+body.healthy-internet-project
 {
 	background-color: #fff;
 	color: #1B1F27;
@@ -53,27 +53,27 @@ body
 	background-repeat: no-repeat;*/
 }
 
-em
+.healthy-internet-project em
 {
 	color: var(--red);
 }
 
-b{
+.healthy-internet-project b{
 	font-weight: bold;
 }
 
-em.good
+.healthy-internet-project em.good
 {
 	color: var(--green);
 }
 
 
-[href]
+.healthy-internet-project [href]
 {
 	color: var(--blue);
 }
 
-.centered
+.healthy-internet-project .centered
 {
 	position: absolute;
 	top: 50%;
@@ -82,7 +82,7 @@ em.good
 }
 
 
-.button
+.healthy-internet-project .button
 {
 	display: inline-block;
 	padding: 8px 12px 8px 12px;
@@ -97,21 +97,21 @@ em.good
 	user-select: none;
 }
 
-.button:hover{
+.healthy-internet-project .button:hover{
     cursor: pointer;
 }
 
-.button.disabled
+.healthy-internet-project .button.disabled
 {
 	opacity: 0.4;
 }
 
-.button.close
+.healthy-internet-project .button.close
 {
 	/* background-color: #E62B1E; */
 }
 
-.button.secondary{
+.healthy-internet-project .button.secondary{
     background: #FFFFFF;
     border: 1.5px solid #5762D5;
     box-sizing: border-box;
@@ -120,9 +120,9 @@ em.good
     font-weight: bold;
 }
 
-ul.missions li,
-.page[data-index="0"] li,
-.selected-flags li
+.healthy-internet-project ul.missions li,
+.healthy-internet-project .page[data-index="0"] li,
+.healthy-internet-project .selected-flags li
 {
 	display: block;
 	position: relative;
@@ -131,17 +131,17 @@ ul.missions li,
 	min-height: 50px;
 }
 
-ul.missions li label,
-.page[data-index="0"] li label,
-.selected-flags li label
+.healthy-internet-project ul.missions li label,
+.healthy-internet-project .page[data-index="0"] li label,
+.healthy-internet-project .selected-flags li label
 {
 	cursor: inherit;
 }
 
 
-ul.missions li .icon,
-.page[data-index="0"] li .icon,
-.selected-flags li .icon
+.healthy-internet-project ul.missions li .icon,
+.healthy-internet-project .page[data-index="0"] li .icon,
+.healthy-internet-project .selected-flags li .icon
 {
 	position: absolute;
 	left: 0;
@@ -154,21 +154,21 @@ ul.missions li .icon,
 	transition: background-color 200ms linear, transform 350ms ease-in-out;
 }
 
-ul.missions li .icon:hover,
-.page[data-index="0"] li .icon:hover,
-.selected-flags li .icon:hover
+.healthy-internet-project ul.missions li .icon:hover,
+.healthy-internet-project .page[data-index="0"] li .icon:hover,
+.healthy-internet-project .selected-flags li .icon:hover
 {
 	transform: scale(1.1);
 }
 
-.selected-flags li .icon:hover
+.healthy-internet-project .selected-flags li .icon:hover
 {
 	transform: none;
 }
 
-ul.missions li .icon img,
-.page[data-index="0"] li .icon img,
-.selected-flags li .icon img
+.healthy-internet-project ul.missions li .icon img,
+.healthy-internet-project .page[data-index="0"] li .icon img,
+.healthy-internet-project .selected-flags li .icon img
 {
 	position: absolute;
 	top: 50%;
@@ -179,7 +179,7 @@ ul.missions li .icon img,
 	height: auto;
 }
 
-textarea
+.healthy-internet-project textarea
 {
 	width: 100%;
 	height: 80px;
@@ -194,7 +194,7 @@ textarea
 	color: #000;
 }
 
-textarea:focus {
+.healthy-internet-project textarea:focus {
     outline: none !important;
     border:1px solid #5762D5;
 }
@@ -203,7 +203,7 @@ textarea:focus {
 CONSOLIDATED "PANELS" STYLING
  */
 
-.panels
+.healthy-internet-project .panels
 {
 	position: absolute;	
 	top: 50%;
@@ -218,7 +218,7 @@ CONSOLIDATED "PANELS" STYLING
 	transition: all 900ms ease-in-out;	
 }
 
-.panels .panel
+.healthy-internet-project .panels .panel
 {
 	display: none;
 	padding: 50px 140px 50px 50px;
@@ -229,7 +229,7 @@ CONSOLIDATED "PANELS" STYLING
 	height: 100%;
 }
 
-.panels .panel h1
+.healthy-internet-project .panels .panel h1
 {
 	font-weight: bold;
 	font-size: 48px;
@@ -238,7 +238,7 @@ CONSOLIDATED "PANELS" STYLING
 }
 
 
-.panels .panel h2
+.healthy-internet-project .panels .panel h2
 {
 	font-size: 20px;
 	margin: 1em 0 0 0;
@@ -247,12 +247,12 @@ CONSOLIDATED "PANELS" STYLING
 }
 
 
-.panels .panel h2 em
+.healthy-internet-project .panels .panel h2 em
 {
 	font-weight: 700;
 }
 
-.panels .panel h3
+.healthy-internet-project .panels .panel h3
 {
     font-size: 30px;
     color:var(--blue);
@@ -261,18 +261,18 @@ CONSOLIDATED "PANELS" STYLING
     font-weight: 700;
 }
 
-.panels .panel .caption{
+.healthy-internet-project .panels .panel .caption{
     font-weight: normal;
     font-size: 12px;
 	line-height: 1.2em;
 	margin-bottom: 50px;
 }
 
-.panels .panel .details {
+.healthy-internet-project .panels .panel .details {
     margin-top: 3em;
 }
 
-.panels .panel button.next
+.healthy-internet-project .panels .panel button.next
 {
 	width: 75px;
 	height: 75px;
@@ -281,7 +281,7 @@ CONSOLIDATED "PANELS" STYLING
 	margin-top: 0;
 }
 
-.panels .panel button.next:before
+.healthy-internet-project .panels .panel button.next:before
 {
 	content: "";
 	position: absolute;
@@ -295,7 +295,7 @@ CONSOLIDATED "PANELS" STYLING
 	left: 12px;
 }
 
-.bold{
+.healthy-internet-project .bold{
     font-weight: 700;
 }
 
@@ -303,7 +303,7 @@ CONSOLIDATED "PANELS" STYLING
 CONSOLIDATED "FLAGGING CARD" STYLING
  */
 
- .card
+.healthy-internet-project .card
 {
 	background-color: #FFFFFF;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
@@ -311,7 +311,7 @@ CONSOLIDATED "FLAGGING CARD" STYLING
 	padding: 20px;
 }
 
-.card h2
+.healthy-internet-project .card h2
 {
 	font-weight: bold;
 	font-size: 18px;
@@ -321,12 +321,12 @@ CONSOLIDATED "FLAGGING CARD" STYLING
 	width: 270px;		
 }
 
-.card .selected-campaign
+.healthy-internet-project .card .selected-campaign
 {
 	margin: 8px 0 8px 0;
 }
 
-.card .selected-campaign span
+.healthy-internet-project .card .selected-campaign span
 {
 	color: var(--white);
 	background-color: var(--red);
@@ -335,7 +335,7 @@ CONSOLIDATED "FLAGGING CARD" STYLING
 	font-size: 12px;
 }
 
-.card .notes
+.healthy-internet-project .card .notes
 {
 	color: #1B1F27;
 	font-size: 12px;
@@ -351,7 +351,7 @@ CONSOLIDATED BLUR STYLING
 */
 
 
-.content-warning {
+.healthy-internet-project .content-warning {
 	display: none;
     position: absolute;
     z-index: 4;
@@ -365,7 +365,7 @@ CONSOLIDATED BLUR STYLING
     padding: 25px 60px 25px 60px;
 }
 
-.content-warning h1{
+.healthy-internet-project .content-warning h1{
 	font-weight: bold;
     font-size: 40px;
 	letter-spacing: -1.97px;
@@ -373,7 +373,7 @@ CONSOLIDATED BLUR STYLING
     margin-bottom: 0px;
 }
 
-.content-warning h2{
+.healthy-internet-project .content-warning h2{
 	font-size: 20px;
 	letter-spacing: -0.75px;	
 	line-height: 1.4em;
@@ -381,27 +381,27 @@ CONSOLIDATED BLUR STYLING
     font-weight: 400;
     margin-top: 0px;
 }
-.content-warning div{
+.healthy-internet-project .content-warning div{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.content-warning div .button-container{
+.healthy-internet-project .content-warning div .button-container{
     font-size: 18px;
     margin-bottom: 10px;
     margin-top: 40px;
 }
 
-.content-warning .no-review .button-container{
+.healthy-internet-project .content-warning .no-review .button-container{
     margin-bottom: 20px;
 }
 
-.content-warning .no-review{
+.healthy-internet-project .content-warning .no-review{
 	display: none;
 }
 
 
-.content-warning .no-review .reasoning {
+.healthy-internet-project .content-warning .no-review .reasoning {
     width: 350px;
     height: 100px;
     border-radius: 10px;
@@ -412,7 +412,7 @@ CONSOLIDATED BLUR STYLING
 CONSOLIDATED "FOOTER" STYLING
  */
 
-#footer{
+.healthy-internet-project #footer{
     position: fixed;
     bottom: 0px;
     right: 20px;
@@ -423,27 +423,27 @@ CONSOLIDATED "FOOTER" STYLING
     color:var(--black);
 }
 
-#footer.negative{
+.healthy-internet-project #footer.negative{
     color:var(--white);
 }
 
-#footer.negative [href]{
+.healthy-internet-project #footer.negative [href]{
     color:var(--white);
 }
 
-.footer #privacy_policy {
+.healthy-internet-project .footer #privacy_policy {
 	float: right;
 }
-.footer #terms_use {
+.healthy-internet-project .footer #terms_use {
 	float: right;
 	margin-right: 2%;
 }
-.footer #ted-conf #copyright {
+.healthy-internet-project .footer #ted-conf #copyright {
 	font-weight:400;
 	display: inline;
 	
 }
-.footer #ted-conf {
+.healthy-internet-project .footer #ted-conf {
 	position: fixed;
 	right: 45%;
 	font-weight: 700;
@@ -451,7 +451,7 @@ CONSOLIDATED "FOOTER" STYLING
 	
 }
 
-.footer #hip-logo-white{
+.healthy-internet-project .footer #hip-logo-white{
 	z-index: 2;
     position: fixed;
     height: 90px;
@@ -465,34 +465,34 @@ CONSOLIDATED "FOOTER" STYLING
 /* RESPONSIVE STYLING */
 
 @media only screen and (max-width: 1250px) {
-	.footer #hip-logo-white{
+	.healthy-internet-project .footer #hip-logo-white{
 		height:75px;
 	}
 
-	.panels .panel button.next {
+	.healthy-internet-project .panels .panel button.next {
 		width: 50px;
 		height: 50px;
 		transition: all 1s linear;
 	}
 
-	.panels .panel button.next:before {
+	.healthy-internet-project .panels .panel button.next:before {
 		width: 28px;
 		height: 25px;
 		transition: all 1s linear;
 	}
-	.panels .panel h1 {
+	.healthy-internet-project .panels .panel h1 {
 		font-size: 35px;
 		transition: all 1s linear;
 	}
-	.panels .panel {
+	.healthy-internet-project .panels .panel {
 		padding-top: 30px;
 	}
 
-	.panels .panel .button-container{	
+	.healthy-internet-project .panels .panel .button-container{	
 		width: 50px;
 	}
 
-	.panels .panel .tips{
+	.healthy-internet-project .panels .panel .tips{
 		height: 65%;
 		top: 30%;
 	}
@@ -500,15 +500,15 @@ CONSOLIDATED "FOOTER" STYLING
 
 
   @media only screen and (max-width: 700px) {
-	.footer #hip-logo-white{
+	.healthy-internet-project .footer #hip-logo-white{
 		height:60px;
 	}
 
-	.panels .panel h1 {
+	.healthy-internet-project .panels .panel h1 {
 		font-size: 25px;
 	}
 
-	.panels .panel {
+	.healthy-internet-project .panels .panel {
 		padding-right: 5%;
 		padding-left: 5%;
 	}
@@ -517,17 +517,17 @@ CONSOLIDATED "FOOTER" STYLING
 
 
   @media only screen and (max-height: 600px) {
-	.panels .panel h1 {
+	.healthy-internet-project .panels .panel h1 {
 		font-size: 35px;
 		transition: all 1s linear;
 	}
 
-	.panels .panel {
+	.healthy-internet-project .panels .panel {
 		padding-top: 30px;
 		padding-right: 5%;
 	}
 
-	.footer #hip-logo-white{
+	.healthy-internet-project .footer #hip-logo-white{
 		height:70px;
 
 	}

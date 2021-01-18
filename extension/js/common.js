@@ -10,7 +10,10 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 if (browser && browser.extension && browser.extension.getBackgroundPage)
 {
 	backgroundPage = browser.extension.getBackgroundPage();
-	CONFIG = backgroundPage.CONFIG;
+	if (backgroundPage)
+	{
+		CONFIG = backgroundPage.CONFIG;
+	}
 }
 
 
