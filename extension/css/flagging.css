@@ -1,11 +1,15 @@
 
+:root
+{
+	--popup-width: 384px;
+}
 
 .healthy-internet-project.flagging 
 {
 	background-color: rgba(0,0,0,0);
 	border: 2px solid #252B36;
 	box-shadow: 0px 2px 10px rgba(0, 0, 0, 1);
-	width: 384px;
+	width: var(--popup-width);
 	min-height: 500px;
 	height: 500px;
 	overflow: hidden;
@@ -26,10 +30,10 @@
 	position: absolute;
 	top: 0;	
 	right: 0;
-	width: 416px;
+	width: calc(800px - var(--popup-width));
 	height: 100%;
 	padding: 10px 10px 120px 10px;
-	z-index: 10;
+	z-index: 99999;
 	overflow: hidden;
 }
 
@@ -57,6 +61,11 @@
 	padding-right: 416px;
 }
 
+.healthy-internet-project.flagging.debug .flagging-ui
+{
+	transform: translateX(-416px);
+}
+
 
 .healthy-internet-project.flagging .error
 {
@@ -68,6 +77,7 @@
 .healthy-internet-project .flagging-ui
 {
 	height: 100%;
+	width: var(--popup-width);
 	min-height: 512px;
 }
 
@@ -620,6 +630,70 @@
 {
 	border-color: #26A65B;
 }
+
+/* RIGHT-TO-LEFT STYLING */
+
+*[dir="rtl"] 
+{
+	direction: RTL; 
+	unicode-bidi:bidi-override;  
+}
+
+
+html[dir="rtl"] .healthy-internet-project.flagging.debug #debugger
+{	
+	direction: LTR; 
+}
+
+html[dir="rtl"] .healthy-internet-project.flagging.debug 
+{
+
+}
+
+
+html[dir="rtl"] .site-title
+{
+	padding-left: 50px; 
+	padding-right: 24px;
+}
+
+html[dir="rtl"] .with-favicon img
+{
+	left: auto;
+	right: 0;
+	margin-right: 0;
+	margin-left: 8px;
+}
+
+html[dir="rtl"] .pane .menu-close,
+html[dir="rtl"] .menu-open
+{
+	left: auto;
+	right: 324px;
+}
+
+html[dir="rtl"] ul.flags li .thermometer,
+html[dir="rtl"] ul.selected-flags li .thermometer
+{
+	left: auto;
+	right: 56px;
+	transform: translateX(0);
+}
+
+html[dir="rtl"] ul.flags li.on,
+html[dir="rtl"] ul.selected-flags li
+{
+	padding-left: auto;
+	padding-right: 78px;
+}
+
+html[dir="rtl"] .select 
+{	
+	background-position: 6px center;
+}
+
+
+/* ANIMATION KEYFRAMES */
 
 
 @keyframes wiggle {

@@ -461,6 +461,31 @@ CONSOLIDATED "FOOTER" STYLING
 
 }
 
+/* RIGHT-TO-LEFT STYLING */
+
+*[dir="rtl"] 
+{
+	direction: RTL; 
+	unicode-bidi:bidi-override;  
+}
+
+html[dir="rtl"] ul.missions li,
+html[dir="rtl"] .page[data-index="0"] li,
+html[dir="rtl"] .selected-flags li
+{
+	padding-left: 0;
+	padding-right: 58px;
+}
+
+html[dir="rtl"] ul.missions li .icon,
+html[dir="rtl"] .page[data-index="0"] li .icon,
+html[dir="rtl"] .selected-flags li .icon
+{
+	left: auto;
+	right: 0;
+}
+
+
 
 /* RESPONSIVE STYLING */
 

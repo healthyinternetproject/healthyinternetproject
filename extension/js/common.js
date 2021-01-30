@@ -1,11 +1,19 @@
 
-var backgroundPage = null;
-var CONFIG = {};
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 {
 	browser = chrome;
 }
+
+var backgroundPage = null;
+var CONFIG = {};
+var locale = getString("@@ui_locale");
+var rtlLocales = [
+	//'en',
+	//'en_US',
+	'ar'
+];
+
 
 if (browser && browser.extension && browser.extension.getBackgroundPage)
 {
@@ -19,11 +27,14 @@ if (browser && browser.extension && browser.extension.getBackgroundPage)
 
 jQuery(document).ready(function ($) {
 
-	console.log("Locale is " + getString("@@ui_locale"));
+	consoleLog("Locale is " + locale);
 
 
 	//insert localized strings
 	localizeStrings($(document));
+
+	//switch inputs to RTL if needed
+	localizeUI($('html'));
 
 });
 
@@ -43,6 +54,28 @@ function localizeStrings ($el)
 		$this.attr("placeholder", message );
 		//consoleLog(messageId + " = " + message);
 	});	
+}
+
+
+function localizeUI ($rootEl)
+{
+	let rtl = rtlLocales.includes(locale);
+
+	if (rtl)
+	{
+		$rootEl.attr("dir","rtl");
+		consoleLog("Adding RTL direction to input elements");
+
+		$rootEl.find("textarea").each(function () {
+			let $this = $(this);
+			$this.attr("dir", "rtl");
+		});
+
+		$rootEl.find("input").each(function () {
+			let $this = $(this);
+			$this.attr("dir", "rtl");
+		});
+	}
 }
 
 
