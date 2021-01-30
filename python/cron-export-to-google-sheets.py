@@ -48,16 +48,16 @@ print("Connected to Google Sheet")
 
 # query for all relevant flags
 data_query = ("SELECT "
-	"LEFT(flagging_event_status_link.timestamp, 16) as `timestamp`, "
-	"flagging_event.flagging_event_id as `flagging event id`, "
-	"flag_type.name as `flag type`, "
-	"flag.severity, "
-	"campaign.name as `campaign`, "
-	"flagging_event.user_id as `user id`, "
-	"locale.code as `language`, "
-	"flagging_event.country_id as `country`, "
-	"flagging_event.url as `url`, "
-	"flagging_event.notes as `notes`"
+	"LEFT(flagging_event_status_link.timestamp, 16) as `Timestamp`, "
+	"flagging_event.country_id as `Country`, "
+	"locale.code as `Language`, "
+	"flag_type.name as `Flag Type`, "
+	"flag.severity as `Severity`, "
+	"campaign.name as `Hashtag`, "
+	"flagging_event.url as `URL`, "
+	"flagging_event.notes as `Notes`, "
+	"flagging_event.user_id as `User ID`, "
+	"flagging_event.flagging_event_id as `Flag ID` "
 	"FROM flag "
 	"INNER JOIN flagging_event ON flag.flagging_event_id=flagging_event.flagging_event_id "
 	"INNER JOIN flagging_event_status_link ON flag.flagging_event_id=flagging_event_status_link.flagging_event_id "
@@ -66,7 +66,7 @@ data_query = ("SELECT "
 	"INNER JOIN locale ON flagging_event.locale_id = locale.locale_id "
 	"WHERE flagging_event.url NOT LIKE 'chrome%%'  "
 	"AND flagging_event.url NOT LIKE 'moz-extension%%'  "
-	"AND flagging_event.url NOT LIKE '127.0.0.1%%'  "
+	"AND flagging_event.url NOT LIKE '%%127.0.0.1%%'  "
 	"AND flagging_event.url NOT LIKE '%%www.damninteresting.com%%' "
 	"AND flagging_event.notes NOT LIKE 'test%%'  "
 	"AND flagging_event.notes NOT LIKE 'justin%%' "
@@ -88,7 +88,7 @@ for row in rows:
 	for key in sheet_keys:
 		new_sheet_row.append(row[key])
 
-	new_sheet_row[7] = get_country_name(row['country'])
+	new_sheet_row[1] = get_country_name(row['Country'])
 
 	new_sheet_rows.append(new_sheet_row)
 	
