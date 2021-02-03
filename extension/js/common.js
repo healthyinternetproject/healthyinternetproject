@@ -9,8 +9,8 @@ var backgroundPage = null;
 var CONFIG = {};
 var locale = getString("@@ui_locale");
 var rtlLocales = [
-	'en',
-	'en_US',
+	//'en',
+	//'en_US',
 	'ar'
 ];
 
