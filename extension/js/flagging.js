@@ -79,6 +79,7 @@ jQuery(document).ready(function ($) {
 		$(".test-local-api").click( testLocalAPI );		
 		$(".test-remote-api").click( testRemoteAPI );		
 		$(".test-flagging-in-tab").click( testLoadFlaggingInTab );
+		$(".close-debug").click( closeDebug );
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
 
@@ -389,6 +390,7 @@ jQuery(document).ready(function ($) {
 		});
 	}
 });
+
 
 
 function sendFlagData (currentReport, currentUrl)
@@ -866,4 +868,10 @@ function toggleDevConsole ()
 	{
 		$body.addClass("debug");
 	}
+}
+
+
+function closeDebug ()
+{
+	$("body").removeClass("debug");
 }

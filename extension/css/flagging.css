@@ -16,6 +16,11 @@
 
 }
 
+.healthy-internet-project.flagging #debugger *
+{
+	direction: ltr !important;
+}
+
 .healthy-internet-project.flagging #debugger
 {
 	display: none;
@@ -30,7 +35,7 @@
 	position: absolute;
 	top: 0;	
 	right: 0;
-	width: calc(800px - var(--popup-width));
+	width: 100%;
 	height: 100%;
 	padding: 10px 10px 120px 10px;
 	z-index: 99999;
@@ -57,13 +62,25 @@
 
 .healthy-internet-project.flagging.debug
 {
-	width: 800px;
-	padding-right: 416px;
+	/* width: 800px;
+	padding-right: 416px; */
 }
 
 .healthy-internet-project.flagging.debug .flagging-ui
 {
-	transform: translateX(-416px);
+	/*transform: translateX(-416px);*/
+}
+
+.healthy-internet-project.flagging.debug .close-debug
+{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 9999;
+	font-size: 30px;
+	font-weight: bold;
+	opacity: 0.8;
+	cursor: pointer;
 }
 
 
@@ -640,24 +657,24 @@
 }
 
 
-html[dir="rtl"] .healthy-internet-project.flagging.debug #debugger
+*[dir="rtl"] .healthy-internet-project.flagging.debug #debugger
 {	
 	direction: LTR; 
 }
 
-html[dir="rtl"] .healthy-internet-project.flagging.debug 
+*[dir="rtl"] .healthy-internet-project.flagging.debug 
 {
 
 }
 
 
-html[dir="rtl"] .site-title
+*[dir="rtl"] .site-title
 {
 	padding-left: 50px; 
 	padding-right: 24px;
 }
 
-html[dir="rtl"] .with-favicon img
+*[dir="rtl"] .with-favicon img
 {
 	left: auto;
 	right: 0;
@@ -665,29 +682,29 @@ html[dir="rtl"] .with-favicon img
 	margin-left: 8px;
 }
 
-html[dir="rtl"] .pane .menu-close,
-html[dir="rtl"] .menu-open
+*[dir="rtl"] .pane .menu-close,
+*[dir="rtl"] .menu-open
 {
 	left: auto;
 	right: 324px;
 }
 
-html[dir="rtl"] ul.flags li .thermometer,
-html[dir="rtl"] ul.selected-flags li .thermometer
+*[dir="rtl"] ul.flags li .thermometer,
+*[dir="rtl"] ul.selected-flags li .thermometer
 {
 	left: auto;
 	right: 56px;
 	transform: translateX(0);
 }
 
-html[dir="rtl"] ul.flags li.on,
-html[dir="rtl"] ul.selected-flags li
+*[dir="rtl"] ul.flags li.on,
+*[dir="rtl"] ul.selected-flags li
 {
 	padding-left: auto;
 	padding-right: 78px;
 }
 
-html[dir="rtl"] .select 
+*[dir="rtl"] .select 
 {	
 	background-position: 6px center;
 }

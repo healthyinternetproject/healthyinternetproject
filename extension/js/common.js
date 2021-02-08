@@ -34,7 +34,7 @@ jQuery(document).ready(function ($) {
 	localizeStrings($(document));
 
 	//switch inputs to RTL if needed
-	localizeUI($('html'));
+	localizeUI();
 
 });
 
@@ -57,21 +57,24 @@ function localizeStrings ($el)
 }
 
 
-function localizeUI ($rootEl)
+function localizeUI ()
 {
 	let rtl = rtlLocales.includes(locale);
 
 	if (rtl)
 	{
-		$rootEl.attr("dir","rtl");
+		$hipEls = $(".healthy-internet-project");
+
+		$hipEls.attr("dir","rtl");
+
 		consoleLog("Adding RTL direction to input elements");
 
-		$rootEl.find("textarea").each(function () {
+		$hipEls.find("textarea").each(function () {
 			let $this = $(this);
 			$this.attr("dir", "rtl");
 		});
 
-		$rootEl.find("input").each(function () {
+		$hipEls.find("input").each(function () {
 			let $this = $(this);
 			$this.attr("dir", "rtl");
 		});
