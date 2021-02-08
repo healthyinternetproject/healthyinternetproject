@@ -5,8 +5,11 @@ var uiInitialized = false;
 
 
 jQuery(document).ready(function ($) 
-{
+{	
+
+
 	initializeUI();	
+
 
 	if(window.location.protocol=="moz-extension:"){
 		$(".help-button").css({'display':'none'});
@@ -146,6 +149,9 @@ jQuery(document).ready(function ($)
 		console.log("Initializing UI");
 		uiInitialized = true;
 
+
+
+
 		$(".onboarding .user-id").html( formatUserId(CONFIG.userId) );
 
 		$(".onboarding .progress .step [href]").click(function (ev) 
@@ -198,6 +204,7 @@ jQuery(document).ready(function ($)
 				$(".mission-name").text( getString( $this.attr("data-message-root") + "_on" ).toLowerCase() ).html();
 				$(".demo-article-headline").text( getString( $this.attr("data-message-root") + "_headline" )).html();
 				$(".demo-article-content").text( getString( $this.attr("data-message-root") + "_content" )).html();
+
 
 				if ($this.hasClass('good'))
 				{
@@ -393,7 +400,6 @@ jQuery(document).ready(function ($)
 		});
 
 
-		$(".country-picker").load("countrylist.html");
 
 
 		$("#button-container-notif").each(function () 

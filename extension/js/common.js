@@ -1,5 +1,4 @@
 
-
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 {
 	browser = chrome;
@@ -33,6 +32,7 @@ jQuery(document).ready(function ($) {
 	//insert localized strings
 	localizeStrings($(document));
 
+
 	//switch inputs to RTL if needed
 	localizeUI();
 
@@ -45,7 +45,16 @@ function localizeStrings ($el)
 		let $this = $(this);
 		let message = getString($this.attr("data-i18n-message"));
 		$this.html( message );
-		//consoleLog(messageId + " = " + message);
+	});
+
+	$el.find("[data-i18n-message=select_a_country]").each(function () {
+		
+		let $this = $(this);
+		$this.attr("data-i18n-message")
+		let message = getString($this.attr("data-i18n-message"));
+		$this.html( message );
+		console.log($this.attr("data-i18n-message") + " = " + message);
+
 	});
 
 	$el.find("[data-i18n-placeholder]").each(function () {
@@ -98,7 +107,7 @@ function consoleLog (data)
 function getString (messageId)
 {
 	let string = browser.i18n.getMessage(messageId);
-
+	
 	if (string) 
 	{
 		return string;
