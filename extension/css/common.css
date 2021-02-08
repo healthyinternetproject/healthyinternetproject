@@ -463,10 +463,10 @@ CONSOLIDATED "FOOTER" STYLING
 
 /* RIGHT-TO-LEFT STYLING */
 
-*[dir="rtl"] 
+*[dir="rtl"] *
 {
 	direction: RTL; 
-	unicode-bidi:bidi-override;  
+	unicode-bidi: bidi-override;  
 }
 
 *[dir="rtl"] ul.missions li,

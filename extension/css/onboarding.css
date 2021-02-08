@@ -810,38 +810,38 @@
 
 /* RTL STYLING */
 
-html[dir="rtl"] .onboarding .panels .panel .button-container
+*[dir="rtl"].onboarding .panels .panel .button-container
 {
 	right: auto;
 	left: 30px;
 }
 
-html[dir="rtl"] .healthy-internet-project .panels .panel button.next:before
+*[dir="rtl"].healthy-internet-project .panels .panel button.next:before
 {
 	transform: scaleX(-1);
 }
 
-html[dir="rtl"] .onboarding .progress:before
+*[dir="rtl"].onboarding .progress:before
 {
 	/* this is the blue filler of the bg progress meter */
 	left: auto;
 	right: 0;
 }
 
-html[dir="rtl"] .onboarding .illustrations.type-a:after
+*[dir="rtl"].onboarding .illustrations.type-a:after
 {
 	right: auto;
 	left: 0;
 	transform: scaleX(-1);
 }
 
-html[dir="rtl"] .onboarding .icon-info li
+*[dir="rtl"] .onboarding .icon-info li
 {
 	padding-left: 0;
 	padding-right: 50px;
 }
 
-html[dir="rtl"] .onboarding .icon-info li .icon
+*[dir="rtl"] .onboarding .icon-info li .icon
 {
 	left: auto;
 	right: 0;
