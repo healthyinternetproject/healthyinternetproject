@@ -1,5 +1,6 @@
 
 var API_ROOT_URL = "https://api.healthyinternetproject.org/api/v1/"; 
+var API_LOCAL_ROOT_URL = "http://127.0.0.1:8080/api/v1/"; 
 var NOTIFICATION_CHECK_MIN_TIME = 600000; //10 minutes in milliseconds
 var DEV_NOTIFICATION_BUTTON = "dev-button";
 
@@ -452,10 +453,10 @@ function sendToAPI ( term, data, authenticate, callback )
 		console.log("this is the callback "+callback.name)
 	}
 
-	getConfigFromStorage (function (result) {
+	getConfigFromStorage(function (result) {
 
 		let xhr = new XMLHttpRequest();
-		let url = window.API_ROOT_URL + term;
+		let url = CONFIG.apiUrl + term;
 		let params = [];
 		let postData = "";
 
@@ -652,9 +653,7 @@ function showNotifications ( data )
 		for (let i=0; i < data.notifications.length; i++)
 		{
 			let notification = data.notifications[i];
-	
-
-			console.log(notification);
+			let url = notification.url;
 			let notificationId = getNotificationId();
 
 			let n = browser.notifications.create(notificationId, {
@@ -665,8 +664,23 @@ function showNotifications ( data )
 				//"requireInteraction" : true
 			});	
 
-			var url = ""
-			if(notification.url){
+			console.log(notification);
+
+			if (notification.type == "mentor-request")
+			{
+				let clickFunc = function(notificationId) 
+				{
+					let url = notification.url;
+					console.log("Mentor review notification click");
+					isMentorReview[url] = true; //todo: remember to delete this key after review
+					window.open(url);
+				};
+
+				browser.notifications.onClicked.addListener(clickFunc);
+				browser.notifications.onButtonClicked.addListener(clickFunc);				
+			}
+			else if(notification.url)
+			{
 				url = notification.url;
 			}
 			else{
@@ -804,6 +818,7 @@ function testOnboarding ()
 	window.open("/html/onboarding.html");
 }
 
+
 function testMentorOnboarding ()
 {
 	window.open("/html/onboarding-mentor.html");
@@ -832,6 +847,25 @@ function testMentorReviewNotification (url)
 	browser.notifications.onClicked.addListener(clickFunc);
 	browser.notifications.onButtonClicked.addListener(clickFunc);
 }
+
+
+function testLocalAPI ()
+{
+	CONFIG.apiUrl = API_LOCAL_ROOT_URL;
+}
+
+
+function testRemoteAPI ()
+{
+	CONFIG.apiUrl = API_ROOT_URL;
+}
+
+
+function testLoadFlaggingInTab ()
+{
+	window.open("/html/flagging.html");
+}
+
 
 
 function isDevMode () 

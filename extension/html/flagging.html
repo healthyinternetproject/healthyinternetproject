@@ -7,7 +7,7 @@
 		<link href="/css/flagging.css" rel="stylesheet">
 		<meta charset="UTF-8">
 	</head>
-	<body class="flagging">
+	<body class="healthy-internet-project flagging">
 
 		<div class="pane">
 			<img class="menu-close" src="/images/close-icon.svg">
@@ -171,14 +171,18 @@
 
 		<div id="debugger">			
 			<span data-i18n-message="developer_console"></span>
+			<div class="close-debug">&times;</div>
 			<div class="messages"></div>
 			<div class="controls">
 				<form>
+					<input type="button" class="test-local-api" value="Use Local API">
+					<input type="button" class="test-remote-api" value="Use Remote API">
 					<input type="button" class="test-notification-ping" value="Ping Notifications">
 					<input type="button" class="test-journalism-request" value="Journalist Request">
 					<input type="button" class="test-mentor-review" value="Mentor Review">
 					<input type="button" class="test-onboarding" value="Onboarding">
 					<input type="button" class="test-mentor-onboarding" value="Mentor Onboarding">
+					<input type="button" class="test-flagging-in-tab" value="Load Flagging UI in Tab">
 				</form>
 			</div>
 		</div>

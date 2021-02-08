@@ -1,0 +1,44 @@
+
+body.healthy-internet-project, .healthy-internet-project div, .healthy-internet-project span, .healthy-internet-project applet, .healthy-internet-project object, .healthy-internet-project iframe,
+.healthy-internet-project h1, .healthy-internet-project h2, healthy-internet-project h3, .healthy-internet-project h4, .healthy-internet-project h5, .healthy-internet-project h6, .healthy-internet-project p, .healthy-internet-project blockquote, .healthy-internet-project pre,
+.healthy-internet-project a, .healthy-internet-project abbr, .healthy-internet-project acronym, .healthy-internet-project address, .healthy-internet-project big, .healthy-internet-project cite, .healthy-internet-project code,
+.healthy-internet-project del, .healthy-internet-project dfn, .healthy-internet-project em, .healthy-internet-project img, .healthy-internet-project ins, .healthy-internet-project kbd, .healthy-internet-project q, .healthy-internet-project s, .healthy-internet-project samp,
+.healthy-internet-project small, .healthy-internet-project strike, .healthy-internet-project strong, .healthy-internet-project sub, .healthy-internet-project sup, .healthy-internet-project tt, .healthy-internet-project var,
+.healthy-internet-project b, .healthy-internet-project u, .healthy-internet-project i, .healthy-internet-project center,
+.healthy-internet-project dl, .healthy-internet-project dt, .healthy-internet-project dd, .healthy-internet-project ol, .healthy-internet-project ul, .healthy-internet-project li,
+.healthy-internet-project fieldset, .healthy-internet-project form, .healthy-internet-project label, .healthy-internet-project legend,
+.healthy-internet-project table, .healthy-internet-project caption, .healthy-internet-project tbody, .healthy-internet-project tfoot, .healthy-internet-project thead, .healthy-internet-project tr, .healthy-internet-project th, .healthy-internet-project td,
+.healthy-internet-project article, .healthy-internet-project aside, .healthy-internet-project canvas, .healthy-internet-project details, .healthy-internet-project embed, 
+.healthy-internet-project figure, .healthy-internet-project figcaption, .healthy-internet-project footer, .healthy-internet-project header, .healthy-internet-project hgroup, 
+.healthy-internet-project menu, .healthy-internet-project nav, .healthy-internet-project output, .healthy-internet-project ruby, .healthy-internet-project section, .healthy-internet-project summary,
+.healthy-internet-project time, .healthy-internet-project mark, .healthy-internet-project audio, .healthy-internet-project video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+.healthy-internet-project article, .healthy-internet-project aside, .healthy-internet-project details, .healthy-internet-project figcaption, .healthy-internet-project figure, 
+.healthy-internet-project footer, .healthy-internet-project header, .healthy-internet-project hgroup, .healthy-internet-project menu, .healthy-internet-project nav, .healthy-internet-project section {
+	display: block;
+}
+body.healthy-internet-project  {
+	line-height: 1;
+}
+.healthy-internet-project ol, .healthy-internet-project ul {
+	list-style: none;
+}
+.healthy-internet-project blockquote, .healthy-internet-project q {
+	quotes: none;
+}
+.healthy-internet-project blockquote:before, .healthy-internet-project blockquote:after,
+.healthy-internet-project q:before, .healthy-internet-project q:after {
+	content: '';
+	content: none;
+}
+.healthy-internet-project table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}

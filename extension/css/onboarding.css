@@ -807,6 +807,48 @@
 	width: 70px;
     padding-right: 5px;
 }
+
+/* RTL STYLING */
+
+*[dir="rtl"].onboarding .panels .panel .button-container
+{
+	right: auto;
+	left: 30px;
+}
+
+*[dir="rtl"].healthy-internet-project .panels .panel button.next:before
+{
+	transform: scaleX(-1);
+}
+
+*[dir="rtl"].onboarding .progress:before
+{
+	/* this is the blue filler of the bg progress meter */
+	left: auto;
+	right: 0;
+}
+
+*[dir="rtl"].onboarding .illustrations.type-a:after
+{
+	right: auto;
+	left: 0;
+	transform: scaleX(-1);
+}
+
+*[dir="rtl"] .onboarding .icon-info li
+{
+	padding-left: 0;
+	padding-right: 50px;
+}
+
+*[dir="rtl"] .onboarding .icon-info li .icon
+{
+	left: auto;
+	right: 0;
+}
+
+
+
 /*
 @keyframes bounce-frames { 
 	0% { opacity: 1;transform:translateY(25px); } 

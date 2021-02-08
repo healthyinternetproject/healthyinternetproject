@@ -12,7 +12,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse)
 
 		$('.healthy-internet-project.content-warning button#begin_review').click(() => startReview());
 		$('.healthy-internet-project.content-warning #uncomfortable-link').click(() => uncomfortable());
-		$(".healthy-internet-project .submit_feedback").click(function () { window.close(); });	
+		$(".healthy-internet-project .submit_feedback").click(submitReview);	
     }
 });
 
@@ -150,5 +150,21 @@ function activateButton()
 function closeOverlay()
 {
     $('.healthy-internet-project.overlay-container').css("display","none");
+}
+
+
+function submitReview()
+{
+	var data = {
+		'agree': verdict ? 'yes' : 'no',
+		'notes': $(".healthy-internet-project.review .reasoning").val()
+	};
+	var callback = function (response) {
+		//todo: show error if needed
+		window.close();
+	};
+
+	//thus may have to be a sendMessage
+	backgroundPage.sendToAPI('mentor-response', data, true, callback);
 }
 

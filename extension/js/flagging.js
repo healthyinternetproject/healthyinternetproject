@@ -72,10 +72,14 @@ jQuery(document).ready(function ($) {
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
 		$(".test-journalism-request").click( generateTestMessage );
-		$(".test-notification-ping").click( getNotifications );
+		$(".test-notification-ping").click( function () { getNotifications(true); } );
 		$(".test-mentor-review").click( testMentorReview );
 		$(".test-onboarding").click( testOnboarding );	
 		$(".test-mentor-onboarding").click( testMentorOnboarding );		
+		$(".test-local-api").click( testLocalAPI );		
+		$(".test-remote-api").click( testRemoteAPI );		
+		$(".test-flagging-in-tab").click( testLoadFlaggingInTab );
+		$(".close-debug").click( closeDebug );
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
 
@@ -87,7 +91,7 @@ jQuery(document).ready(function ($) {
 			}
 
 
-			currentUrl = url;
+			currentUrl = url ? url : "about:blank";
 
 
 			if (!config.userId)
@@ -131,74 +135,71 @@ jQuery(document).ready(function ($) {
 			}
 
 
-			if ($(".site-title").length > 0)
+			//populate the flagging with details of the site
+
+			let title          = getPageTitle( tabs[0] );				
+			let favicon        = "chrome://favicon/" + displayUrl;					
+			if(window.location.protocol=='moz-extension:' && !onboarding){
+				let domain = (new URL(url)).hostname;
+				console.log(domain)
+				favicon = 'https://'+ domain + '/favicon.ico';
+				console.log(favicon)
+			}
+			let messageDetails = isPermalink( displayUrl );
+
+			if ( messageDetails )
 			{
-				//populate the flagging with details of the site
+				$(".flagging .message h1").html( messageDetails.title );
+				$(".flagging .message .text").html( messageDetails.message );
 
-				let title          = getPageTitle( tabs[0].title );				
-				let favicon        = "chrome://favicon/" + displayUrl;					
-				if(window.location.protocol=='moz-extension:' && !onboarding){
-					let domain = (new URL(url)).hostname;
-					console.log(domain)
-					favicon = 'https://'+ domain + '/favicon.ico';
-					console.log(favicon)
-				}
-				let messageDetails = isPermalink( displayUrl );
-
-				if ( messageDetails )
+				if (messageDetails.image)
 				{
-					$(".flagging .message h1").html( messageDetails.title );
-					$(".flagging .message .text").html( messageDetails.message );
+					$(".flagging .message .example").attr('src',messageDetails.image).css('display','block');
+				}
 
-					if (messageDetails.image)
+				$(".flagging .message").css('display','block');
+				$(".flagging .pages").css('display','none');
+
+				adjustPopupSize(true); //toggle message screen size
+			}
+			else
+			{			
+				if (onboarding)
+				{
+					//TODO: get headline title from demo article dynamically and fill flagging window title with that
+
+					//move the pointy hand to the next step ONLY on the correct onboarding step
+					if(url.slice(-2) == "#5")
 					{
-						$(".flagging .message .example").attr('src',messageDetails.image).css('display','block');
+						//we are looking at an extension page, work in demo mode
+						title = getString("example_site_title");
+						displayUrl = "http://example.com";
+						favicon = "/images/demo-favicon.svg";
+						browser.runtime.sendMessage({command: 'move-hand-flag'}, function (response) { console.log(response); });
 					}
-
-					$(".flagging .message").css('display','block');
-					$(".flagging .pages").css('display','none');
-
-					adjustPopupSize(true); //toggle message screen size
 				}
 				else
-				{			
-					if (onboarding)
+				{
+					if (title.length > CARD_DISPLAY_TITLE_LENGTH)
 					{
-						//TODO: get headline title from demo article dynamically and fill flagging window title with that
-
-						//move the pointy hand to the next step ONLY on the correct onboarding step
-						if(url.slice(-2) == "#5")
-						{
-							//we are looking at an extension page, work in demo mode
-							title = getString("example_site_title");
-							displayUrl = "http://example.com";
-							favicon = "/images/demo-favicon.svg";
-							browser.runtime.sendMessage({command: 'move-hand-flag'}, function (response) { console.log(response); });
-						}
-					}
-					else
-					{
-						if (title.length > CARD_DISPLAY_TITLE_LENGTH)
-						{
-							title = title.substring(0,CARD_DISPLAY_TITLE_LENGTH);
-						}
-
-						if (displayUrl.length > CARD_DISPLAY_URL_LENGTH)
-						{
-							displayUrl = displayUrl.substring(0,(CARD_DISPLAY_URL_LENGTH - 3)) + "...";
-						}
+						title = title.substring(0,CARD_DISPLAY_TITLE_LENGTH);
 					}
 
-					$(".site-title").html( title );
-					//$(".card .site-url").html( '<a href="' + url + '" target="_blank" rel="noreferrer noopener">' + displayUrl + '</a>' );
-					$(".with-favicon img").attr('src', favicon);
-
-					$(".flagging .pages").css('display','block');
-
-					adjustPopupSize();
+					if (displayUrl.length > CARD_DISPLAY_URL_LENGTH)
+					{
+						displayUrl = displayUrl.substring(0,(CARD_DISPLAY_URL_LENGTH - 3)) + "...";
+					}
 				}
 
+				$(".site-title").html( title );
+				//$(".card .site-url").html( '<a href="' + url + '" target="_blank" rel="noreferrer noopener">' + displayUrl + '</a>' );
+				$(".with-favicon img").attr('src', favicon);
+
+				$(".flagging .pages").css('display','block');
+
+				adjustPopupSize();
 			}
+
 
 			
 			$("body").click(function (ev) {
@@ -391,6 +392,7 @@ jQuery(document).ready(function ($) {
 });
 
 
+
 function sendFlagData (currentReport, currentUrl)
 {
 	let data = {
@@ -432,14 +434,16 @@ function generateTestMessage ()
 }
 
 
-function getNotifications ()
+function getNotifications (force)
 {
 	let data = {
 		'command' : 'get-notifications'
 	};
 
 	browser.runtime.sendMessage( data ); 
-	debug("Pinging for notifications...");
+	
+	debug("Pinging for notifications (" + backgroundPage.CONFIG.apiUrl + ")");
+	//backgroundPage.getNotificationsFromAPI(force);
 }
 
 
@@ -456,11 +460,35 @@ function testOnboarding ()
 	backgroundPage.testOnboarding();	
 }
 
+
 function testMentorOnboarding ()
 {
 	debug("Testing onboarding...");
 	backgroundPage.testMentorOnboarding();	
 }
+
+
+function testLocalAPI ()
+{
+	debug("Switching to local API...");
+	backgroundPage.testLocalAPI();	
+	debug(backgroundPage.CONFIG.apiUrl);
+}
+
+
+function testRemoteAPI ()
+{
+	debug("Switching to remote API...");
+	backgroundPage.testRemoteAPI();	
+	debug(backgroundPage.CONFIG.apiUrl);
+}
+
+
+function testLoadFlaggingInTab ()
+{
+	backgroundPage.testLoadFlaggingInTab();
+}
+
 
 function debug (data)
 {
@@ -469,6 +497,10 @@ function debug (data)
 	let json = JSON.stringify(data);
 
 	$debug.html( existing + "<hr>" + json );
+	$debug.animate(
+		{ 'scrollTop' : $debug[0].scrollHeight }, 
+		300
+	);
 }
 
 
@@ -615,7 +647,7 @@ function adjustPopupSize (messageToggle)
 	if (messageToggle)
 	{
 		$flagging.height("auto");	//set height to auto for messages with no "page"
-		$flagging.overflow( "hidden" );
+		$flagging.css( "overflow","hidden" );
 
 	}
 	else if ($button.length > 0)
@@ -639,7 +671,10 @@ function adjustPopupSize (messageToggle)
 
 function isPermalink ( url )
 {
-	if (!url) { return true; }
+	if (!url) 
+	{  
+		url = "about:blank";
+	}
 
 	let domain = (new URL(url)).hostname;
 
@@ -680,16 +715,14 @@ function isPermalink ( url )
 
 
 
-function getPageTitle ( foundTitle )
+function getPageTitle ( tab )
 {
-	let title = foundTitle;
+	let title = getString("this_page");
 
-	if (!title)
+	if (tab && tab.title)
 	{
-		title = getString("this_page");
-	}
-	else
-	{
+		title = tab.title;
+
 		//clean up if needed
 		title = title.replace(/^\(.*?\)\s/g, '');
 	}
@@ -835,4 +868,10 @@ function toggleDevConsole ()
 	{
 		$body.addClass("debug");
 	}
+}
+
+
+function closeDebug ()
+{
+	$("body").removeClass("debug");
 }

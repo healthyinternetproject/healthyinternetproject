@@ -1,4 +1,6 @@
 
+# this class is no longer used, replaced by HIPDatabase
+
 import mysql.connector
 
 class CivicDB:

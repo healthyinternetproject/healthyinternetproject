@@ -1,26 +1,40 @@
 
-var backgroundPage = null;
-var CONFIG = {};
 
 if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 {
 	browser = chrome;
 }
 
+var backgroundPage = null;
+var CONFIG = {};
+var locale = getString("@@ui_locale");
+var rtlLocales = [
+	//'en',
+	//'en_US',
+	'ar'
+];
+
+
 if (browser && browser.extension && browser.extension.getBackgroundPage)
 {
 	backgroundPage = browser.extension.getBackgroundPage();
-	CONFIG = backgroundPage.CONFIG;
+	if (backgroundPage)
+	{
+		CONFIG = backgroundPage.CONFIG;
+	}
 }
 
 
 jQuery(document).ready(function ($) {
 
-	console.log("Locale is " + getString("@@ui_locale"));
+	consoleLog("Locale is " + locale);
 
 
 	//insert localized strings
 	localizeStrings($(document));
+
+	//switch inputs to RTL if needed
+	localizeUI();
 
 });
 
@@ -40,6 +54,31 @@ function localizeStrings ($el)
 		$this.attr("placeholder", message );
 		//consoleLog(messageId + " = " + message);
 	});	
+}
+
+
+function localizeUI ()
+{
+	let rtl = rtlLocales.includes(locale);
+
+	if (rtl)
+	{
+		$hipEls = $(".healthy-internet-project");
+
+		$hipEls.attr("dir","rtl");
+
+		consoleLog("Adding RTL direction to input elements");
+
+		$hipEls.find("textarea").each(function () {
+			let $this = $(this);
+			$this.attr("dir", "rtl");
+		});
+
+		$hipEls.find("input").each(function () {
+			let $this = $(this);
+			$this.attr("dir", "rtl");
+		});
+	}
 }
 
 
