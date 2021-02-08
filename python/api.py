@@ -29,7 +29,7 @@ app = flask.Flask(__name__)
 @app.route('/', methods=['GET'])
 def home():
 	functions.to_console("home")
-	return '<h1>Civic API (' + cfg.settings['version'] + ')</h1>'
+	return '<h1>Healthy Internet Project API (' + cfg.settings['version'] + ')</h1>'
 
 
 @app.route('/favicon.ico')
