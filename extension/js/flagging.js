@@ -320,7 +320,8 @@ jQuery(document).ready(function ($) {
 				let $this    = $(this);
 				let $select  = $this.closest(".select");
 				let $preview = $select.find(".preview");
-				let value    = $this.attr("data-value");
+				//let value    = $this.attr("data-value");
+				let value    = $this.text();
 
 				$select.find(".option").removeClass('selected');
 				$this.addClass('selected');
