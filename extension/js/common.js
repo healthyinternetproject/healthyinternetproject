@@ -66,7 +66,7 @@ function getString (messageId)
 	}
 	else
 	{
-		return messageId;
+		return "";
 	}
 }
 
