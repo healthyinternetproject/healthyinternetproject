@@ -859,7 +859,7 @@
 *[dir="rtl"].onboarding #pointer-hand.point-at-flag
 {
 	right: auto;	
-	left: 960px;	
+	left: 470px;	
 	animation-fill-mode: forwards;
 	animation: slide-frames-rotate-rtl ease-in-out infinite;
 	animation-duration: 2s;	
@@ -869,7 +869,7 @@
 *[dir="rtl"].onboarding #pointer-hand.point-at-text
 {
 	right: auto;	
-	left: 960px;	
+	left: 470px;	
 	animation-fill-mode: forwards;
 	animation: slide-frames-rotate-rtl ease-in-out infinite;
 	animation-duration: 2s;	
@@ -878,7 +878,7 @@
 *[dir="rtl"].onboarding #pointer-hand.point-at-dropdown
 {
 	right: auto;	
-	left: 960px;	
+	left: 470px;	
 	animation-fill-mode: forwards;
 	animation: slide-frames-rotate-rtl ease-in-out infinite;
 	animation-duration: 2s;	
