@@ -463,23 +463,22 @@ CONSOLIDATED "FOOTER" STYLING
 
 /* RIGHT-TO-LEFT STYLING */
 
-*[dir="rtl"] *
+.healthy-internet-project[dir="rtl"] *
 {
 	direction: RTL; 
-	unicode-bidi: bidi-override;  
 }
 
-*[dir="rtl"] ul.missions li,
-*[dir="rtl"] .page[data-index="0"] li,
-*[dir="rtl"] .selected-flags li
+.healthy-internet-project[dir="rtl"] ul.missions li,
+.healthy-internet-project[dir="rtl"] .page[data-index="0"] li,
+.healthy-internet-project[dir="rtl"] .selected-flags li
 {
 	padding-left: 0;
 	padding-right: 58px;
 }
 
-*[dir="rtl"] ul.missions li .icon,
-*[dir="rtl"] .page[data-index="0"] li .icon,
-*[dir="rtl"] .selected-flags li .icon
+.healthy-internet-project[dir="rtl"] ul.missions li .icon,
+.healthy-internet-project[dir="rtl"] .page[data-index="0"] li .icon,
+.healthy-internet-project[dir="rtl"] .selected-flags li .icon
 {
 	left: auto;
 	right: 0;
