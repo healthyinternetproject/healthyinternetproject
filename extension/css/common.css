@@ -468,6 +468,11 @@ CONSOLIDATED "FOOTER" STYLING
 	direction: RTL; 
 }
 
+.healthy-internet-project[dir="rtl"] .panels .panel
+{
+	padding: 50px 50px 50px 140px;
+}
+
 .healthy-internet-project[dir="rtl"] ul.missions li,
 .healthy-internet-project[dir="rtl"] .page[data-index="0"] li,
 .healthy-internet-project[dir="rtl"] .selected-flags li
