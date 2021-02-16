@@ -25,13 +25,27 @@
   src: url('../fonts/Inter-Regular.otf') format('opentype');
 }
 
-
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
   src: url('../fonts/Inter-Bold.otf') format('opentype');
 }
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/IBMPlexSansArabic-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/IBMPlexSansArabic-Bold.otf') format('opentype');
+}
+
 
 .healthy-internet-project * 
 {
@@ -466,6 +480,7 @@ CONSOLIDATED "FOOTER" STYLING
 .healthy-internet-project[dir="rtl"] *
 {
 	direction: RTL; 
+	font-family: 'IBM Plex Sans Arabic';
 }
 
 .healthy-internet-project[dir="rtl"] .panels .panel
