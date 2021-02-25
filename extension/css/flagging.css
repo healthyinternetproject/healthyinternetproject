@@ -650,31 +650,26 @@
 
 /* RIGHT-TO-LEFT STYLING */
 
-*[dir="rtl"] 
+.healthy-internet-project[dir="rtl"] 
 {
 	direction: RTL; 
-	unicode-bidi:bidi-override;  
 }
 
 
-*[dir="rtl"] .healthy-internet-project.flagging.debug #debugger
+.healthy-internet-project[dir="rtl"].flagging.debug #debugger
 {	
 	direction: LTR; 
 }
 
-*[dir="rtl"] .healthy-internet-project.flagging.debug 
-{
-
-}
 
 
-*[dir="rtl"] .site-title
+.healthy-internet-project[dir="rtl"] .site-title
 {
 	padding-left: 50px; 
 	padding-right: 24px;
 }
 
-*[dir="rtl"] .with-favicon img
+.healthy-internet-project[dir="rtl"] .with-favicon img
 {
 	left: auto;
 	right: 0;
@@ -682,29 +677,29 @@
 	margin-left: 8px;
 }
 
-*[dir="rtl"] .pane .menu-close,
-*[dir="rtl"] .menu-open
+.healthy-internet-project[dir="rtl"] .pane .menu-close,
+.healthy-internet-project[dir="rtl"] .menu-open
 {
 	left: auto;
 	right: 324px;
 }
 
-*[dir="rtl"] ul.flags li .thermometer,
-*[dir="rtl"] ul.selected-flags li .thermometer
+.healthy-internet-project[dir="rtl"] ul.flags li .thermometer,
+.healthy-internet-project[dir="rtl"] ul.selected-flags li .thermometer
 {
 	left: auto;
 	right: 56px;
 	transform: translateX(0);
 }
 
-*[dir="rtl"] ul.flags li.on,
-*[dir="rtl"] ul.selected-flags li
+.healthy-internet-project[dir="rtl"] ul.flags li.on,
+.healthy-internet-project[dir="rtl"] ul.selected-flags li
 {
 	padding-left: auto;
 	padding-right: 78px;
 }
 
-*[dir="rtl"] .select 
+.healthy-internet-project[dir="rtl"] .select 
 {	
 	background-position: 6px center;
 }

@@ -480,7 +480,14 @@
 	display: none;
 }
 
-.onboarding .panels .panel .browserbar{
+.onboarding .panels .panel .countrypicker
+{
+	display: block;
+	max-height: 100px;
+}
+
+.onboarding .panels .panel .browserbar
+{
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -813,6 +820,13 @@
 
 /* RTL STYLING */
 
+*[dir="rtl"].onboarding .panels .panel.welcome
+{
+	padding-top: 300px;
+	padding-left: 140px;
+	padding-right: 140px;
+}
+
 *[dir="rtl"].onboarding .panels .panel .button-container
 {
 	right: auto;
@@ -838,17 +852,92 @@
 	transform: scaleX(-1);
 }
 
-*[dir="rtl"] .onboarding .icon-info li
+*[dir="rtl"].onboarding .icon-info li
 {
 	padding-left: 0;
 	padding-right: 50px;
 }
 
-*[dir="rtl"] .onboarding .icon-info li .icon
+*[dir="rtl"].onboarding .icon-info li .icon
 {
 	left: auto;
 	right: 0;
 }
+
+
+
+*[dir="rtl"].onboarding #pointer-hand.point-at-extension
+{
+	right: auto;	
+	left: 120px;
+}
+
+*[dir="rtl"].onboarding #pointer-hand.point-at-flag
+{
+	right: auto;	
+	left: 470px;	
+	animation-fill-mode: forwards;
+	animation: slide-frames-rotate-rtl ease-in-out infinite;
+	animation-duration: 2s;	
+
+}
+
+*[dir="rtl"].onboarding #pointer-hand.point-at-text
+{
+	right: auto;	
+	left: 470px;	
+	animation-fill-mode: forwards;
+	animation: slide-frames-rotate-rtl ease-in-out infinite;
+	animation-duration: 2s;	
+}
+
+*[dir="rtl"].onboarding #pointer-hand.point-at-dropdown
+{
+	right: auto;	
+	left: 470px;	
+	animation-fill-mode: forwards;
+	animation: slide-frames-rotate-rtl ease-in-out infinite;
+	animation-duration: 2s;	
+}
+
+*[dir="rtl"].onboarding #pointer-hand.point-at-submit
+{
+	right: auto;	
+	left: 205px;	
+}
+
+*[dir="rtl"].onboarding #pointer-tip
+{
+	right: auto;
+	left: 20px;
+	padding: 18px 80px 18px 18px;
+	background-position: 240px 10px;
+}
+
+*[dir="rtl"].onboarding #pointer-tip.point-at-flag
+{
+	right: auto;	
+	left: 640px;	
+}
+
+*[dir="rtl"].onboarding #pointer-tip.point-at-text
+{
+	right: auto;	
+	left: 640px;	
+}
+
+*[dir="rtl"].onboarding #pointer-tip.point-at-dropdown
+{
+	right: auto;	
+	left: 640px;	
+}
+
+*[dir="rtl"].onboarding #pointer-tip.point-at-submit
+{
+	right: auto;		
+	left: 85px;		
+}
+
 
 
 
@@ -871,6 +960,14 @@
 	50% { opacity:1;transform:translateX(90px) rotate(90deg); } 
 	100% { opacity:1;transform:translateX(0) rotate(90deg); }
 } 
+
+@keyframes slide-frames-rotate-rtl { 
+	0% { opacity:1;transform:translateX(0) rotate(270deg) scaleX(-1); } 
+	50% { opacity:1;transform:translateX(90px) rotate(270deg) scaleX(-1); } 
+	100% { opacity:1;transform:translateX(0) rotate(270deg) scaleX(-1); }
+} 
+
+
 
 @keyframes fade-in-frames { 
 	0% { opacity: 0; } 
@@ -913,6 +1010,11 @@
     
     .onboarding .progress .step [href] {
 		padding: 36px 9px 0 20px;
+	}
+
+	*[dir="rtl"].onboarding .progress .step [href] 
+	{
+		padding: 36px 20px 0 9px;
 	}
 }
 

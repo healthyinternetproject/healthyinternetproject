@@ -25,13 +25,27 @@
   src: url('../fonts/Inter-Regular.otf') format('opentype');
 }
 
-
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
   src: url('../fonts/Inter-Bold.otf') format('opentype');
 }
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/IBMPlexSansArabic-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/IBMPlexSansArabic-Bold.otf') format('opentype');
+}
+
 
 .healthy-internet-project * 
 {
@@ -463,23 +477,28 @@ CONSOLIDATED "FOOTER" STYLING
 
 /* RIGHT-TO-LEFT STYLING */
 
-*[dir="rtl"] *
+.healthy-internet-project[dir="rtl"] *
 {
 	direction: RTL; 
-	unicode-bidi: bidi-override;  
+	font-family: 'IBM Plex Sans Arabic';
 }
 
-*[dir="rtl"] ul.missions li,
-*[dir="rtl"] .page[data-index="0"] li,
-*[dir="rtl"] .selected-flags li
+.healthy-internet-project[dir="rtl"] .panels .panel
+{
+	padding: 50px 50px 50px 140px;
+}
+
+.healthy-internet-project[dir="rtl"] ul.missions li,
+.healthy-internet-project[dir="rtl"] .page[data-index="0"] li,
+.healthy-internet-project[dir="rtl"] .selected-flags li
 {
 	padding-left: 0;
 	padding-right: 58px;
 }
 
-*[dir="rtl"] ul.missions li .icon,
-*[dir="rtl"] .page[data-index="0"] li .icon,
-*[dir="rtl"] .selected-flags li .icon
+.healthy-internet-project[dir="rtl"] ul.missions li .icon,
+.healthy-internet-project[dir="rtl"] .page[data-index="0"] li .icon,
+.healthy-internet-project[dir="rtl"] .selected-flags li .icon
 {
 	left: auto;
 	right: 0;
