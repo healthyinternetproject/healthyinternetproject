@@ -769,7 +769,9 @@
     line-height: 25px;
     padding: 13px;
     transition: all 1s ease-in-out;
-    top: 40%;
+	top: 40%;
+	overflow: auto;
+	background-color: white;
 }
 
 .onboarding .next-container{
