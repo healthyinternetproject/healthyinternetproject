@@ -781,6 +781,10 @@
 	background-color: white;
 }
 
+.tips .windows img {
+	width: 30px;
+}
+
 .onboarding .next-container{
     display: flex;
     flex-direction: row;
