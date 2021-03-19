@@ -548,10 +548,10 @@ function sendMissionToAPI (mission_id)
 }
 
 function sendCountryToAPI (country_id)
-{
+{	
 	let data = {
-		'user_id': CONFIG.userId,
-		'country_id': country_id
+		'country_id': country_id,
+		'user_id': CONFIG.userId
 	};
 	return sendToAPI( "country", data, true );
 }

@@ -56,6 +56,15 @@ function localizeStrings ($el)
 		console.log($this.attr("data-i18n-message") + " = " + message);
 
 	});
+	$el.find("[data-i18n-message=prefer_not_to_say]").each(function () {
+		
+		let $this = $(this);
+		$this.attr("data-i18n-message")
+		let message = getString($this.attr("data-i18n-message"));
+		$this.html( message );
+		console.log($this.attr("data-i18n-message") + " = " + message);
+
+	});
 
 	$el.find("[data-i18n-placeholder]").each(function () {
 		let $this = $(this);

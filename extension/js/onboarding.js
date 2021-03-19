@@ -251,10 +251,7 @@ jQuery(document).ready(function ($)
 
 		});
 
-
-
-		$(".onboarding .panel.countrypicker .next").click(function () 
-		{
+		$('select').on('change', function (e) {
 
 			let id = parseInt( $("#countrypicker").val() );
 
@@ -265,8 +262,11 @@ jQuery(document).ready(function ($)
 				{command: 'save-country', 'country_id': id}, 
 				function () {}
 			);
-
+			
 		});
+
+
+		
 
 
 		//activate 'next' buttons in onboarding
