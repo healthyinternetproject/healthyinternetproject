@@ -582,6 +582,8 @@
 {
 	display: inline;
 	height: auto;
+    max-height: 215px;
+    overflow-y: scroll;
 }
 
 .healthy-internet-project .select .options .option
