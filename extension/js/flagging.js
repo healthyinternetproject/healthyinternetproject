@@ -9,6 +9,7 @@ var autofilling = false;
 
 
 debug('Starting...');
+console = backgroundPage.console;
 
 
 jQuery(document).ready(function ($) {
@@ -205,12 +206,19 @@ jQuery(document).ready(function ($) {
 			$("body").click(function (ev) {
 
 				$(".select.open").click();
-				console.log('body click');
 			});
 			
 
 
-			$(".flagging ul.flags li").click(function () {
+			$(".flagging ul.flags li").click(function () 
+			{
+				let $openSelect = $(".select.open");
+
+				if ($openSelect.length > 0)
+				{
+					//user is clicking to close the select, not trying to click this
+					return;
+				}
 
 				let $this               = $(this);
 				let $label              = $this.find("label");
@@ -270,7 +278,7 @@ jQuery(document).ready(function ($) {
 
 
 			$("#reasoning").on("keyup", function () {
-
+				updateSelectedHashtags();
 				updateCurrentReport();
 			});
 
@@ -296,8 +304,6 @@ jQuery(document).ready(function ($) {
 			$(".select").click(function (ev) {
 
 				let $this    = $(this);
-				let $preview = $this.find(".preview");
-				let $options = $this.find(".options");
 				let open     = $this.hasClass("open");
 
 				if (open)
@@ -315,21 +321,43 @@ jQuery(document).ready(function ($) {
 			});
 
 
-			$(".select .options .option").click(function () {
+			$(".select .options .option").click(function (ev) {
+				//console.log("Option click");
 
-				let $this    = $(this);
-				let $select  = $this.closest(".select");
-				let $preview = $select.find(".preview");
-				//let value    = $this.attr("data-value");
-				let value    = $this.text();
+				ev.stopPropagation();
 
-				$select.find(".option").removeClass('selected');
-				$this.addClass('selected');
-				$select.addClass('selected');
+				try
+				{
+					let $this    = $(this);
+					let $select  = $this.closest(".select");
+					//let value    = $this.attr("data-value");
+					let value    = $this.text();
+					let $notes   = $("#reasoning");
+					let tags     = "";
 
-				$preview.html( value ).addClass("selected");
+					/*$select.find(".option").removeClass('selected');
+					$this.addClass('selected');*/
+					//$select.addClass('selected');
 
-				updateCurrentReport();
+					if (notesContainHashtag(value))
+					{
+						let text = $notes.val();
+						$notes.val( text.replace(value, "").trim() );
+					}
+					else
+					{
+						$notes.val( $notes.val() + " " + value );
+					}
+					//console.log("TEST");
+					updateCurrentReport();
+					tags = getHashtagsFromNotes();
+
+					updateSelectedHashtags();
+				}
+				catch (e)
+				{
+					console.error(e.message);
+				}
 			});
 
 			
@@ -392,6 +420,78 @@ jQuery(document).ready(function ($) {
 	}
 });
 
+
+
+function notesContainHashtag (tag)
+{
+	let $notes = $("#reasoning");
+	let index = $notes.val().indexOf(tag);
+
+	/*backgroundPage.console.log("Looking for " + tag);
+	backgroundPage.console.log("Current val is " + $notes.val());
+	backgroundPage.console.log("Index is " + index);*/
+	return (index > -1);
+}
+
+
+function updateSelectedHashtags ()
+{
+	//console.log("Updating selected tags");
+	var tags     = getHashtagsFromNotes();
+	let $select  = $(".select.campaign");
+	var $options = $select.find(".option");
+	let $preview = $select.find(".preview");
+
+	$options.removeClass("selected");
+
+	if (tags && tags.length > 0)
+	{
+		for (let i=0; i < tags.length; i++)
+		{
+			let tag = tags[i];
+
+			//console.log("Checking " + tag);
+
+			$options.each(function () {
+				let $this = $(this);
+
+
+				if ($this.text() == tag)
+				{
+					$this.addClass('selected');
+				}
+				else
+				{
+					//console.log($this.text() + " != " + tag + "?");
+				}
+			});
+		}
+		$preview.html( tags.join(", ") ).addClass("selected");
+	}
+	else
+	{
+		//console.log("Tags", tags);
+		$preview.html( "" ).removeClass("selected");
+	}	
+}
+
+
+function getHashtagsFromNotes ()
+{
+	var notes = $("#reasoning").val();
+
+	//console.log("Notes are: " + notes);
+
+	if (!notes) { return; }
+	if (notes.indexOf("#") == -1) { return; }
+
+	var re      = /\#[A-Za-z0-9\-\_]+/g;
+	var matches = notes.match(re);
+
+	//console.log("Matches: " + matches);
+
+	return matches;
+}
 
 
 function sendFlagData (currentReport, currentUrl)
@@ -531,51 +631,50 @@ function updateCurrentReport ()
 {
 	if (autofilling == true)
 	{
-		//debug("Autofilling, ignoring updateCurrentReport");
+		console.log("Autofilling, ignoring updateCurrentReport");
 		return;
 	}
 
-	let $flags            = $(".flagging ul.flags li");
-	let $selectedCampaign = $(".campaign .option.selected");
-	let campaign          = "";
-	let campaignId        = "";
+	//console.log("Building report");
 
-	if ($selectedCampaign.length > 0)
+	try
 	{
-		campaign = $( $selectedCampaign.get(0) ).attr("data-value");
-		campaignId = $( $selectedCampaign.get(0) ).attr("data-campaign-id");
-		//debug("Campaign ID is " + campaignId);
+		let $flags = $(".flagging ul.flags li");
+
+		currentReport = {
+			'url'        : currentUrl,
+			'flags'      : [],
+			'notes'      : $("#reasoning").val()
+		};	
+
+		$flags.each(function () {
+
+			let $this      = $(this);
+			let severity   = parseInt($this.attr("data-severity"));
+			let good       = $this.hasClass("good");
+			let $image     = $this.find(".icon img");
+			let jsonReport = "";
+
+			if (severity > 0)
+			{
+				currentReport.flags.push({
+					'flag_type_id' : $this.attr("data-id"),
+					'name'         : $this.attr("data-message-root"),
+					'severity'     : severity,
+					'good'         : good,
+					'image'        : $image.attr("src")
+				});
+			}
+		});
+
+		//console.log("Report built");
+
+		setStoredReport(currentUrl, currentReport);
 	}
-
-	currentReport = {
-		'url'        : currentUrl,
-		'flags'      : [],
-		'notes'      : $("#reasoning").val(),
-		'campaign'   : campaign,
-		'campaignId' : campaignId
-	};	
-
-	$flags.each(function () {
-
-		let $this      = $(this);
-		let severity   = parseInt($this.attr("data-severity"));
-		let good       = $this.hasClass("good");
-		let $image     = $this.find(".icon img");
-		let jsonReport = "";
-
-		if (severity > 0)
-		{
-			currentReport.flags.push({
-				'flag_type_id' : $this.attr("data-id"),
-				'name'         : $this.attr("data-message-root"),
-				'severity'     : severity,
-				'good'         : good,
-				'image'        : $image.attr("src")
-			});
-		}
-	});
-
-	setStoredReport(currentUrl, currentReport);
+	catch (e)
+	{
+		console.error(e.message);
+	}
 }
 
 
@@ -709,7 +808,7 @@ function isPermalink ( url )
 	}
 	else
 	{
-		console.log(domain);
+		//console.log(domain);
 	}
 	return false;
 }
@@ -799,58 +898,52 @@ function restoreStoredReport (url)
 {
 	let storedReport = getStoredReport(url);
 	let $flags       = $(".flagging ul.flags li");
-	let $campaigns   = $(".campaign .option");
+	//let $campaigns   = $(".campaign .option");
 
 	if (!storedReport || !storedReport.url)
 	{
 		return false;
 	}
 
-	autofilling = true; //set global var
-	
-	//save to global var
-	currentReport = storedReport;
-
-	debug("Re-entering report data");
-	debug(currentReport);
-
-	//update the UI with stored report data
-	$("#reasoning").val(currentReport.notes);
-
-	for (var i=0; i < currentReport.flags.length; i++)
+	try
 	{
+		autofilling = true; //set global var
 		
-		let currentFlag = currentReport.flags[i];
+		//save to global var
+		currentReport = storedReport;
 
-		for (let j=0; j < $flags.length; j++)
+		debug("Re-entering report data");
+		debug(currentReport);
+
+		//update the UI with stored report data
+		$("#reasoning").val(currentReport.notes);
+		updateSelectedHashtags();
+
+		for (var i=0; i < currentReport.flags.length; i++)
 		{
 			
-			let $flag = $( $flags[j] );
+			let currentFlag = currentReport.flags[i];
 
-			if ($flag.attr("data-id") == currentFlag.flag_type_id)
+			for (let j=0; j < $flags.length; j++)
 			{
-				for (let k=0; k < currentFlag.severity; k++)
+				
+				let $flag = $( $flags[j] );
+
+				if ($flag.attr("data-id") == currentFlag.flag_type_id)
 				{
-					$flag.trigger('click'); //click this flag once for each level of severity
-				}			
-			}
+					for (let k=0; k < currentFlag.severity; k++)
+					{
+						$flag.trigger('click'); //click this flag once for each level of severity
+					}			
+				}
 
+			}
 		}
+
 	}
-
-	if (storedReport.campaignId)
+	catch (e)
 	{
-		for (let i=0; i < $campaigns.length; i++)
-		{
-			let $campaign = $( $campaigns[i] );
-
-			if ($campaign.attr("data-campaign-id") == storedReport.campaignId)
-			{
-				$campaign.trigger('click');
-				$campaign.trigger('click'); //click again to close the select popup
-				break;
-			}
-		}	
+		console.log(e.message);
 	}
 
 	autofilling = false; //set global var
