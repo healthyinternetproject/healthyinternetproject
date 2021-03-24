@@ -549,6 +549,7 @@ function sendMissionToAPI (mission_id)
 
 function sendCountryToAPI (country_id)
 {	
+	console.log('now were here')
 	let data = {
 		'country_id': country_id,
 		'user_id': CONFIG.userId

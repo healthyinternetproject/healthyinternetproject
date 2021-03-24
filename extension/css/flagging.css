@@ -12,7 +12,7 @@
 	width: var(--popup-width);
 	min-height: 500px;
 	height: 500px;
-	overflow: hidden;
+	overflow: auto;
 
 }
 
@@ -582,6 +582,8 @@
 {
 	display: inline;
 	height: auto;
+    max-height: 215px;
+    overflow-y: scroll;
 }
 
 .healthy-internet-project .select .options .option

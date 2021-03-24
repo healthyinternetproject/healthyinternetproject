@@ -2,13 +2,12 @@
 var FADE_TIME = 400;
 var WELCOME_ANIMATION_TIME = 900; //matches transition time for .onboarding .welcome in onboarding.css
 var uiInitialized = false;
-
-
 jQuery(document).ready(function ($) 
 {	
 
 
 	initializeUI();	
+
 
 
 	if(window.location.protocol=="moz-extension:"){
@@ -133,6 +132,7 @@ jQuery(document).ready(function ($)
 			sendResponse({result: "success"});
 			browser.runtime.sendMessage({command: 'onboarding-done'}, function () {});
 		}
+
 		else
 		{
 			console.log("Unrecognized command");
@@ -251,19 +251,29 @@ jQuery(document).ready(function ($)
 
 		});
 
-		$('select').on('change', function (e) {
+		// $(".onboarding #countrypicker").load('countrylist.html',function (){
+		$( ".onboarding .panel .countrypicker" ).ready(function() {
+				console.log("ready!")
 
-			let id = parseInt( $("#countrypicker").val() );
+				var $next = $("#countrybutton");
+			$("select").change(function() {
 
-			console.log("Saving country id " + id);
+				// $next = $(".onboarding #countrybutton")
+				$next.removeClass('disabled');
+					// document.getElementById("countrybutton").disabled = false;
+					
+					let id = parseInt( $(this).val());
+					console.log("Saving country id " + id);
 
-			//save mission to API
-			browser.runtime.sendMessage(
-				{command: 'save-country', 'country_id': id}, 
-				function () {}
-			);
-			
+					//save mission to API
+					browser.runtime.sendMessage(
+						{command: 'save-country', 'country_id': id}, 
+						function () {}
+				);
+			});
 		});
+
+
 
 
 		
@@ -705,3 +715,4 @@ function notificationClick(){
 			}
 			sendResponse({result: "success"});
 }
+

@@ -475,6 +475,21 @@ CONSOLIDATED "FOOTER" STYLING
 
 }
 
+
+#countrypicker{
+    margin-top: 10px;
+    border: 2px solid #5762D5;
+    border-radius: 5px;
+	height: 30px;
+	font-family: 'Inter'
+
+
+}
+
+#countrypicker option[value=""][disabled] {
+    display: none;
+}
+
 /* RIGHT-TO-LEFT STYLING */
 
 .healthy-internet-project[dir="rtl"] *

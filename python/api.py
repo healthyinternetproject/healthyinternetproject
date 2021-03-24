@@ -420,32 +420,52 @@ def api_country():
 		return quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
 	
 	try:
+
 		add_country = ("INSERT INTO user_country_link "
 			"(user_id, country_id) "
 			"VALUES (%s, %s)")
 
 		country_data = (user['user_id'], country_id)
 
+		#create entry into user_country_link table
 		db.execute(add_country, country_data)
+		#update user table as well
+		#not an ideal solution bc can't tell which execution is throwing an error 
+		#TODO create seperate method with try/except & returns for updating user table 
+		db.execute("UPDATE user SET country_id = %s WHERE user_id = %s", (country_id,user_id))
 
 		results = {
 			'status': 'success',
 			'token': user.get("token")
 		}
-
 		return jsonify(results)
-
 	except Exception as err:
 
+		try:
+			db.execute("UPDATE user SET country_id = %s WHERE user_id = %s", (country_id,user_id))
+			db.execute("UPDATE user_country_link SET country_id = %s WHERE user_id = %s", (country_id,user_id))
+		except Exception as err:
+			results = {
+				'error': "results 1 Error: {}".format(err),
+				'status': 'error',
+				'message': 'Database error'
+			}
+
+			return jsonify(results)
 		results = {
-			'error': "Error: {}".format(err),
+			'error': "results 1 Error: {}".format(err),
 			'status': 'error',
 			'message': 'Database error'
 		}
 
 		return jsonify(results)
+	
 
 
+	
+
+
+	
 @app.route('/api/v1/opt_out_preference', methods=['POST'])
 def api_preference():
 	to_console("preference")
