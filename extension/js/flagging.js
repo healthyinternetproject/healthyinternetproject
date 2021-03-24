@@ -631,7 +631,7 @@ function updateCurrentReport ()
 {
 	if (autofilling == true)
 	{
-		console.log("Autofilling, ignoring updateCurrentReport");
+		//console.log("Autofilling, ignoring updateCurrentReport");
 		return;
 	}
 
@@ -684,7 +684,7 @@ function updateThanksPage ()
 	let $selectedCampaign = $(".thanks .selected-campaign");
 	let $notes            = $(".thanks .notes");
 
-	console.log(currentReport);
+	//console.log(currentReport);
 
 	$selectedFlags.html("");
 	$selectedCampaign.html("");
