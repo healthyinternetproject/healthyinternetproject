@@ -822,11 +822,6 @@
     padding-right: 5px;
 }
 
-
-.onboarding #send-notification {
-	width: 210px;
-}
-
 /* RTL STYLING */
 
 *[dir="rtl"].onboarding .panels .panel.welcome

@@ -162,7 +162,7 @@ def api_mission():
 def api_country():
 	functions.to_console("country")
 	params     = json.loads(request.form.get("json"))
-	country_id = params.get('country_id')
+	country_id = request.values.get('country_id')
 	user_id    = request.values.get("user_id")
 	password   = request.values.get("password")
 	token      = request.values.get("token")
@@ -177,48 +177,30 @@ def api_country():
 		return functions.quit_with_error("Incorrect Login","Your credentials are incorrect.", 401)
 	
 	try:
-
 		add_country = ("INSERT INTO user_country_link "
 			"(user_id, country_id) "
 			"VALUES (%s, %s)")
 
 		country_data = (user['user_id'], country_id)
 
-		#create entry into user_country_link table
 		cfg.db.execute(add_country, country_data)
-		#update user table as well
-		#not an ideal solution bc can't tell which execution is throwing an error 
-		#TODO create seperate method with try/except & returns for updating user table 
-		cfg.db.execute("UPDATE user SET country_id = %s WHERE user_id = %s", (country_id,user_id))
 
 		results = {
 			'status': 'success',
 			'token': user.get("token")
 		}
+
 		return jsonify(results)
+
 	except Exception as err:
 
-		try:
-			#if user changes their country it needs to update instead of insert
-			#TODO create more specific error which applies to duplicate entry
-			cfg.db.execute("UPDATE user SET country_id = %s WHERE user_id = %s", (country_id,user_id))
-			cfg.db.execute("UPDATE user_country_link SET country_id = %s WHERE user_id = %s", (country_id,user_id))
-		except Exception as err:
-			results = {
-				'error': "results 1 Error: {}".format(err),
-				'status': 'error',
-				'message': 'Database error'
-			}
-
-			return jsonify(results)
 		results = {
-			'error': "results 1 Error: {}".format(err),
+			'error': "Error: {}".format(err),
 			'status': 'error',
 			'message': 'Database error'
 		}
 
 		return jsonify(results)
-	
 
 
 @app.route('/api/v1/opt_out_preference', methods=['POST'])

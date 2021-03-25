@@ -551,6 +551,10 @@
 .healthy-internet-project .select .preview
 {
 	color: #7F8DA7;
+	max-width: 90%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .select.campaign.selected
@@ -582,13 +586,15 @@
 {
 	display: inline;
 	height: auto;
-    max-height: 215px;
-    overflow-y: scroll;
+	max-height: 300px;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 .healthy-internet-project .select .options .option
 {
-	border-top: 0.5px solid #D9DDE5;
+	position: relative;
+	/* border-top: 0.5px solid #D9DDE5; */
 }
 
 .healthy-internet-project .select .options .option:first-child
@@ -599,6 +605,15 @@
 .healthy-internet-project .select .options .option:hover
 {
 	background-color: rgba(87,98,213,0.2);
+}
+
+.healthy-internet-project .select .options .option.selected:after
+{
+	content: "✓";
+	position: absolute;
+	top: 0px;
+	right: 4px;
+	font-size: 14px;
 }
 
 .reasoning-note
