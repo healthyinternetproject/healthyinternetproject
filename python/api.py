@@ -179,7 +179,7 @@ def api_country():
 		add_country = ("INSERT INTO user_country_link "
 			"(user_id, country_id) "
 			"VALUES (%s, %s)"
-			"ON DUPLICATE KEY UPDATE country_id=%s")
+			"ON DUPLICATE KEY UPDATE country_id = %s")
 
 		country_data = (user['user_id'], country_id, country_id)
 
