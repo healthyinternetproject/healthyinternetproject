@@ -13,7 +13,6 @@ from flask import request, jsonify, abort, send_from_directory
 import string
 from argon2 import PasswordHasher
 import urllib.parse
-import random
 import cfg
 import functions
 
@@ -162,7 +161,7 @@ def api_mission():
 def api_country():
 	functions.to_console("country")
 	params     = json.loads(request.form.get("json"))
-	country_id = request.values.get('country_id')
+	country_id = params.get('country_id')
 	user_id    = request.values.get("user_id")
 	password   = request.values.get("password")
 	token      = request.values.get("token")
@@ -179,9 +178,10 @@ def api_country():
 	try:
 		add_country = ("INSERT INTO user_country_link "
 			"(user_id, country_id) "
-			"VALUES (%s, %s)")
+			"VALUES (%s, %s)"
+			"ON DUPLICATE KEY UPDATE country_id=%s")
 
-		country_data = (user['user_id'], country_id)
+		country_data = (user['user_id'], country_id, country_id)
 
 		cfg.db.execute(add_country, country_data)
 

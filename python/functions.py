@@ -5,6 +5,8 @@ import json
 from flask import jsonify
 from argon2 import PasswordHasher
 import hashlib
+import string
+import random
 
 
 def to_console (message):
@@ -33,7 +35,7 @@ def quit_with_error(title,message,code=500):
 
 def random_string(string_length=10):
 	"""Generate a random string of fixed length """
-	# password_characters = string.ascii_letters + string.digits + string.punctuation
+	# password_characters = string.ascii_letters + string.digits + string.punctuation	
 	characters = string.ascii_letters + string.digits
 	randomstring = ''.join(random.choice(characters) for i in range(string_length))
 	return randomstring

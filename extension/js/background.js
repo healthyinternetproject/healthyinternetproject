@@ -404,9 +404,17 @@ function isUserRegistered ()
 				}
 				else
 				{
-					console.log("Received user ID " + data.user_id + " from API");
-					CONFIG.userId = data.user_id;
-					CONFIG.password = data.password;
+					if (data.user_id)
+					{
+						console.log("Received user ID " + data.user_id + " from API");
+						CONFIG.userId = data.user_id;
+						CONFIG.password = data.password;
+					}
+					else
+					{
+						console.log(data);
+						throw 'Bad response from API';
+					}
 				}
 
 				browser.storage.sync.set(
@@ -498,6 +506,8 @@ function sendToAPI ( term, data, authenticate, callback )
 
 		xhr.onreadystatechange = function () 
 		{
+			console.log("Status: " + xhr.status);
+
 			if (xhr.readyState == 4) 
 			{
 
@@ -549,7 +559,7 @@ function sendMissionToAPI (mission_id)
 
 function sendCountryToAPI (country_id)
 {	
-	console.log('now were here')
+	//console.log('now were here');
 	let data = {
 		'country_id': country_id,
 		'user_id': CONFIG.userId
