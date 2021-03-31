@@ -9,6 +9,7 @@ var CONFIG = {};
 var locale = getString("@@ui_locale");
 var rtlLocales = [
 	//'en',
+	//'en-US',
 	//'en_US',
 	'ar'
 ];
@@ -79,8 +80,10 @@ function localizeUI ()
 {
 	let rtl = rtlLocales.includes(locale);
 
-	if (rtl)
+	if (rtl !== false)
 	{
+		consoleLog("RTL mode");
+
 		$hipEls = $(".healthy-internet-project");
 
 		$hipEls.attr("dir","rtl");
@@ -96,6 +99,10 @@ function localizeUI ()
 			let $this = $(this);
 			$this.attr("dir", "rtl");
 		});
+	}
+	else
+	{
+		consoleLog("LTR mode");
 	}
 }
 

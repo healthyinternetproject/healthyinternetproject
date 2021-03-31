@@ -12,8 +12,7 @@
 	width: var(--popup-width);
 	min-height: 500px;
 	height: 500px;
-	overflow: auto;
-
+	overflow: hidden;
 }
 
 .healthy-internet-project.flagging #debugger *

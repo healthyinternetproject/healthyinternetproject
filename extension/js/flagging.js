@@ -558,6 +558,9 @@ function testMentorReview ()
 function testOnboarding ()
 {
 	debug("Testing onboarding...");
+	var creating = browser.tabs.create({
+		url:"/html/onboarding.html"
+	});	
 	backgroundPage.testOnboarding();	
 }
 
