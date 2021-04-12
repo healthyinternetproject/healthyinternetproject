@@ -80,6 +80,7 @@ jQuery(document).ready(function ($) {
 		$(".test-local-api").click( testLocalAPI );		
 		$(".test-remote-api").click( testRemoteAPI );		
 		$(".test-flagging-in-tab").click( testLoadFlaggingInTab );
+		$(".test-rtl").click( testRTL );
 		$(".close-debug").click( closeDebug );
 
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {		
@@ -481,12 +482,26 @@ function getHashtagsFromNotes ()
 	var notes = $("#reasoning").val();
 
 	//console.log("Notes are: " + notes);
+	// abc#
+	// #الانتخابات
+	// #كوفيد19 #لقاح #العلوم
 
 	if (!notes) { return; }
 	if (notes.indexOf("#") == -1) { return; }
 
-	var re      = /\#[A-Za-z0-9\-\_]+/g;
-	var matches = notes.match(re);
+	var re         = /#[^\s]+/g;
+	var matches    = notes.match(re);
+	/*
+	var rtlRe      = /\b[\S\-\_]+?\#/g;
+	var rtlMatches = notes.match(rtlRe);
+
+	if (!matches)
+	{
+		matches = [];
+	}
+
+	matches.concat(rtlMatches);
+	*/
 
 	//console.log("Matches: " + matches);
 
@@ -591,6 +606,12 @@ function testRemoteAPI ()
 function testLoadFlaggingInTab ()
 {
 	backgroundPage.testLoadFlaggingInTab();
+}
+
+
+function testRTL ()
+{
+	$("body").addClass("rtl");
 }
 
 
