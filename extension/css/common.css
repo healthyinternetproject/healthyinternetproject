@@ -432,10 +432,10 @@ CONSOLIDATED "FOOTER" STYLING
     position: fixed;
     bottom: 0px;
     right: 20px;
+    left: 20px;
     z-index: 2;
-	width: 100%;
 	height: 20px;
-    font-size: 12px;
+    font-size: 14px;
     color:var(--black);
 }
 
@@ -498,6 +498,8 @@ CONSOLIDATED "FOOTER" STYLING
 {
 	direction: RTL; 
 	font-family: 'IBM Plex Sans Arabic';
+	letter-spacing: 0;
+	line-height: 150%;
 }
 
 .healthy-internet-project[dir="rtl"] .panels .panel
