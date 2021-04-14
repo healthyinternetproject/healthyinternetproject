@@ -311,7 +311,7 @@
     border-radius: 10px;
     font-weight: bold;
     text-align: center;
-    height: 80px;
+    min-height: 80px;
 }
 
 
@@ -873,7 +873,7 @@
 *[dir="rtl"].onboarding .illustrations.type-a:after
 {
 	right: auto;
-	left: -40px;
+	left: 0;
 	transform: scaleX(-1);
 }
 
