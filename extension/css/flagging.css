@@ -683,6 +683,7 @@
 {
 	padding-left: 50px; 
 	padding-right: 24px;
+    line-height: 1.55em;
 }
 
 .healthy-internet-project[dir="rtl"] .with-favicon img
