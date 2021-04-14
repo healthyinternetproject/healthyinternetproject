@@ -721,6 +721,13 @@
 	background-position: 6px center;
 }
 
+.healthy-internet-project[dir="rtl"] .select .options .option.selected:after
+{
+	right: auto;
+	left: 4px;
+	transform: scaleX(-1);
+}
+
 
 /* ANIMATION KEYFRAMES */
 

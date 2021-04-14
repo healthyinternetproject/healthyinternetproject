@@ -6,7 +6,8 @@ if ((typeof browser === 'undefined') && (typeof chrome !== 'undefined'))
 
 var backgroundPage = null;
 var CONFIG = {};
-var locale = getString("@@ui_locale");
+//var locale = getString("@@ui_locale");
+var locale = navigator.languages[0];
 var rtlLocales = [
 	//'en',
 	//'en-US',

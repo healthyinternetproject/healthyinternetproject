@@ -311,7 +311,7 @@
     border-radius: 10px;
     font-weight: bold;
     text-align: center;
-    height: 80px;
+    min-height: 80px;
 }
 
 
@@ -829,6 +829,17 @@
 
 /* RTL STYLING */
 
+*[dir="rtl"].onboarding .footer #terms_use
+{
+    float: left;
+    margin-left: 2%;	
+}
+
+*[dir="rtl"].onboarding .footer #privacy_policy
+{
+	float: left;
+}
+
 *[dir="rtl"].onboarding .panels .panel.welcome
 {
 	padding-top: 300px;
@@ -854,6 +865,11 @@
 	right: 0;
 }
 
+*[dir="rtl"].onboarding ul.missions li .description
+{
+	font-size: 14px;
+}
+
 *[dir="rtl"].onboarding .illustrations.type-a:after
 {
 	right: auto;
@@ -872,7 +888,6 @@
 	left: auto;
 	right: 0;
 }
-
 
 
 *[dir="rtl"].onboarding #pointer-hand.point-at-extension
