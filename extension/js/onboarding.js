@@ -401,11 +401,13 @@ jQuery(document).ready(function ($)
         {
 
 			let $inspiration = $("#inspiration");
-			let $inspirationFlag = $("#inspirationFlag");
+			let $inspirationFlag = $(".example-flag");
+
+			$inspiration.attr("href",window.location.hash);
 
 			$inspiration.click(function () 
 			{
-				$inspirationFlag.css({'display':'block'});
+				$inspirationFlag.css("opacity","1");
 			});
 		});
 
