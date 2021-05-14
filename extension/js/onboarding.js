@@ -403,7 +403,7 @@ jQuery(document).ready(function ($)
 			let $inspiration = $("#inspiration");
 			let $inspirationFlag = $(".example-flag");
 
-			$inspiration.attr("href",window.location.hash);
+			$inspiration.attr("href","javascript:void(0)");
 
 			$inspiration.click(function () 
 			{
