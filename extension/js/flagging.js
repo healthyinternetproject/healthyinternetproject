@@ -67,8 +67,15 @@ jQuery(document).ready(function ($) {
 		uiInitialized = true;
 
 		let manifestData = browser.runtime.getManifest();
+		let language = navigator.languages[0].toLowerCase(); 
 
 		debug(CONFIG);
+
+		//localize bug report link if possible
+		if (language.indexOf("es") === 0)
+		{
+			$("#report-bug-link").attr("href","https://forms.gle/9Mzz5GZSu3QU5FzYA");
+		}
 
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
