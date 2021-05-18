@@ -130,7 +130,7 @@ jQuery(document).ready(function ($)
 			console.log("done with flagging demo");
 			window.location.href = window.location.pathname + "#6";
 			sendResponse({result: "success"});
-			browser.runtime.sendMessage({command: 'onboarding-done'}, function () {});
+			//browser.runtime.sendMessage({command: 'onboarding-done'}, function () {});
 		}
 
 		else

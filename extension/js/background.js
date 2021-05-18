@@ -201,8 +201,10 @@ function initializeExtension ()
 			}
 			else if (request.command == 'onboarding-done') 
 			{
-				browser.storage.sync.set({ 'onboardingDone': 1 });	
-				CONFIG.onboardingDone = 1;
+				//moved to sendCountryToAPI
+				//browser.storage.sync.set({ 'onboardingDone': 1 });	
+				//CONFIG.onboardingDone = 1;
+				//console.log("Onboarding marked as done");
 			}
 			else if (request.command == 'onboarding-opt-out') 
 			{
@@ -564,7 +566,15 @@ function sendCountryToAPI (country_id)
 		'country_id': country_id,
 		'user_id': CONFIG.userId
 	};
-	return sendToAPI( "country", data, true );
+
+	let callback = function () 
+	{
+		browser.storage.sync.set({ 'onboardingDone': 1 });	
+		CONFIG.onboardingDone = 1;
+		console.log("Onboarding marked as done");		
+	};
+
+	return sendToAPI( "country", data, true, callback );
 }
 
 function sendPreferencesToAPI (preference_id)
