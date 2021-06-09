@@ -76,6 +76,14 @@ jQuery(document).ready(function ($) {
 		{
 			$("#report-bug-link").attr("href","https://forms.gle/9Mzz5GZSu3QU5FzYA");
 		}
+		else if (language.indexOf("fr") === 0)
+		{
+			$("#report-bug-link").attr("href","https://forms.gle/rRhT3JU7PipJY4sGA");
+		}
+		else if (language.indexOf("ar") === 0)
+		{
+			$("#report-bug-link").attr("href","https://forms.gle/BRSoaqHPPESzMMgs8");
+		}
 
 		$(".flagging .user-id").html( formatUserId(CONFIG.userId) );
 		$(".flagging .extension-version").html( manifestData.version );
