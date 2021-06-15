@@ -4,12 +4,15 @@ import json
 import logging
 import gspread
 from classes.CivicDB import CivicDB
+import os 
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 print("Starting")
 
-logging.basicConfig(filename='../cron-warnings.log', filemode='w', level=logging.WARNING)
+logging.basicConfig(filename=dir_path + '/../cron-warnings.log', filemode='w', level=logging.WARNING)
 
-with open("../api-config.json") as json_data_file:
+with open(dir_path + "/../api-config.json") as json_data_file:
     config = json.load(json_data_file)
 
 print("Loaded config")
