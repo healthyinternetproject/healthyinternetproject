@@ -14,6 +14,8 @@ Here are some additional links which are helping in understanding our values and
 *[flagging/ mentoring operation models](https://docs.google.com/document/d/1LYWrc77WGkxcX8RPbCpMtDq5Qz7keeEV1MuwwhhuExo/edit?usp=sharing)
 
 
+### !! Important !!
+If you have any interest in contributing to this, please participate in our community. Building a thriving community that is centered around these issues is more important to us than the actual tool surviving.  [Join the slack.](https://join.slack.com/t/healthyintern-5jp3924/shared_invite/zt-wuh780xe-GoNqCv4fPrgG~KkLe~asBw)
 
 ## Deploy ....
 
