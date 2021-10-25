@@ -1,21 +1,21 @@
 # Healthy Internet Project
 
-The Healthy Internet Project is a browser extension on Chrome and Firefox which allows you to flag content online, 
+The [Healthy Internet Project](http://www.healthyinternetproject.org) is a browser extension on Chrome and Firefox which allows you to flag content online, 
 no matter the URL. Help us report lies, take down abuse, stop fear mongering, and uplift the greatest ideas on the web.
 It is licensed under the Non Profit Open Source License 3.0, which you can find in NPOSL-3.0.txt. 
 
 Please be mindful. 
-The good of the world and the internet is only possible if each of us act with the wellbeing of others in mind... 
+A healthier internet is only possible if each of us have the wellbeing of others in mind.
 
-Here are some additional links which are helping in understanding our values and goals:\
-*[PRD](https://docs.google.com/document/d/19q0rheSTswLEoRiKnO9zS0YuTDFA_8we-83n3WrbHuY/edit?usp=sharing)\
+Here are some additional links which are helpful in understanding our values and goals:\
+*[Product Requirements Document (PRD)](https://docs.google.com/document/d/19q0rheSTswLEoRiKnO9zS0YuTDFA_8we-83n3WrbHuY/edit?usp=sharing)\
 *[PRD for partners](https://docs.google.com/document/d/1maVF6tuHKrR5l4uIqhGVAb5WaiUKGWi-8uoYwTKxbFw/edit?usp=sharing)\
 *[PRD for partners - spanish](https://docs.google.com/document/d/1ySDFvNv4OtV2eN64zlLBQERL86haP6eLJVSSbturPBY/edit?usp=sharing)\
 *[flagging/ mentoring operation models](https://docs.google.com/document/d/1LYWrc77WGkxcX8RPbCpMtDq5Qz7keeEV1MuwwhhuExo/edit?usp=sharing)
 
 
 ### !! Important !!
-If you have any interest in contributing to this, please participate in our community. Building a thriving community that is centered around these issues is more important to us than the actual tool surviving.  [Join the slack.](https://join.slack.com/t/healthyintern-5jp3924/shared_invite/zt-wuh780xe-GoNqCv4fPrgG~KkLe~asBw)
+If you're interested in contributing, please join our online community! Building a thriving space for discussion around these issues is just as important as the actual browser extension. [Join the slack.](https://join.slack.com/t/healthyintern-5jp3924/shared_invite/zt-wuh780xe-GoNqCv4fPrgG~KkLe~asBw)
 
 ## Deploy ....
 
