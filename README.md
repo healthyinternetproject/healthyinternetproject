@@ -1,5 +1,7 @@
 # Healthy Internet Project
 
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+
 The [Healthy Internet Project](http://www.healthyinternetproject.org) is a browser extension on Chrome and Firefox which allows you to flag content online, 
 no matter the URL. Help us report lies, take down abuse, stop fear mongering, and uplift the greatest ideas on the web.
 It is licensed under the Non Profit Open Source License 3.0, which you can find in NPOSL-3.0.txt. 
@@ -12,7 +14,6 @@ Here are some additional links which are helpful in understanding our values and
 *[PRD for partners](https://docs.google.com/document/d/1maVF6tuHKrR5l4uIqhGVAb5WaiUKGWi-8uoYwTKxbFw/edit?usp=sharing)\
 *[PRD for partners - spanish](https://docs.google.com/document/d/1ySDFvNv4OtV2eN64zlLBQERL86haP6eLJVSSbturPBY/edit?usp=sharing)\
 *[flagging/ mentoring operation models](https://docs.google.com/document/d/1LYWrc77WGkxcX8RPbCpMtDq5Qz7keeEV1MuwwhhuExo/edit?usp=sharing)
-
 
 ### !! Important !!
 If you're interested in contributing, please join our online community! Building a thriving space for discussion around these issues is just as important as the actual browser extension. [Join the slack.](https://join.slack.com/t/healthyintern-5jp3924/shared_invite/zt-wuh780xe-GoNqCv4fPrgG~KkLe~asBw)
