@@ -1,6 +1,6 @@
 # Healthy Internet Project
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 The [Healthy Internet Project](http://www.healthyinternetproject.org) is a browser extension on Chrome and Firefox which allows you to flag content online, 
 no matter the URL. Help us report lies, take down abuse, stop fear mongering, and uplift the greatest ideas on the web.
