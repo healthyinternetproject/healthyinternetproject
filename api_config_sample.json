@@ -1,0 +1,11 @@
+{
+	"version" : "2020.10.16.1",
+	"token_secret_key" : "some secret key",
+	"default_locale_id" : 1,	
+	"mariadb" : {
+		"host"     : "localhost",
+		"username" : "civic",
+		"password" : "",
+		"database" : "civic"
+	}
+}
