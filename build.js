@@ -20,7 +20,7 @@ Airtable.configure({
     endpointUrl: 'https://api.airtable.com',
     apiKey: process.env.AIRTABLE_API_KEY              
 });
-var base = Airtable.base('appsGDOWZSAPscKAl');
+var base = Airtable.base(BASE);
 
 // ARRAYS TO FILL
 // TODO: make this dynamic so a new array is created for each airtable column
